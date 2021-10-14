@@ -24,8 +24,45 @@ open class MXTipDialog(context: Context) :
     }
 
     companion object {
-        fun warn() {
+        fun confirm(
+            context: Context,
+            message: String,
+            onOkClick: ((confirm: Boolean) -> Unit)? = null
+        ) {
+            val dialog = MXTipDialog(context)
+            dialog.setMessage(message)
+            dialog.setCancelable(false)
+            dialog.setActiveBtn(text = "确认", onclick = { onOkClick?.invoke(true) })
+            dialog.setInActiveBtn(onclick = { onOkClick?.invoke(false) })
+            dialog.setTipType(MXTipType.WARN)
+            dialog.show()
+        }
 
+        fun warn(context: Context, message: String, dismissDelay: Int? = null) {
+            val dialog = MXTipDialog(context)
+            dialog.setMessage(message)
+            dialog.setDismissDelay(dismissDelay)
+            dialog.setActiveBtn(text = "确认")
+            dialog.setTipType(MXTipType.WARN)
+            dialog.show()
+        }
+
+        fun success(context: Context, message: String, dismissDelay: Int? = null) {
+            val dialog = MXTipDialog(context)
+            dialog.setMessage(message)
+            dialog.setDismissDelay(dismissDelay)
+            dialog.setActiveBtn(text = "确认")
+            dialog.setTipType(MXTipType.SUCCESS)
+            dialog.show()
+        }
+
+        fun error(context: Context, message: String, dismissDelay: Int? = null) {
+            val dialog = MXTipDialog(context)
+            dialog.setMessage(message)
+            dialog.setDismissDelay(dismissDelay)
+            dialog.setActiveBtn(text = "确认")
+            dialog.setTipType(MXTipType.ERROR)
+            dialog.show()
         }
     }
 }

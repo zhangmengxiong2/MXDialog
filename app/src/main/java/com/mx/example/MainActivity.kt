@@ -4,8 +4,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.mx.dialog.tip.MXTipDialog
-import com.mx.dialog.tip.MXTipGravity
-import com.mx.dialog.tip.MXTipType
 import com.mx.dialog.toast.toast
 
 class MainActivity : AppCompatActivity() {
@@ -33,6 +31,24 @@ class MainActivity : AppCompatActivity() {
                 toast("ActiveBtn Click")
             }
         }.show()
+    }
+
+    fun showConfirm(view: View) {
+        MXTipDialog.confirm(this, "请确认") { confirm ->
+            toast("确认结果：$confirm")
+        }
+    }
+
+    fun showError(view: View) {
+        MXTipDialog.error(this, "错误提示")
+    }
+
+    fun showSuccess(view: View) {
+        MXTipDialog.success(this, "成功提示")
+    }
+
+    fun showWarn(view: View) {
+        MXTipDialog.warn(this, "Warn提示")
     }
 
     fun showToast(view: View) {
