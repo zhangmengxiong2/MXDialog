@@ -3,6 +3,7 @@ package com.mx.example
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.mx.dialog.progress.MXLoadingDialog
 import com.mx.dialog.tip.MXTipDialog
 import com.mx.dialog.toast.toast
 
@@ -49,6 +50,13 @@ class MainActivity : AppCompatActivity() {
 
     fun showWarn(view: View) {
         MXTipDialog.warn(this, "Warn提示")
+    }
+
+    fun showLoading(view: View) {
+        MXLoadingDialog(this).apply {
+            setDismissDelay(6)
+            setMessage("我要吃饭！！！")
+        }.show()
     }
 
     fun showToast(view: View) {
