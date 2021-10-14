@@ -54,6 +54,7 @@ class MainActivity : AppCompatActivity() {
 
     fun showLoading(view: View) {
         MXLoadingDialog(this).apply {
+            setCancelable(false)
             setDismissDelay(6)
             setMessage("我要吃饭！！！")
         }.show()
