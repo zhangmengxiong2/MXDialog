@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="mx_size_title">17sp</dimen>
+    <dimen name="mx_size_content">14sp</dimen>
+    <dimen name="mx_dialog_card_corner_radius">14dp</dimen>
+</resources>

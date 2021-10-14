@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rootLay"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/mx_dialog_color_background_alpha">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardLay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_margin="25dp"
+        app:cardBackgroundColor="@color/mx_dialog_color_background"
+        app:cardCornerRadius="@dimen/mx_dialog_card_corner_radius"
+        app:cardElevation="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/titleTxv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:padding="15dp"
+                android:text="温馨提示"
+                android:textColor="@color/mx_color_text"
+                android:textSize="@dimen/mx_size_title"
+                android:textStyle="bold" />
+
+            <FrameLayout
+                android:id="@+id/contentLay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="15dp"
+                android:paddingBottom="15dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/mx_color_btn_bg"
+                android:divider="@drawable/mx_dialog_divider_space"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="12dp"
+                android:showDividers="middle">
+
+                <TextView
+                    android:id="@+id/cancelBtn"
+                    style="@style/mx_dialog_style_inactive_btn"
+                    android:text="取消" />
+
+                <TextView
+                    android:id="@+id/okBtn"
+                    style="@style/mx_dialog_style_active_btn"
+                    android:text="确认" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>
