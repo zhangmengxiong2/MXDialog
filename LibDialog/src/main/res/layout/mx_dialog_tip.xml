@@ -50,13 +50,14 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/ticketTxv"
+                    android:id="@+id/delayTxv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
                     android:text="2 秒后消失"
                     android:textColor="@color/mx_color_text_ticket"
-                    android:textSize="@dimen/mx_size_small" />
+                    android:textSize="@dimen/mx_size_small"
+                    android:visibility="gone" />
             </LinearLayout>
 
             <View
@@ -67,7 +68,8 @@
             <FrameLayout
                 android:id="@+id/contentLay"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:orientation="vertical"
                 android:paddingHorizontal="15dp"
                 android:paddingVertical="25dp" />

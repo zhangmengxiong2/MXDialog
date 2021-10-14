@@ -23,6 +23,7 @@ open class MXTipBaseDialog(context: Context, private val contentRes: Int? = null
     private var tipTypeImg: ImageView? = null
     private var contentLay: FrameLayout? = null
     private var titleTxv: TextView? = null
+    private var delayTxv: TextView? = null
     private var cancelBtn: TextView? = null
     private var okBtn: TextView? = null
 
@@ -57,6 +58,7 @@ open class MXTipBaseDialog(context: Context, private val contentRes: Int? = null
         tipTypeImg = findViewById(R.id.tipTypeImg)
         contentLay = findViewById(R.id.contentLay)
         titleTxv = findViewById(R.id.titleTxv)
+        delayTxv = findViewById(R.id.delayTxv)
         cancelBtn = findViewById(R.id.cancelBtn)
         okBtn = findViewById(R.id.okBtn)
     }
@@ -169,7 +171,10 @@ open class MXTipBaseDialog(context: Context, private val contentRes: Int? = null
                     dismiss()
                 }
             }, delay * 1000L)
+            delayTxv?.text = "$delay 秒后消失"
+            delayTxv?.visibility = View.VISIBLE
         } else {
+            delayTxv?.visibility = View.GONE
             mHandler.removeCallbacksAndMessages(null)
         }
     }
