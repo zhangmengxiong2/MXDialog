@@ -72,7 +72,7 @@
                 android:layout_weight="1"
                 android:orientation="vertical"
                 android:paddingHorizontal="15dp"
-                android:paddingVertical="25dp" />
+                android:paddingVertical="10dp" />
 
             <LinearLayout
                 android:id="@+id/btnLay"

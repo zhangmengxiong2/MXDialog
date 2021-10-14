@@ -19,8 +19,8 @@ class MainActivity : AppCompatActivity() {
         MXTipDialog(this).apply {
 //            setCancelable(false)
             setTitle("提示")
-            setMessage("这是一个提示！！！这是一个提示！！！这是一个提示！！！这是一个提示！！！这是一个提示！！！这是一个提示！！！这是一个提示！！！这是一个提示！！！这是一个提示！！！这是一个提示！！！这是一个提示！！！这是一个提示！！！这是一个提示！！！这是一个提示！！！这是一个提示！！！这是一个提示！！！这是一个提示！！！这是一个提示！！！这是一个提示！！！这是一个提示！！！ ")
-//            setDismissDelay(2)
+            setMessage("这是一个提示！！！这是一个提示！！！这是一个提示！！！这是一个提示！！！这是一个提示！！！这是一个提示！！！这是一个提示！！！这是一个提示！！！")
+            setDismissDelay(2)
 //            setGravity(MXTipGravity.BOTTOM)
 //            setTipType(MXTipType.SUCCESS)
 //            setOnCancelListener {
