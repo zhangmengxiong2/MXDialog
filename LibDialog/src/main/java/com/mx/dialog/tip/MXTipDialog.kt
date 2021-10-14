@@ -4,7 +4,8 @@ import android.content.Context
 import android.widget.TextView
 import com.mx.dialog.R
 
-class TipDialog(context: Context) : TipBaseDialog(context, R.layout.mx_dialog_tip_content) {
+open class MXTipDialog(context: Context) :
+    MXTipBaseDialog(context, R.layout.mx_dialog_tip_content) {
     private var msgStr: CharSequence? = null
     private var msgTxv: TextView? = null
     override fun initView() {
@@ -20,5 +21,11 @@ class TipDialog(context: Context) : TipBaseDialog(context, R.layout.mx_dialog_ti
     fun setMessage(message: CharSequence) {
         msgStr = message
         msgTxv?.text = msgStr
+    }
+
+    companion object {
+        fun warn() {
+
+        }
     }
 }

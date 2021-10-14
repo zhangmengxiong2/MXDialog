@@ -4,7 +4,8 @@
     android:id="@+id/rootLay"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/mx_dialog_color_background_alpha">
+    android:background="@color/mx_dialog_color_background_alpha"
+    android:soundEffectsEnabled="false">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardLay"
@@ -12,6 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_margin="25dp"
+        android:soundEffectsEnabled="false"
         app:cardBackgroundColor="@color/mx_dialog_color_background"
         app:cardCornerRadius="@dimen/mx_dialog_card_corner_radius"
         app:cardElevation="0dp">
@@ -42,13 +44,15 @@
                 android:paddingBottom="15dp" />
 
             <LinearLayout
+                android:id="@+id/btnLay"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/mx_color_btn_bg"
                 android:divider="@drawable/mx_dialog_divider_space"
                 android:paddingHorizontal="20dp"
                 android:paddingVertical="12dp"
-                android:showDividers="middle">
+                android:showDividers="middle"
+                android:visibility="invisible">
 
                 <TextView
                     android:id="@+id/cancelBtn"

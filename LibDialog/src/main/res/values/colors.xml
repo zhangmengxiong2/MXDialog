@@ -12,4 +12,5 @@
     <color name="mx_color_text">#333333</color>
     <color name="mx_color_text_focus">#ffffff</color>
     <color name="mx_color_btn_bg">#11aaaaaa</color>
+    <color name="mx_color_snack_bg">#333333</color>
 </resources>

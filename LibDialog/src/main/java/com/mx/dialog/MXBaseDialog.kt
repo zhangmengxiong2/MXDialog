@@ -7,7 +7,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
 
-open class BaseDialog(context: Context) : Dialog(context, R.style.MXDialog_FullScreen) {
+open class MXBaseDialog(context: Context) : Dialog(context, R.style.MXDialog_FullScreen) {
     private var onCancelListener: DialogInterface.OnCancelListener? = null
 
     private var isDialogCancelable = true
@@ -30,9 +30,9 @@ open class BaseDialog(context: Context) : Dialog(context, R.style.MXDialog_FullS
         onCancelListener = listener
     }
 
-    override fun setCancelable(flag: Boolean) {
-        isDialogCancelable = flag
-        super.setCancelable(flag)
+    override fun setCancelable(cancelable: Boolean) {
+        isDialogCancelable = cancelable
+        super.setCancelable(cancelable)
     }
 
     fun isCancelable() = isDialogCancelable

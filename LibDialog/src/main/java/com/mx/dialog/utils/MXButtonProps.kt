@@ -1,6 +1,6 @@
 package com.mx.dialog.utils
 
-data class ButtonProps(
+internal data class MXButtonProps(
     val visible: Boolean = true,
     val text: CharSequence? = null,
     val color: Int? = null,
