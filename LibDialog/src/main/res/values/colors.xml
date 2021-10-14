@@ -2,13 +2,14 @@
 <resources>
     <color name="mx_dialog_color_background_alpha">#66000000</color>
     <color name="mx_dialog_color_background">#ffffff</color>
-    <color name="mx_dialog_color_divider">#666666</color>
+    <color name="mx_dialog_color_divider">#11aaaaaa</color>
     <color name="mx_dialog_color_border">#DEDEDE</color>
     <color name="mx_color_focus">#00C157</color>
 
 
     <color name="mx_color_text_inactive">#666666</color>
     <color name="mx_color_text_active">#333333</color>
+    <color name="mx_color_text_ticket">#666666</color>
     <color name="mx_color_text">#333333</color>
     <color name="mx_color_text_focus">#ffffff</color>
     <color name="mx_color_btn_bg">#11aaaaaa</color>
