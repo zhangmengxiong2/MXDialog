@@ -27,7 +27,7 @@
             android:paddingVertical="20dp">
 
             <ProgressBar
-                android:id="@+id/tipTypeImg"
+                android:id="@+id/progressBar"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 android:indeterminateDrawable="@drawable/mx_dialog_progress_loading"

@@ -38,4 +38,9 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="mx_dialog_animation" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/mx_dialog_animation_enter</item>
+        <item name="android:windowExitAnimation">@anim/mx_dialog_animation_exit</item>
+    </style>
+
 </resources>
