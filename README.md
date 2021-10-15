@@ -20,7 +20,7 @@
 ##### 2、集成
 
 ```kotlin
-    MXTipDialog(this).apply {
+MXTipDialog(this).apply {
     setCancelable(false) // 不可返回
     setBackGroundColor(Color.parseColor("#22000000")) // 背景图
     setTitle("提示") // 标题
