@@ -3,7 +3,7 @@ package com.mx.dialog.utils
 import android.content.Context
 import kotlin.math.roundToInt
 
-object MXDialogUtils {
+internal object MXDialogUtils {
     /**
      * dp - px单位转换
      */

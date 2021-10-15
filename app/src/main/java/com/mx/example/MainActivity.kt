@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
 //            setCancelable(false)
             setTitle("提示")
             setMessage("这是一个提示！！！这是一个提示！！！这是一个提示！！！这是一个提示！！！这是一个提示！！！这是一个提示！！！这是一个提示！！！这是一个提示！！！")
-//            setDismissDelay(2)
+            setDismissDelay(10)
             setPosition(MXDialogPosition.BOTTOM.also {
                 it.marginBottom = 30
             })

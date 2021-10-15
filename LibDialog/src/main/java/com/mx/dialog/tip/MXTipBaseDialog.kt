@@ -2,8 +2,6 @@ package com.mx.dialog.tip
 
 import android.content.Context
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
@@ -11,12 +9,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.mx.dialog.R
 import com.mx.dialog.base.MXBaseCardDialog
-import com.mx.dialog.base.MXBaseDialog
 import com.mx.dialog.utils.MXButtonProps
-import com.mx.dialog.utils.MXDialogUtils
 
 open class MXTipBaseDialog(context: Context) : MXBaseCardDialog(context) {
-    private val mHandler = Handler(Looper.getMainLooper())
     private var btnLay: ViewGroup? = null
     private var tipTypeImg: ImageView? = null
     private var contentLay: FrameLayout? = null
@@ -27,10 +22,9 @@ open class MXTipBaseDialog(context: Context) : MXBaseCardDialog(context) {
 
     private var titleStr: CharSequence? = null
 
-    private var inActiveProp: MXButtonProps? = null
-    private var activeProp: MXButtonProps? = null
+    private var cancelProp: MXButtonProps? = null
+    private var actionProp: MXButtonProps? = null
 
-    private var dismissDelay: Int? = null
     private var tipType = MXDialogType.NONE
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,8 +44,6 @@ open class MXTipBaseDialog(context: Context) : MXBaseCardDialog(context) {
 
         initView()
         initData()
-
-        processDelay()
     }
 
     protected open fun generalContentView(parent: FrameLayout): View? = null
@@ -65,13 +57,18 @@ open class MXTipBaseDialog(context: Context) : MXBaseCardDialog(context) {
         okBtn = findViewById(R.id.okBtn)
     }
 
+    override fun onDismissTicket(maxSecond: Int, remindSecond: Int) {
+        delayTxv?.text = "$remindSecond 秒后消失"
+        delayTxv?.visibility = View.VISIBLE
+    }
+
     protected open fun initData() {
         if (titleTxv == null) return
         titleTxv?.text = titleStr ?: "温馨提示"
 
-        setButtonAction(cancelBtn, inActiveProp, "")
-        setButtonAction(okBtn, activeProp, "确认")
-        if (inActiveProp != null || activeProp != null) {
+        setButtonAction(cancelBtn, cancelProp, "")
+        setButtonAction(okBtn, actionProp, "确认")
+        if (cancelProp != null || actionProp != null) {
             btnLay?.visibility = View.VISIBLE
         } else {
             btnLay?.visibility = View.GONE
@@ -108,7 +105,7 @@ open class MXTipBaseDialog(context: Context) : MXBaseCardDialog(context) {
         color: Int? = null,
         onclick: (() -> Unit)? = null
     ) {
-        activeProp = MXButtonProps(visible, text ?: "确认", color, onclick)
+        actionProp = MXButtonProps(visible, text ?: "确认", color, onclick)
 
         initData()
     }
@@ -122,7 +119,7 @@ open class MXTipBaseDialog(context: Context) : MXBaseCardDialog(context) {
         color: Int? = null,
         onclick: (() -> Unit)? = null
     ) {
-        inActiveProp = MXButtonProps(visible, text ?: "取消", color) {
+        cancelProp = MXButtonProps(visible, text ?: "取消", color) {
             // 先触发onCancelListener,再触发用户设置的回调
             dispatchOnCancelListener()
             onclick?.invoke()
@@ -147,28 +144,6 @@ open class MXTipBaseDialog(context: Context) : MXBaseCardDialog(context) {
         this.tipType = type
 
         initData()
-    }
-
-    fun setDismissDelay(second: Int?) {
-        mHandler.removeCallbacksAndMessages(null)
-        dismissDelay = second
-        processDelay()
-    }
-
-    private fun processDelay() {
-        val delay = dismissDelay
-        if (delay != null) {
-            mHandler.postDelayed({
-                if (isShowing) {
-                    dismiss()
-                }
-            }, delay * 1000L)
-            delayTxv?.text = "$delay 秒后消失"
-            delayTxv?.visibility = View.VISIBLE
-        } else {
-            delayTxv?.visibility = View.GONE
-            mHandler.removeCallbacksAndMessages(null)
-        }
     }
 
     private fun setButtonAction(button: TextView?, inActiveProp: MXButtonProps?, s: String) {

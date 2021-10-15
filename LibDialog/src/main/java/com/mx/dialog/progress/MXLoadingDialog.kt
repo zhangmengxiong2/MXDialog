@@ -3,22 +3,13 @@ package com.mx.dialog.progress
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.view.ViewGroup
-import android.widget.FrameLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import com.mx.dialog.R
 import com.mx.dialog.base.MXBaseCardDialog
-import com.mx.dialog.base.MXBaseDialog
-import com.mx.dialog.tip.MXDialogPosition
-import com.mx.dialog.utils.MXDialogUtils
 
 open class MXLoadingDialog(context: Context) : MXBaseCardDialog(context) {
     private var loadingMessage: CharSequence? = null
-    private val mHandler = Handler(Looper.getMainLooper())
-    private var dismissDelayTime: Int? = null
     private var indeterminateDrawable: Drawable? = null
 
     private var progressBar: ProgressBar? = null
@@ -37,7 +28,6 @@ open class MXLoadingDialog(context: Context) : MXBaseCardDialog(context) {
     }
 
     private fun initData() {
-
         loadingTxv?.text = loadingMessage ?: "正在加载中..."
 
         kotlin.run { // Icon设置
@@ -48,26 +38,16 @@ open class MXLoadingDialog(context: Context) : MXBaseCardDialog(context) {
             drawable.setBounds(0, 0, width, width)
             progressBar?.indeterminateDrawable = drawable
         }
-
-        mHandler.removeCallbacksAndMessages(null)
-        val delay = dismissDelayTime ?: return
-        mHandler.postDelayed({
-            if (isShowing) {
-                dismiss()
-            }
-        }, delay * 1000L)
-    }
-
-    fun setDismissDelay(delay: Int) {
-        dismissDelayTime = delay
-
-        initData()
     }
 
     fun setMessage(message: CharSequence) {
         loadingMessage = message
 
         initData()
+    }
+
+    override fun onDismissTicket(maxSecond: Int, remindSecond: Int) {
+
     }
 
     fun setIndeterminateDrawable(drawable: Drawable) {
