@@ -14,8 +14,8 @@ import com.mx.dialog.utils.MXDialogUtils
 open class MXBaseCardDialog(context: Context) : MXBaseDialog(context) {
     private var backgroundColor: Int? = null
     private var position = MXDialogPosition.CENTER
-    private var rootLay: ViewGroup? = null
-    private var cardLay: ViewGroup? = null
+    private var mxRootLay: ViewGroup? = null
+    private var mxCardLay: ViewGroup? = null
 
     override fun onStart() {
         super.onStart()
@@ -23,19 +23,19 @@ open class MXBaseCardDialog(context: Context) : MXBaseDialog(context) {
     }
 
     private fun initCard() {
-        if (rootLay == null) rootLay = findViewById(R.id.rootLay)
-        if (cardLay == null) cardLay = findViewById(R.id.cardLay)
-        rootLay?.setOnClickListener {
+        if (mxRootLay == null) mxRootLay = findViewById(R.id.mxRootLay)
+        if (mxCardLay == null) mxCardLay = findViewById(R.id.mxCardLay)
+        mxRootLay?.setOnClickListener {
             onBackPressed()
         }
-        cardLay?.setOnClickListener { }
+        mxCardLay?.setOnClickListener { }
 
         kotlin.run { // 位置设置
-            val lp = (cardLay?.layoutParams as FrameLayout.LayoutParams?)
+            val lp = (mxCardLay?.layoutParams as FrameLayout.LayoutParams?)
             lp?.gravity = position.gravity
-            cardLay?.layoutParams = lp
+            mxCardLay?.layoutParams = lp
 
-            rootLay?.setPadding(
+            mxRootLay?.setPadding(
                 0,
                 MXDialogUtils.getStatusBarHeight(context) + MXDialogUtils.dp2px(
                     context,
@@ -48,16 +48,16 @@ open class MXBaseCardDialog(context: Context) : MXBaseDialog(context) {
                 )
             )
 
-            cardLay?.translationX =
+            mxCardLay?.translationX =
                 MXDialogUtils.dp2px(context, position.translationX ?: 0).toFloat()
-            cardLay?.translationY =
+            mxCardLay?.translationY =
                 MXDialogUtils.dp2px(context, position.translationY ?: 0).toFloat()
         }
 
         kotlin.run {
             val color = backgroundColor
                 ?: context.resources.getColor(R.color.mx_dialog_color_background_alpha)
-            rootLay?.setBackgroundColor(color)
+            mxRootLay?.setBackgroundColor(color)
         }
     }
 

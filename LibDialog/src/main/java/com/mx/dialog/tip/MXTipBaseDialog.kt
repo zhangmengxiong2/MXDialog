@@ -58,7 +58,7 @@ open class MXTipBaseDialog(context: Context) : MXBaseCardDialog(context) {
     }
 
     override fun onDismissTicket(maxSecond: Int, remindSecond: Int) {
-        delayTxv?.text = "$remindSecond 秒后消失"
+        delayTxv?.text = "$remindSecond s"
         delayTxv?.visibility = View.VISIBLE
     }
 
@@ -73,7 +73,7 @@ open class MXTipBaseDialog(context: Context) : MXBaseCardDialog(context) {
         } else {
             btnLay?.visibility = View.GONE
         }
-        
+
         when (tipType) {
             MXDialogType.NONE -> {
                 tipTypeImg?.visibility = View.GONE

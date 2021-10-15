@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/rootLay"
+    android:id="@+id/mxRootLay"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/mx_dialog_color_background_alpha"
@@ -8,7 +8,7 @@
 
 
     <LinearLayout
-        android:id="@+id/cardLay"
+        android:id="@+id/mxCardLay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

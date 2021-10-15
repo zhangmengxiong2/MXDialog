@@ -15,15 +15,20 @@ class MXDialogPosition {
     var translationY: Int? = null //Y轴偏移 dp
 
     companion object {
-        val TOP = MXDialogPosition().apply {
-            gravity = Gravity.TOP or Gravity.CENTER_HORIZONTAL
-        }
-        val CENTER = MXDialogPosition().apply {
-            gravity = Gravity.CENTER
-        }
-        val BOTTOM = MXDialogPosition().apply {
-            gravity = Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL
-        }
+        val TOP: MXDialogPosition
+            get() = MXDialogPosition().apply {
+                gravity = Gravity.TOP or Gravity.CENTER_HORIZONTAL
+            }
+
+        val CENTER: MXDialogPosition
+            get() = MXDialogPosition().apply {
+                gravity = Gravity.CENTER
+            }
+
+        val BOTTOM: MXDialogPosition
+            get() = MXDialogPosition().apply {
+                gravity = Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL
+            }
     }
 }
 
