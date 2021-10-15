@@ -12,6 +12,7 @@ import com.mx.dialog.utils.MXDialogUtils
  * 详情见：setPosition()
  */
 open class MXBaseCardDialog(context: Context) : MXBaseDialog(context) {
+    private var backgroundColor: Int? = null
     private var position = MXDialogPosition.CENTER
     private var rootLay: ViewGroup? = null
     private var cardLay: ViewGroup? = null
@@ -52,6 +53,18 @@ open class MXBaseCardDialog(context: Context) : MXBaseDialog(context) {
             cardLay?.translationY =
                 MXDialogUtils.dp2px(context, position.translationY ?: 0).toFloat()
         }
+
+        kotlin.run {
+            val color = backgroundColor
+                ?: context.resources.getColor(R.color.mx_dialog_color_background_alpha)
+            rootLay?.setBackgroundColor(color)
+        }
+    }
+
+    fun setBackGroundColor(color: Int) {
+        backgroundColor = color
+
+        initCard()
     }
 
     fun setPosition(position: MXDialogPosition) {

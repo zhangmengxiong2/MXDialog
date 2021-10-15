@@ -73,10 +73,7 @@ open class MXTipBaseDialog(context: Context) : MXBaseCardDialog(context) {
         } else {
             btnLay?.visibility = View.GONE
         }
-
-
-
-
+        
         when (tipType) {
             MXDialogType.NONE -> {
                 tipTypeImg?.visibility = View.GONE

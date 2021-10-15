@@ -1,9 +1,16 @@
 package com.mx.dialog.utils
 
 import android.content.Context
+import com.mx.dialog.BuildConfig
 import kotlin.math.roundToInt
 
 internal object MXDialogUtils {
+    fun log(message: Any) {
+        if (BuildConfig.DEBUG) {
+            println("MXDialog - $message")
+        }
+    }
+
     /**
      * dp - px单位转换
      */

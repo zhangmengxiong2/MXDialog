@@ -17,6 +17,7 @@ class MainActivity : AppCompatActivity() {
     fun showTip(view: View) {
         MXTipDialog(this).apply {
 //            setCancelable(false)
+//            setBackGroundColor(Color.parseColor("#22000000"))
             setTitle("提示")
             setMessage("这是一个提示！！！这是一个提示！！！这是一个提示！！！这是一个提示！！！这是一个提示！！！这是一个提示！！！这是一个提示！！！这是一个提示！！！")
             setDismissDelay(10)
@@ -59,11 +60,11 @@ class MainActivity : AppCompatActivity() {
             setCancelable(false)
             setPosition(MXDialogPosition.CENTER.also {
 //                it.translationX = 50
-                it.translationY = -100
+//                it.translationY = -100
             })
             setDismissDelay(3)
 //            setIndeterminateDrawable(resources.getDrawable(com.mx.dialog.R.drawable.mx_dialog_icon_error))
-            setMessage("我要吃饭！！！")
+            setMessage("我在加载中...")
         }.show()
     }
 
