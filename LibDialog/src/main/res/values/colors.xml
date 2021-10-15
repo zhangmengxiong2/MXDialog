@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="mx_dialog_color_background_alpha">#88000000</color>
+    <color name="mx_dialog_color_background_alpha">#aa000000</color>
     <color name="mx_dialog_color_background">#ffffff</color>
     <color name="mx_dialog_color_divider">#11aaaaaa</color>
     <color name="mx_dialog_color_border">#DEDEDE</color>
