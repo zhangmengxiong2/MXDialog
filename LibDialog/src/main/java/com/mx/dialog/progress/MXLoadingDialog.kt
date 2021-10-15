@@ -37,6 +37,8 @@ open class MXLoadingDialog(context: Context) : MXBaseDialog(context) {
     }
 
     private fun initData() {
+        if (rootLay == null) return
+
         rootLay?.setOnClickListener {
             onBackPressed()
         }
