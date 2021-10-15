@@ -20,8 +20,10 @@
             android:id="@+id/progressBar"
             android:layout_width="45dp"
             android:layout_height="45dp"
+            android:indeterminate="true"
             android:indeterminateDrawable="@drawable/mx_dialog_progress_loading"
-            android:indeterminateDuration="1000" />
+            android:indeterminateDuration="1000"
+            android:indeterminateTint="@color/mx_color_focus" />
 
         <TextView
             android:id="@+id/loadingTxv"
