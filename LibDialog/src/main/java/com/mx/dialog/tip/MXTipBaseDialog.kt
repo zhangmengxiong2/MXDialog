@@ -4,20 +4,19 @@ import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import com.mx.dialog.R
+import com.mx.dialog.base.MXBaseCardDialog
 import com.mx.dialog.base.MXBaseDialog
 import com.mx.dialog.utils.MXButtonProps
+import com.mx.dialog.utils.MXDialogUtils
 
-open class MXTipBaseDialog(context: Context) : MXBaseDialog(context) {
+open class MXTipBaseDialog(context: Context) : MXBaseCardDialog(context) {
     private val mHandler = Handler(Looper.getMainLooper())
-    private var rootLay: FrameLayout? = null
-    private var cardLay: ViewGroup? = null
     private var btnLay: ViewGroup? = null
     private var tipTypeImg: ImageView? = null
     private var contentLay: FrameLayout? = null
@@ -32,7 +31,6 @@ open class MXTipBaseDialog(context: Context) : MXBaseDialog(context) {
     private var activeProp: MXButtonProps? = null
 
     private var dismissDelay: Int? = null
-    private var gravity = MXDialogGravity.CENTER
     private var tipType = MXDialogType.NONE
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,8 +57,6 @@ open class MXTipBaseDialog(context: Context) : MXBaseDialog(context) {
     protected open fun generalContentView(parent: FrameLayout): View? = null
 
     protected open fun initView() {
-        rootLay = findViewById(R.id.rootLay)
-        cardLay = findViewById(R.id.cardLay)
         btnLay = findViewById(R.id.btnLay)
         tipTypeImg = findViewById(R.id.tipTypeImg)
         titleTxv = findViewById(R.id.titleTxv)
@@ -70,12 +66,7 @@ open class MXTipBaseDialog(context: Context) : MXBaseDialog(context) {
     }
 
     protected open fun initData() {
-        if (rootLay == null) return
-
-        rootLay?.setOnClickListener {
-            onBackPressed()
-        }
-        cardLay?.setOnClickListener { }
+        if (titleTxv == null) return
         titleTxv?.text = titleStr ?: "温馨提示"
 
         setButtonAction(cancelBtn, inActiveProp, "")
@@ -86,13 +77,8 @@ open class MXTipBaseDialog(context: Context) : MXBaseDialog(context) {
             btnLay?.visibility = View.GONE
         }
 
-        val lp = (cardLay?.layoutParams as FrameLayout.LayoutParams)
-        lp.gravity = when (gravity) {
-            MXDialogGravity.TOP -> Gravity.NO_GRAVITY
-            MXDialogGravity.CENTER -> Gravity.CENTER_VERTICAL
-            MXDialogGravity.BOTTOM -> Gravity.BOTTOM
-        }
-        cardLay?.layoutParams = lp
+
+
 
         when (tipType) {
             MXDialogType.NONE -> {
@@ -113,7 +99,10 @@ open class MXTipBaseDialog(context: Context) : MXBaseDialog(context) {
         }
     }
 
-    fun setActiveBtn(
+    /**
+     * 设置活动按钮
+     */
+    fun setActionBtn(
         visible: Boolean = true,
         text: CharSequence? = null,
         color: Int? = null,
@@ -124,7 +113,10 @@ open class MXTipBaseDialog(context: Context) : MXBaseDialog(context) {
         initData()
     }
 
-    fun setInActiveBtn(
+    /**
+     * 设置取消按钮
+     */
+    fun setCancelBtn(
         visible: Boolean = true,
         text: CharSequence? = null,
         color: Int? = null,
@@ -147,12 +139,6 @@ open class MXTipBaseDialog(context: Context) : MXBaseDialog(context) {
 
     override fun setTitle(titleId: Int) {
         titleStr = context.getString(titleId)
-
-        initData()
-    }
-
-    fun setGravity(gravity: MXDialogGravity) {
-        this.gravity = gravity
 
         initData()
     }

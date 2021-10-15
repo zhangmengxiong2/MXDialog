@@ -6,19 +6,21 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import com.mx.dialog.R
+import com.mx.dialog.base.MXBaseCardDialog
 import com.mx.dialog.base.MXBaseDialog
+import com.mx.dialog.tip.MXDialogPosition
+import com.mx.dialog.utils.MXDialogUtils
 
-open class MXLoadingDialog(context: Context) : MXBaseDialog(context) {
+open class MXLoadingDialog(context: Context) : MXBaseCardDialog(context) {
     private var loadingMessage: CharSequence? = null
     private val mHandler = Handler(Looper.getMainLooper())
     private var dismissDelayTime: Int? = null
     private var indeterminateDrawable: Drawable? = null
 
-    private var rootLay: ViewGroup? = null
-    private var cardLay: ViewGroup? = null
     private var progressBar: ProgressBar? = null
     private var loadingTxv: TextView? = null
 
@@ -30,26 +32,22 @@ open class MXLoadingDialog(context: Context) : MXBaseDialog(context) {
     }
 
     private fun initView() {
-        rootLay = findViewById(R.id.rootLay)
-        cardLay = findViewById(R.id.cardLay)
         progressBar = findViewById(R.id.progressBar)
         loadingTxv = findViewById(R.id.loadingTxv)
     }
 
     private fun initData() {
-        if (rootLay == null) return
 
-        rootLay?.setOnClickListener {
-            onBackPressed()
-        }
-        cardLay?.setOnClickListener { }
         loadingTxv?.text = loadingMessage ?: "正在加载中..."
 
-        val width = context.resources.getDimensionPixelOffset(R.dimen.mx_dialog_progress_img_size)
-        val drawable = indeterminateDrawable
-            ?: context.resources.getDrawable(R.drawable.mx_dialog_progress_loading)
-        drawable.setBounds(0, 0, width, width)
-        progressBar?.indeterminateDrawable = drawable
+        kotlin.run { // Icon设置
+            val width =
+                context.resources.getDimensionPixelOffset(R.dimen.mx_dialog_progress_img_size)
+            val drawable = indeterminateDrawable
+                ?: context.resources.getDrawable(R.drawable.mx_dialog_progress_loading)
+            drawable.setBounds(0, 0, width, width)
+            progressBar?.indeterminateDrawable = drawable
+        }
 
         mHandler.removeCallbacksAndMessages(null)
         val delay = dismissDelayTime ?: return

@@ -43,8 +43,8 @@ open class MXTipDialog(context: Context) : MXTipBaseDialog(context) {
             val dialog = MXTipDialog(context)
             dialog.setMessage(message)
             dialog.setCancelable(false)
-            dialog.setActiveBtn(text = "确认", onclick = { onOkClick?.invoke(true) })
-            dialog.setInActiveBtn(onclick = { onOkClick?.invoke(false) })
+            dialog.setActionBtn(text = "确认", onclick = { onOkClick?.invoke(true) })
+            dialog.setCancelBtn(onclick = { onOkClick?.invoke(false) })
             dialog.setTipType(MXDialogType.WARN)
             dialog.show()
         }
@@ -53,7 +53,7 @@ open class MXTipDialog(context: Context) : MXTipBaseDialog(context) {
             val dialog = MXTipDialog(context)
             dialog.setMessage(message)
             dialog.setDismissDelay(dismissDelay)
-            dialog.setActiveBtn(text = "确认")
+            dialog.setActionBtn(text = "确认")
             dialog.setTipType(MXDialogType.WARN)
             dialog.show()
         }
@@ -62,7 +62,7 @@ open class MXTipDialog(context: Context) : MXTipBaseDialog(context) {
             val dialog = MXTipDialog(context)
             dialog.setMessage(message)
             dialog.setDismissDelay(dismissDelay)
-            dialog.setActiveBtn(text = "确认")
+            dialog.setActionBtn(text = "确认")
             dialog.setTipType(MXDialogType.SUCCESS)
             dialog.show()
         }
@@ -71,7 +71,7 @@ open class MXTipDialog(context: Context) : MXTipBaseDialog(context) {
             val dialog = MXTipDialog(context)
             dialog.setMessage(message)
             dialog.setDismissDelay(dismissDelay)
-            dialog.setActiveBtn(text = "确认")
+            dialog.setActionBtn(text = "确认")
             dialog.setTipType(MXDialogType.ERROR)
             dialog.show()
         }

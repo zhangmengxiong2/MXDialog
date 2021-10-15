@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.mx.dialog.progress.MXLoadingDialog
+import com.mx.dialog.tip.MXDialogPosition
 import com.mx.dialog.tip.MXTipDialog
 import com.mx.dialog.toast.toast
 
@@ -11,7 +12,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
     }
 
     fun showTip(view: View) {
@@ -19,16 +19,18 @@ class MainActivity : AppCompatActivity() {
 //            setCancelable(false)
             setTitle("提示")
             setMessage("这是一个提示！！！这是一个提示！！！这是一个提示！！！这是一个提示！！！这是一个提示！！！这是一个提示！！！这是一个提示！！！这是一个提示！！！")
-            setDismissDelay(2)
-//            setGravity(MXTipGravity.BOTTOM)
+//            setDismissDelay(2)
+            setPosition(MXDialogPosition.BOTTOM.also {
+                it.marginBottom = 30
+            })
 //            setTipType(MXTipType.SUCCESS)
 //            setOnCancelListener {
 //                toast("onCancelListener")
 //            }
-            setInActiveBtn(text = "不要") {
+            setCancelBtn(text = "不要") {
                 toast("InActiveBtn Click")
             }
-            setActiveBtn {
+            setActionBtn {
                 toast("ActiveBtn Click")
             }
         }.show()
@@ -55,6 +57,7 @@ class MainActivity : AppCompatActivity() {
     fun showLoading(view: View) {
         MXLoadingDialog(this).apply {
             setCancelable(false)
+            setPosition(MXDialogPosition.CENTER)
             setDismissDelay(3)
 //            setIndeterminateDrawable(resources.getDrawable(com.mx.dialog.R.drawable.mx_dialog_icon_error))
             setMessage("我要吃饭！！！")

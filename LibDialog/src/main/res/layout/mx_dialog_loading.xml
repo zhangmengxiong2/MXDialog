@@ -7,9 +7,11 @@
     android:soundEffectsEnabled="false">
 
     <LinearLayout
+        android:id="@+id/cardLay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_margin="25dp"
         android:background="@drawable/mx_dialog_card_bg"
         android:gravity="center"
         android:orientation="vertical"
