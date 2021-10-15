@@ -9,7 +9,7 @@
 
 - TipDialog封装
 
-##### 1、通过 dependence 引入MXVideo
+##### 1、通过 dependence 引入MXDialog
 
 ```groovy
     dependencies {
@@ -17,7 +17,7 @@
 }
 ```
 
-##### 2、集成
+##### 2、TipDialog集成
 
 ```kotlin
 MXTipDialog(this).apply {
@@ -75,3 +75,32 @@ MXTipDialog.success(this, "成功提示")
 MXTipDialog.warn(this, "Warn提示")
 ```
 
+##### 4、Toast集成
+在Activity和Fragment中直接使用：
+```kotlin
+    toast("提示！！！！！！！")
+```
+
+在任意位置可以使用View的外部函数：
+```kotlin
+    view.toast("提示！！！！！！！")
+```
+
+##### 5、加载中Dialog集成 
+```kotlin
+    toast("提示！！！！！！！")
+```
+
+在任意位置可以使用View的外部函数：
+```kotlin
+MXLoadingDialog(this).apply {
+    setCancelable(false) //设置是否可手动返回
+    setPosition(MXDialogPosition.CENTER.also {
+        // 和TipDialog的位置使用一样
+    })
+    setDismissDelay(3) // 设置Dialog3秒后自动消失
+    setIndeterminateDrawable(drawable) // 设置Icon
+    setMessage("我在加载中...")
+}.show()
+```
+![Image text](https://gitee.com/zhangmengxiong/MXDialog/raw/master/imgs/img_loading1.png)
