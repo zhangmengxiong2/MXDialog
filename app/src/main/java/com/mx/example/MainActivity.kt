@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity() {
         MXLoadingDialog(this).apply {
             setCancelable(false)
             setDismissDelay(3)
-            setIndeterminateDrawable(resources.getDrawable(com.mx.dialog.R.drawable.mx_dialog_icon_error))
+//            setIndeterminateDrawable(resources.getDrawable(com.mx.dialog.R.drawable.mx_dialog_icon_error))
             setMessage("我要吃饭！！！")
         }.show()
     }
