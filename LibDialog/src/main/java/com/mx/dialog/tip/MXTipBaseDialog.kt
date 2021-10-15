@@ -32,8 +32,8 @@ open class MXTipBaseDialog(context: Context) : MXBaseDialog(context) {
     private var activeProp: MXButtonProps? = null
 
     private var dismissDelay: Int? = null
-    private var gravity = MXTipGravity.CENTER
-    private var tipType = MXTipType.NONE
+    private var gravity = MXDialogGravity.CENTER
+    private var tipType = MXDialogType.NONE
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -88,25 +88,25 @@ open class MXTipBaseDialog(context: Context) : MXBaseDialog(context) {
 
         val lp = (cardLay?.layoutParams as FrameLayout.LayoutParams)
         lp.gravity = when (gravity) {
-            MXTipGravity.TOP -> Gravity.NO_GRAVITY
-            MXTipGravity.CENTER -> Gravity.CENTER_VERTICAL
-            MXTipGravity.BOTTOM -> Gravity.BOTTOM
+            MXDialogGravity.TOP -> Gravity.NO_GRAVITY
+            MXDialogGravity.CENTER -> Gravity.CENTER_VERTICAL
+            MXDialogGravity.BOTTOM -> Gravity.BOTTOM
         }
         cardLay?.layoutParams = lp
 
         when (tipType) {
-            MXTipType.NONE -> {
+            MXDialogType.NONE -> {
                 tipTypeImg?.visibility = View.GONE
             }
-            MXTipType.SUCCESS -> {
+            MXDialogType.SUCCESS -> {
                 tipTypeImg?.visibility = View.VISIBLE
                 tipTypeImg?.setImageResource(R.drawable.mx_dialog_icon_success)
             }
-            MXTipType.WARN -> {
+            MXDialogType.WARN -> {
                 tipTypeImg?.visibility = View.VISIBLE
                 tipTypeImg?.setImageResource(R.drawable.mx_dialog_icon_warn)
             }
-            MXTipType.ERROR -> {
+            MXDialogType.ERROR -> {
                 tipTypeImg?.visibility = View.VISIBLE
                 tipTypeImg?.setImageResource(R.drawable.mx_dialog_icon_error)
             }
@@ -151,13 +151,13 @@ open class MXTipBaseDialog(context: Context) : MXBaseDialog(context) {
         initData()
     }
 
-    fun setGravity(gravity: MXTipGravity) {
+    fun setGravity(gravity: MXDialogGravity) {
         this.gravity = gravity
 
         initData()
     }
 
-    fun setTipType(type: MXTipType) {
+    fun setTipType(type: MXDialogType) {
         this.tipType = type
 
         initData()

@@ -1,6 +1,7 @@
 package com.mx.dialog.tip
 
 import android.content.Context
+import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
@@ -27,9 +28,13 @@ open class MXTipDialog(context: Context) : MXTipBaseDialog(context) {
     fun setMessage(message: CharSequence) {
         msgStr = message
         msgTxv?.text = msgStr
+        msgTxv?.movementMethod = LinkMovementMethod.getInstance()
     }
 
     companion object {
+        /**
+         * 需要用户确认的操作，无法返回且只能点击确认/取消
+         */
         fun confirm(
             context: Context,
             message: String,
@@ -40,7 +45,7 @@ open class MXTipDialog(context: Context) : MXTipBaseDialog(context) {
             dialog.setCancelable(false)
             dialog.setActiveBtn(text = "确认", onclick = { onOkClick?.invoke(true) })
             dialog.setInActiveBtn(onclick = { onOkClick?.invoke(false) })
-            dialog.setTipType(MXTipType.WARN)
+            dialog.setTipType(MXDialogType.WARN)
             dialog.show()
         }
 
@@ -49,7 +54,7 @@ open class MXTipDialog(context: Context) : MXTipBaseDialog(context) {
             dialog.setMessage(message)
             dialog.setDismissDelay(dismissDelay)
             dialog.setActiveBtn(text = "确认")
-            dialog.setTipType(MXTipType.WARN)
+            dialog.setTipType(MXDialogType.WARN)
             dialog.show()
         }
 
@@ -58,7 +63,7 @@ open class MXTipDialog(context: Context) : MXTipBaseDialog(context) {
             dialog.setMessage(message)
             dialog.setDismissDelay(dismissDelay)
             dialog.setActiveBtn(text = "确认")
-            dialog.setTipType(MXTipType.SUCCESS)
+            dialog.setTipType(MXDialogType.SUCCESS)
             dialog.show()
         }
 
@@ -67,7 +72,7 @@ open class MXTipDialog(context: Context) : MXTipBaseDialog(context) {
             dialog.setMessage(message)
             dialog.setDismissDelay(dismissDelay)
             dialog.setActiveBtn(text = "确认")
-            dialog.setTipType(MXTipType.ERROR)
+            dialog.setTipType(MXDialogType.ERROR)
             dialog.show()
         }
     }

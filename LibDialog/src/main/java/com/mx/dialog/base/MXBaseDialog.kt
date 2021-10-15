@@ -8,6 +8,8 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import com.mx.dialog.R
 
 open class MXBaseDialog(context: Context) : Dialog(context, R.style.MXDialog_FullScreen) {
@@ -50,6 +52,25 @@ open class MXBaseDialog(context: Context) : Dialog(context, R.style.MXDialog_Ful
         if (isDialogCancelable) {
             dismiss()
             dispatchOnCancelListener()
+        }
+    }
+
+    override fun dismiss() {
+        hideSoftInput()
+        super.dismiss()
+    }
+
+    fun hideSoftInput() {
+        try {
+            // 解决键盘弹出的问题
+            val focus = currentFocus ?: return
+            if (focus is EditText) {
+                val imm = context.getSystemService(
+                    Context.INPUT_METHOD_SERVICE
+                ) as InputMethodManager
+                imm.hideSoftInputFromWindow(focus.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
+            }
+        } catch (ignored: Exception) {
         }
     }
 
