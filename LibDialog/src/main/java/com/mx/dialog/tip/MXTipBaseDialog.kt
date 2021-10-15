@@ -10,8 +10,8 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
-import com.mx.dialog.base.MXBaseDialog
 import com.mx.dialog.R
+import com.mx.dialog.base.MXBaseDialog
 import com.mx.dialog.utils.MXButtonProps
 
 open class MXTipBaseDialog(context: Context) : MXBaseDialog(context) {

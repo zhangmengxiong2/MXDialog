@@ -8,8 +8,8 @@ import android.os.Looper
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
-import com.mx.dialog.base.MXBaseDialog
 import com.mx.dialog.R
+import com.mx.dialog.base.MXBaseDialog
 
 open class MXLoadingDialog(context: Context) : MXBaseDialog(context) {
     private var loadingMessage: CharSequence? = null
