@@ -99,10 +99,10 @@ open class MXTipBaseDialog(context: Context) : MXBaseCardDialog(context) {
     fun setActionBtn(
         visible: Boolean = true,
         text: CharSequence? = null,
-        color: Int? = null,
+        textColor: Int? = null,
         onclick: (() -> Unit)? = null
     ) {
-        actionProp = MXButtonProps(visible, text ?: "确认", color, onclick)
+        actionProp = MXButtonProps(visible, text ?: "确认", textColor, onclick)
 
         initData()
     }
@@ -113,10 +113,10 @@ open class MXTipBaseDialog(context: Context) : MXBaseCardDialog(context) {
     fun setCancelBtn(
         visible: Boolean = true,
         text: CharSequence? = null,
-        color: Int? = null,
+        textColor: Int? = null,
         onclick: (() -> Unit)? = null
     ) {
-        cancelProp = MXButtonProps(visible, text ?: "取消", color) {
+        cancelProp = MXButtonProps(visible, text ?: "取消", textColor) {
             // 先触发onCancelListener,再触发用户设置的回调
             dispatchOnCancelListener()
             onclick?.invoke()
@@ -148,7 +148,7 @@ open class MXTipBaseDialog(context: Context) : MXBaseCardDialog(context) {
         if (inActiveProp != null) {
             button?.text = inActiveProp.text
             button?.visibility = if (inActiveProp.visible) View.VISIBLE else View.GONE
-            inActiveProp.color?.let { button?.setTextColor(it) }
+            inActiveProp.textColor?.let { button?.setTextColor(it) }
             button?.setOnClickListener {
                 dismiss()
                 inActiveProp.onclick?.invoke()

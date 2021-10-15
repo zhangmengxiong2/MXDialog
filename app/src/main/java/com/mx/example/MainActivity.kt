@@ -1,5 +1,6 @@
 package com.mx.example
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -23,12 +24,15 @@ class MainActivity : AppCompatActivity() {
             setDismissDelay(10)
             setPosition(MXDialogPosition.CENTER.also {
                 it.translationY = -50
+                it.translationX = 100
+                it.marginTop = 20
+                it.marginBottom = 10
             })
 //            setTipType(MXTipType.SUCCESS)
 //            setOnCancelListener {
 //                toast("onCancelListener")
 //            }
-            setCancelBtn(text = "不要") {
+            setCancelBtn(visible = true, text = "不要", textColor = Color.GRAY) {
                 toast("InActiveBtn Click")
             }
             setActionBtn {
