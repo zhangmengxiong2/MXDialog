@@ -15,7 +15,9 @@
         android:layout_margin="25dp"
         android:soundEffectsEnabled="false"
         app:cardBackgroundColor="@color/mx_dialog_color_background"
-        app:cardCornerRadius="@dimen/mx_dialog_card_corner_radius">
+        app:cardCornerRadius="@dimen/mx_dialog_card_corner_radius"
+        app:cardElevation="2dp"
+        app:cardMaxElevation="2dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -29,6 +31,7 @@
                 android:id="@+id/progressBar"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
+                android:elevation="3dp"
                 android:indeterminateDrawable="@drawable/mx_dialog_progress_loading"
                 android:indeterminateDuration="1000" />
 
