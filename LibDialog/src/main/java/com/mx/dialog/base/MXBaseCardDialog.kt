@@ -9,6 +9,7 @@ import com.mx.dialog.utils.MXDialogUtils
 
 /**
  * 集成内容定位的功能
+ * 详情见：setPosition()
  */
 open class MXBaseCardDialog(context: Context) : MXBaseDialog(context) {
     private var position = MXDialogPosition.CENTER
@@ -45,6 +46,11 @@ open class MXBaseCardDialog(context: Context) : MXBaseDialog(context) {
                     position.marginBottom ?: 0
                 )
             )
+
+            cardLay?.translationX =
+                MXDialogUtils.dp2px(context, position.translationX ?: 0).toFloat()
+            cardLay?.translationY =
+                MXDialogUtils.dp2px(context, position.translationY ?: 0).toFloat()
         }
     }
 

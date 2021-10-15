@@ -7,8 +7,12 @@ import android.view.Gravity
  */
 class MXDialogPosition {
     var gravity = Gravity.CENTER
-    var marginTop: Int? = null // dp
-    var marginBottom: Int? = null // dp
+
+    var marginTop: Int? = null // 容器顶部边距 dp
+    var marginBottom: Int? = null // 容器底部边距 dp
+
+    var translationX: Int? = null //X轴偏移 dp
+    var translationY: Int? = null //Y轴偏移 dp
 
     companion object {
         val TOP = MXDialogPosition().apply {

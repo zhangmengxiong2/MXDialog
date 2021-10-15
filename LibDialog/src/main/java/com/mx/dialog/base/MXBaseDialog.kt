@@ -12,6 +12,13 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import com.mx.dialog.R
 
+/**
+ * 所有Dialog的基类
+ * 1：所有弹窗设置成全屏弹窗
+ * 2：处理顶部、底部状态栏透明
+ * 3：处理软键盘自动收起
+ * 4：统一OnCancel监听、统一返回按键处理
+ */
 open class MXBaseDialog(context: Context) : Dialog(context, R.style.MXDialog_FullScreen) {
     private var onCancelListener: DialogInterface.OnCancelListener? = null
 
