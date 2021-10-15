@@ -37,12 +37,12 @@ open class MXBaseCardDialog(context: Context) : MXBaseDialog(context) {
 
             mxRootLay?.setPadding(
                 0,
-                MXDialogUtils.getStatusBarHeight(context) + MXDialogUtils.dp2px(
+                MXDialogUtils.dp2px(
                     context,
                     position.marginTop ?: 0
                 ),
                 0,
-                MXDialogUtils.getNavigationBarHeight(context) + MXDialogUtils.dp2px(
+                MXDialogUtils.dp2px(
                     context,
                     position.marginBottom ?: 0
                 )

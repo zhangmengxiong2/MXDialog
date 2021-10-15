@@ -43,6 +43,10 @@ open class MXTipBaseDialog(context: Context) : MXBaseCardDialog(context) {
         }
 
         initView()
+    }
+
+    override fun onStart() {
+        super.onStart()
         initData()
     }
 
@@ -66,8 +70,8 @@ open class MXTipBaseDialog(context: Context) : MXBaseCardDialog(context) {
         if (titleTxv == null) return
         titleTxv?.text = titleStr ?: "温馨提示"
 
-        setButtonAction(cancelBtn, cancelProp, "")
-        setButtonAction(okBtn, actionProp, "确认")
+        attachButton(cancelBtn, cancelProp, "")
+        attachButton(okBtn, actionProp, "确认")
         if (cancelProp != null || actionProp != null) {
             btnLay?.visibility = View.VISIBLE
         } else {
@@ -143,7 +147,7 @@ open class MXTipBaseDialog(context: Context) : MXBaseCardDialog(context) {
         initData()
     }
 
-    private fun setButtonAction(button: TextView?, inActiveProp: MXButtonProps?, s: String) {
+    private fun attachButton(button: TextView?, inActiveProp: MXButtonProps?, s: String) {
         button?.text = s
         if (inActiveProp != null) {
             button?.text = inActiveProp.text

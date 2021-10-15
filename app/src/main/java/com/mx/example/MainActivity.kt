@@ -1,6 +1,6 @@
 package com.mx.example
 
-import android.graphics.Color
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -16,29 +16,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun showTip(view: View) {
-        MXTipDialog(this).apply {
-//            setCancelable(false)
-//            setBackGroundColor(Color.parseColor("#22000000"))
-            setTitle("提示")
-            setMessage("这是一个提示！！！这是一个提示！！！这是一个提示！！！这是一个提示！！！这是一个提示！！！这是一个提示！！！这是一个提示！！！这是一个提示！！！")
-            setDismissDelay(10)
-            setPosition(MXDialogPosition.CENTER.also {
-                it.translationY = -50
-                it.translationX = 100
-                it.marginTop = 20
-                it.marginBottom = 10
-            })
-//            setTipType(MXTipType.SUCCESS)
-//            setOnCancelListener {
-//                toast("onCancelListener")
-//            }
-            setCancelBtn(visible = true, text = "不要", textColor = Color.GRAY) {
-                toast("InActiveBtn Click")
-            }
-            setActionBtn {
-                toast("ActiveBtn Click")
-            }
-        }.show()
+        startActivity(Intent(this, TipDialogActivity::class.java))
     }
 
     fun showConfirm(view: View) {

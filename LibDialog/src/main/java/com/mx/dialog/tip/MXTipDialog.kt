@@ -25,7 +25,7 @@ open class MXTipDialog(context: Context) : MXTipBaseDialog(context) {
         msgTxv?.text = msgStr
     }
 
-    fun setMessage(message: CharSequence) {
+    fun setMessage(message: CharSequence?) {
         msgStr = message
         msgTxv?.text = msgStr
         msgTxv?.movementMethod = LinkMovementMethod.getInstance()
