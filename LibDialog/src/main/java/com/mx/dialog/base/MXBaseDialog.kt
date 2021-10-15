@@ -1,4 +1,4 @@
-package com.mx.dialog
+package com.mx.dialog.base
 
 import android.app.Dialog
 import android.content.Context
@@ -8,6 +8,7 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
+import com.mx.dialog.R
 
 open class MXBaseDialog(context: Context) : Dialog(context, R.style.MXDialog_FullScreen) {
     private var onCancelListener: DialogInterface.OnCancelListener? = null

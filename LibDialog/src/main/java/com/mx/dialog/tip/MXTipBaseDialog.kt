@@ -10,12 +10,11 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
-import com.mx.dialog.MXBaseDialog
+import com.mx.dialog.base.MXBaseDialog
 import com.mx.dialog.R
 import com.mx.dialog.utils.MXButtonProps
 
-open class MXTipBaseDialog(context: Context, private val contentRes: Int? = null) :
-    MXBaseDialog(context) {
+open class MXTipBaseDialog(context: Context) : MXBaseDialog(context) {
     private val mHandler = Handler(Looper.getMainLooper())
     private var rootLay: FrameLayout? = null
     private var cardLay: ViewGroup? = null
@@ -39,10 +38,16 @@ open class MXTipBaseDialog(context: Context, private val contentRes: Int? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.mx_dialog_tip)
-        val contentLay = findViewById<FrameLayout>(R.id.contentLay)
-        contentLay.removeAllViews()
-        contentRes?.let { layoutId ->
-            View.inflate(context, layoutId, contentLay)
+
+        contentLay = findViewById(R.id.contentLay)
+        // 从重构方法创建Content内容
+        generalContentView(contentLay!!)?.let { view ->
+            contentLay?.removeAllViews()
+            contentLay?.addView(
+                view,
+                FrameLayout.LayoutParams.MATCH_PARENT,
+                FrameLayout.LayoutParams.WRAP_CONTENT
+            )
         }
 
         initView()
@@ -51,12 +56,13 @@ open class MXTipBaseDialog(context: Context, private val contentRes: Int? = null
         processDelay()
     }
 
+    protected open fun generalContentView(parent: FrameLayout): View? = null
+
     protected open fun initView() {
         rootLay = findViewById(R.id.rootLay)
         cardLay = findViewById(R.id.cardLay)
         btnLay = findViewById(R.id.btnLay)
         tipTypeImg = findViewById(R.id.tipTypeImg)
-        contentLay = findViewById(R.id.contentLay)
         titleTxv = findViewById(R.id.titleTxv)
         delayTxv = findViewById(R.id.delayTxv)
         cancelBtn = findViewById(R.id.cancelBtn)

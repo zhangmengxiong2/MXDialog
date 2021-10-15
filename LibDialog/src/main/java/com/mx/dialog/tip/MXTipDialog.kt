@@ -1,13 +1,19 @@
 package com.mx.dialog.tip
 
 import android.content.Context
+import android.view.LayoutInflater
+import android.view.View
+import android.widget.FrameLayout
 import android.widget.TextView
 import com.mx.dialog.R
 
-open class MXTipDialog(context: Context) :
-    MXTipBaseDialog(context, R.layout.mx_dialog_tip_content) {
+open class MXTipDialog(context: Context) : MXTipBaseDialog(context) {
     private var msgStr: CharSequence? = null
     private var msgTxv: TextView? = null
+    override fun generalContentView(parent: FrameLayout): View? {
+        return LayoutInflater.from(context).inflate(R.layout.mx_dialog_tip_content, parent, false)
+    }
+
     override fun initView() {
         super.initView()
         msgTxv = findViewById(R.id.msgTxv)
