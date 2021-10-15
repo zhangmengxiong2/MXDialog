@@ -18,8 +18,8 @@
 
         <ProgressBar
             android:id="@+id/progressBar"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
+            android:layout_width="@dimen/mx_dialog_progress_img_size"
+            android:layout_height="@dimen/mx_dialog_progress_img_size"
             android:indeterminate="true"
             android:indeterminateDrawable="@drawable/mx_dialog_progress_loading"
             android:indeterminateDuration="1000"

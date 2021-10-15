@@ -10,7 +10,6 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import com.mx.dialog.R
 import com.mx.dialog.base.MXBaseDialog
-import com.mx.dialog.utils.MXDialogUtils
 
 open class MXLoadingDialog(context: Context) : MXBaseDialog(context) {
     private var loadingMessage: CharSequence? = null
@@ -43,14 +42,11 @@ open class MXLoadingDialog(context: Context) : MXBaseDialog(context) {
         }
         cardLay?.setOnClickListener { }
         loadingTxv?.text = loadingMessage ?: "正在加载中..."
+
+        val width = context.resources.getDimensionPixelOffset(R.dimen.mx_dialog_progress_img_size)
         val drawable = indeterminateDrawable
             ?: context.resources.getDrawable(R.drawable.mx_dialog_progress_loading)
-        drawable.setBounds(
-            0,
-            0,
-            MXDialogUtils.dp2px(context, 45.0),
-            MXDialogUtils.dp2px(context, 45.0)
-        )
+        drawable.setBounds(0, 0, width, width)
         progressBar?.indeterminateDrawable = drawable
 
         mHandler.removeCallbacksAndMessages(null)
