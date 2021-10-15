@@ -1,21 +1,24 @@
 # MXDialog
 
 #### 介绍
+
 通用Dialog
 最新版本：[![](https://jitpack.io/v/com.gitee.zhangmengxiong/MXDialog.svg)](https://jitpack.io/#com.gitee.zhangmengxiong/MXDialog)
 
-
 #### 功能特性
+
 - TipDialog封装
 
 ##### 1、通过 dependence 引入MXVideo
+
 ```groovy
     dependencies {
-         implementation 'com.gitee.zhangmengxiong:MXDialog:x.x.x'
-    }
+    implementation 'com.gitee.zhangmengxiong:MXDialog:x.x.x'
+}
 ```
 
 ##### 2、集成
+
 ```kotlin
     MXTipDialog(this).apply {
     setCancelable(false) // 不可返回
@@ -37,27 +40,38 @@
     }
 }.show()
 ```
+
 ![Image text](https://gitee.com/zhangmengxiong/MXDialog/raw/master/imgs/img_tip1.jpg)
 
 ##### 3、Confirm弹窗
+
 Confirm弹窗不可返回
+
 ```kotlin
 MXTipDialog.confirm(this, "请确认") { confirm ->
     toast("确认结果：$confirm")
 }
 ``` 
+
+![Image text](https://gitee.com/zhangmengxiong/MXDialog/raw/master/imgs/img_tip2.png)
 类似还有：
+
 ```kotlin
 // 错误提示
 MXTipDialog.error(this, "错误提示")
 ``` 
+
+![Image text](https://gitee.com/zhangmengxiong/MXDialog/raw/master/imgs/img_tip3.png)
+
 ```kotlin
 // 成功提示
 MXTipDialog.success(this, "成功提示")
 ``` 
 
+![Image text](https://gitee.com/zhangmengxiong/MXDialog/raw/master/imgs/img_tip4.png)
+
 ```kotlin
 // Warn提示
 MXTipDialog.warn(this, "Warn提示")
-``` 
+```
 
