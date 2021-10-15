@@ -14,6 +14,7 @@
         android:layout_gravity="center"
         android:layout_margin="25dp"
         android:soundEffectsEnabled="false"
+        android:translationY="-100dp"
         app:cardBackgroundColor="@color/mx_dialog_color_background"
         app:cardCornerRadius="@dimen/mx_dialog_card_corner_radius">
 
@@ -29,7 +30,8 @@
                 android:id="@+id/tipTypeImg"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
-                android:indeterminateDrawable="@drawable/mx_dialog_progress_loading" />
+                android:indeterminateDrawable="@drawable/mx_dialog_progress_loading"
+                android:indeterminateDuration="1000" />
 
             <TextView
                 android:id="@+id/loadingTxv"
