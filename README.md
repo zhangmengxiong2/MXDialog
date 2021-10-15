@@ -37,6 +37,7 @@
     }
 }.show()
 ```
+![Image text](https://gitee.com/zhangmengxiong/MXDialog/raw/master/imgs/img_tip1.jpg)
 
 ##### 3、Confirm弹窗
 Confirm弹窗不可返回
