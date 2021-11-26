@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.mx.dialog.progress.MXLoadingDialog
 import com.mx.dialog.tip.MXDialogPosition
 import com.mx.dialog.tip.MXTipDialog
-import com.mx.dialog.toast.toast
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,7 +20,6 @@ class MainActivity : AppCompatActivity() {
 
     fun showConfirm(view: View) {
         MXTipDialog.confirm(this, "请确认") { confirm ->
-            toast("确认结果：$confirm")
         }
     }
 
@@ -51,6 +49,5 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun showToast(view: View) {
-        toast("提示！！！！！！！")
     }
 }
