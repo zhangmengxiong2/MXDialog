@@ -5,4 +5,5 @@
     <dimen name="mx_dialog_card_corner_radius">14dp</dimen>
     <dimen name="mx_size_small">13sp</dimen>
     <dimen name="mx_dialog_progress_img_size">45dp</dimen>
+    <dimen name="mx_size_divider_space">12dp</dimen>
 </resources>

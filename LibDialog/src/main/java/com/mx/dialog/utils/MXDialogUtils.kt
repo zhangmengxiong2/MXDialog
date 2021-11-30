@@ -5,6 +5,7 @@ import com.mx.dialog.BuildConfig
 import kotlin.math.roundToInt
 
 internal object MXDialogUtils {
+
     fun log(message: Any) {
         if (BuildConfig.DEBUG) {
             println("MXDialog - $message")
@@ -14,8 +15,8 @@ internal object MXDialogUtils {
     /**
      * dp - px单位转换
      */
-    fun dp2px(context: Context, dp: Int): Int {
-        return (dp * context.resources.displayMetrics.density + 0.5f).roundToInt()
+    fun dp2px(context: Context, dp: Number): Int {
+        return (dp.toDouble() * context.resources.displayMetrics.density + 0.5f).roundToInt()
     }
 
     /**

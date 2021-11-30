@@ -11,12 +11,12 @@ import android.widget.TextView
 import com.mx.dialog.R
 import com.mx.dialog.base.MXBaseCardDialog
 import com.mx.dialog.utils.MXButtonProps
-import com.mx.dialog.views.MaxHeightFrameLayout
+import com.mx.dialog.views.MXRatioFrameLayout
 
 open class MXTipBaseDialog(context: Context) : MXBaseCardDialog(context) {
     private var btnLay: ViewGroup? = null
     private var tipTypeImg: ImageView? = null
-    private var contentLay: MaxHeightFrameLayout? = null
+    private var contentLay: MXRatioFrameLayout? = null
     private var titleTxv: TextView? = null
     private var delayTxv: TextView? = null
     private var cancelBtn: TextView? = null
@@ -155,6 +155,9 @@ open class MXTipBaseDialog(context: Context) : MXBaseCardDialog(context) {
         initData()
     }
 
+    /**
+     * 设置内容最大宽高比
+     */
     fun setMaxContentRatio(ratio: Float) {
         maxContentRatio = ratio
 

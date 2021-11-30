@@ -85,7 +85,7 @@ open class MXBaseDialog(context: Context) : Dialog(context, R.style.MXDialog_Ful
         dialogDelay.setDelayTime(delay ?: -1)
     }
 
-    fun hideSoftInput() {
+    private fun hideSoftInput() {
         try {
             // 解决键盘弹出的问题
             val focus = currentFocus ?: return

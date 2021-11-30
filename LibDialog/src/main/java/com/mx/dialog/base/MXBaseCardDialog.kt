@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import com.mx.dialog.R
 import com.mx.dialog.tip.MXDialogPosition
+import com.mx.dialog.utils.MXDrawableUtils
 import com.mx.dialog.utils.MXDialogUtils
 
 /**
@@ -12,7 +13,8 @@ import com.mx.dialog.utils.MXDialogUtils
  * 详情见：setPosition()
  */
 open class MXBaseCardDialog(context: Context) : MXBaseDialog(context) {
-    private var backgroundColor: Int? = null
+    private var dialogBackgroundColor: Int? = null
+    private var cardBackgroundRadiusDP: Float? = 15f
     private var position = MXDialogPosition.CENTER
     private var mxRootLay: ViewGroup? = null
     private var mxCardLay: ViewGroup? = null
@@ -29,6 +31,16 @@ open class MXBaseCardDialog(context: Context) : MXBaseDialog(context) {
             onBackPressed()
         }
         mxCardLay?.setOnClickListener { }
+
+        val cardRadiusDP = cardBackgroundRadiusDP
+        if (cardRadiusDP != null && cardRadiusDP > 0) {
+            mxCardLay?.background = MXDrawableUtils.buildGradientDrawable(
+                context, cardRadiusDP,
+                context.resources.getColor(R.color.mx_dialog_color_background)
+            )
+        } else {
+            mxCardLay?.setBackgroundResource(R.drawable.mx_dialog_card_bg)
+        }
 
         kotlin.run { // 位置设置
             val lp = (mxCardLay?.layoutParams as FrameLayout.LayoutParams?)
@@ -55,19 +67,31 @@ open class MXBaseCardDialog(context: Context) : MXBaseDialog(context) {
         }
 
         kotlin.run {
-            val color = backgroundColor
+            val color = dialogBackgroundColor
                 ?: context.resources.getColor(R.color.mx_dialog_color_background_alpha)
             mxRootLay?.setBackgroundColor(color)
         }
     }
 
-    fun setBackGroundColor(color: Int) {
-        backgroundColor = color
+    /**
+     * 设置弹窗背景颜色
+     */
+    fun setDialogBackGroundColor(color: Int) {
+        dialogBackgroundColor = color
 
         initCard()
     }
 
-    fun setPosition(position: MXDialogPosition) {
+    /**
+     * 设置内容ViewGroup 背景圆角半径
+     */
+    fun setCardBackgroundRadius(radiusDP: Float) {
+        cardBackgroundRadiusDP = radiusDP
+
+        initCard()
+    }
+
+    fun setCardPosition(position: MXDialogPosition) {
         this.position = position
 
         initCard()

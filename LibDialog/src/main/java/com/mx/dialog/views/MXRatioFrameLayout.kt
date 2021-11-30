@@ -8,7 +8,7 @@ import android.widget.FrameLayout
  * 可以设置最大宽高比的FrameLayout
  * 当高度超过设置的宽高比时，高度会固定成对应的高度
  */
-class MaxHeightFrameLayout @JvmOverloads constructor(
+internal class MXRatioFrameLayout @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
 ) : FrameLayout(context, attrs) {
 

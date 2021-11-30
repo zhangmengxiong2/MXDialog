@@ -21,7 +21,7 @@ class TipDialogActivity : AppCompatActivity() {
     }
 
     private fun initView() {
-        tipDialog.setPosition(position)
+        tipDialog.setCardPosition(position)
         titleEdt.addTextChangedListener {
             tipDialog.setTitle(it)
         }
@@ -40,7 +40,7 @@ class TipDialogActivity : AppCompatActivity() {
         backgroundGroup.children.forEachIndexed { index, view ->
             val colors = arrayOf("#33000000", "#66000000", "#99000000")
             view.setOnClickListener {
-                tipDialog.setBackGroundColor(Color.parseColor(colors[index]))
+                tipDialog.setDialogBackGroundColor(Color.parseColor(colors[index]))
                 tipDialog.show()
             }
         }

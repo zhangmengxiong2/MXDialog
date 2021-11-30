@@ -15,12 +15,10 @@
 
     <style name="mx_dialog_style_inactive_btn">
         <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
         <item name="android:layout_weight">1</item>
         <item name="android:background">@drawable/mx_dialog_bg_inactive_btn</item>
         <item name="android:gravity">center</item>
-        <item name="android:paddingTop">11dp</item>
-        <item name="android:paddingBottom">11dp</item>
         <item name="android:textColor">@color/mx_color_text_inactive</item>
         <item name="android:textSize">@dimen/mx_size_content</item>
         <item name="android:textStyle">bold</item>
@@ -28,12 +26,10 @@
 
     <style name="mx_dialog_style_active_btn">
         <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
         <item name="android:layout_weight">1</item>
         <item name="android:background">@drawable/mx_dialog_bg_active_btn</item>
         <item name="android:gravity">center</item>
-        <item name="android:paddingTop">11dp</item>
-        <item name="android:paddingBottom">11dp</item>
         <item name="android:textColor">@color/mx_color_text_focus</item>
         <item name="android:textSize">@dimen/mx_size_content</item>
         <item name="android:textStyle">bold</item>

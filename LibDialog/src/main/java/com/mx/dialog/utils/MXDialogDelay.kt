@@ -3,7 +3,7 @@ package com.mx.dialog.utils
 import android.os.Handler
 import android.os.Looper
 
-class MXDialogDelay {
+internal class MXDialogDelay {
     private val mHandler = Handler(Looper.getMainLooper())
     private var isActive = false
     private var ticketTime = 0

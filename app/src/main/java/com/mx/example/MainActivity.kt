@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
     fun showLoading(view: View) {
         MXLoadingDialog(this).apply {
             setCancelable(false)
-            setPosition(MXDialogPosition.CENTER.also {
+            setCardPosition(MXDialogPosition.CENTER.also {
 //                it.translationX = 50
 //                it.translationY = -100
             })
