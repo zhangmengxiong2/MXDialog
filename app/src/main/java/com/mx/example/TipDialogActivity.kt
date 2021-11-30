@@ -62,5 +62,7 @@ class TipDialogActivity : AppCompatActivity() {
         marginBottomEdt.addTextChangedListener {
             position.marginBottom = it?.toString()?.toIntOrNull() ?: 0
         }
+        tipDialog.setActionBtn(true)
+        tipDialog.setCancelBtn(true)
     }
 }

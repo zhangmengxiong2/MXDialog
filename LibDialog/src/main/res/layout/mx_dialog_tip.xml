@@ -59,7 +59,7 @@
             android:layout_height="1dp"
             android:background="@color/mx_dialog_color_divider" />
 
-        <FrameLayout
+        <com.mx.dialog.views.MaxHeightFrameLayout
             android:id="@+id/contentLay"
             android:layout_width="match_parent"
             android:layout_height="0dp"

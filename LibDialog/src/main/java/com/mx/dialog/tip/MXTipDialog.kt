@@ -5,12 +5,14 @@ import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
+import android.widget.ScrollView
 import android.widget.TextView
 import com.mx.dialog.R
 
 open class MXTipDialog(context: Context) : MXTipBaseDialog(context) {
     private var msgStr: CharSequence? = null
     private var msgTxv: TextView? = null
+    private var tipScrollView: ScrollView? = null
     override fun generalContentView(parent: FrameLayout): View? {
         return LayoutInflater.from(context).inflate(R.layout.mx_dialog_tip_content, parent, false)
     }
@@ -18,6 +20,7 @@ open class MXTipDialog(context: Context) : MXTipBaseDialog(context) {
     override fun initView() {
         super.initView()
         msgTxv = findViewById(R.id.msgTxv)
+        tipScrollView = findViewById(R.id.tipScrollView)
     }
 
     override fun initData() {
@@ -38,13 +41,13 @@ open class MXTipDialog(context: Context) : MXTipBaseDialog(context) {
         fun confirm(
             context: Context,
             message: String,
-            onOkClick: ((confirm: Boolean) -> Unit)? = null
+            onActionClick: ((confirm: Boolean) -> Unit)? = null
         ) {
             val dialog = MXTipDialog(context)
             dialog.setMessage(message)
             dialog.setCancelable(false)
-            dialog.setActionBtn(text = "确认", onclick = { onOkClick?.invoke(true) })
-            dialog.setCancelBtn(onclick = { onOkClick?.invoke(false) })
+            dialog.setActionBtn(text = "确认", onclick = { onActionClick?.invoke(true) })
+            dialog.setCancelBtn(onclick = { onActionClick?.invoke(false) })
             dialog.setTipType(MXDialogType.WARN)
             dialog.show()
         }
