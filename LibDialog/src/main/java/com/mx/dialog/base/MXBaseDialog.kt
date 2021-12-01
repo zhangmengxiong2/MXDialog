@@ -29,7 +29,6 @@ open class MXBaseDialog(context: Context) : Dialog(context, R.style.MXDialog_Ful
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window?.let { window ->
-            window.setWindowAnimations(R.style.mx_dialog_animation)
             window.decorView.setPadding(0, 0, 0, 0)
             window.attributes.let { lp ->
                 lp.y = 0
@@ -43,6 +42,7 @@ open class MXBaseDialog(context: Context) : Dialog(context, R.style.MXDialog_Ful
             } else {
                 window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
             }
+            window.setWindowAnimations(R.style.mx_dialog_animation)
         }
         dialogDelay.setTicketCall { finish, maxSecond, remindSecond ->
             if (finish) {

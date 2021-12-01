@@ -87,6 +87,9 @@ open class MXBaseCardDialog(context: Context) : MXBaseDialog(context) {
         initCard()
     }
 
+    /**
+     * 设置弹窗位置
+     */
     fun setCardPosition(position: MXDialogPosition) {
         this.position = position
 
