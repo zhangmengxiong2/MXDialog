@@ -1,6 +1,7 @@
 package com.mx.dialog.base
 
 import android.content.Context
+import android.graphics.RectF
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import com.mx.dialog.R
@@ -15,6 +16,7 @@ import com.mx.dialog.utils.MXDialogUtils
 open class MXBaseCardDialog(context: Context) : MXBaseDialog(context) {
     private var dialogBackgroundColor: Int? = null
     private var cardBackgroundRadiusDP: Float? = 15f
+    private var cardMarginDP: RectF? = RectF(25f, 25f, 25f, 25f)
     private var position = MXDialogPosition.CENTER
     private var mxRootLay: ViewGroup? = null
     private var mxCardLay: ViewGroup? = null
@@ -43,22 +45,16 @@ open class MXBaseCardDialog(context: Context) : MXBaseDialog(context) {
         }
 
         kotlin.run { // 位置设置
+            val marginLeft = MXDialogUtils.dp2px(context, cardMarginDP?.left ?: 0f)
+            val marginTop = MXDialogUtils.dp2px(context, cardMarginDP?.top ?: 0)
+            val marginRight = MXDialogUtils.dp2px(context, cardMarginDP?.right ?: 0)
+            val marginBottom = MXDialogUtils.dp2px(context, cardMarginDP?.bottom ?: 0)
+
             val lp = (mxCardLay?.layoutParams as FrameLayout.LayoutParams?)
             lp?.gravity = position.gravity
             mxCardLay?.layoutParams = lp
 
-            mxRootLay?.setPadding(
-                0,
-                MXDialogUtils.dp2px(
-                    context,
-                    position.marginTop ?: 0
-                ),
-                0,
-                MXDialogUtils.dp2px(
-                    context,
-                    position.marginBottom ?: 0
-                )
-            )
+            mxRootLay?.setPadding(marginLeft, marginTop, marginRight, marginBottom)
 
             mxCardLay?.translationX =
                 MXDialogUtils.dp2px(context, position.translationX ?: 0).toFloat()
@@ -93,6 +89,36 @@ open class MXBaseCardDialog(context: Context) : MXBaseDialog(context) {
 
     fun setCardPosition(position: MXDialogPosition) {
         this.position = position
+
+        initCard()
+    }
+
+    /**
+     * 设置内容外边距
+     * 单位：DP
+     */
+    fun setCardMargin(margin: Float) {
+        cardMarginDP = RectF(margin, margin, margin, margin)
+
+        initCard()
+    }
+
+    /**
+     * 设置内容外边距
+     * 单位：DP
+     */
+    fun setCardMargin(horizontal: Float, vertical: Float) {
+        cardMarginDP = RectF(horizontal, vertical, horizontal, vertical)
+
+        initCard()
+    }
+
+    /**
+     * 设置内容外边距
+     * 单位：DP
+     */
+    fun setCardMargin(left: Float, top: Float, right: Float, bottom: Float) {
+        cardMarginDP = RectF(left, top, right, bottom)
 
         initCard()
     }

@@ -3,6 +3,7 @@ package com.mx.example
 import android.graphics.Color
 import android.os.Bundle
 import android.view.Gravity
+import android.widget.SeekBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
@@ -29,7 +30,19 @@ class TipDialogActivity : AppCompatActivity() {
         infoEdt.addTextChangedListener {
             tipDialog.setMessage(it)
         }
+        radioSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                tipDialog.setCardBackgroundRadius(progress.toFloat())
+            }
 
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+
+            }
+        })
 
         positionGroup.children.forEachIndexed { index, view ->
             val gravitys = arrayOf(Gravity.TOP, Gravity.CENTER, Gravity.BOTTOM)
@@ -57,11 +70,8 @@ class TipDialogActivity : AppCompatActivity() {
                 tipDialog.show()
             }
         }
-        marginTopEdt.addTextChangedListener {
-            position.marginTop = it?.toString()?.toIntOrNull() ?: 0
-        }
-        marginBottomEdt.addTextChangedListener {
-            position.marginBottom = it?.toString()?.toIntOrNull() ?: 0
+        marginEdt.addTextChangedListener {
+            tipDialog.setCardMargin(it?.toString()?.toFloatOrNull() ?: 0f)
         }
         tipDialog.setActionBtn(true) {
             Toast.makeText(this, "点击确认", Toast.LENGTH_SHORT).show()

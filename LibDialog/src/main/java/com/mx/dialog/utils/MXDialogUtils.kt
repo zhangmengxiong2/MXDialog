@@ -16,6 +16,7 @@ internal object MXDialogUtils {
      * dp - px单位转换
      */
     fun dp2px(context: Context, dp: Number): Int {
+        if (dp.toDouble() <= 0.0) return 0
         return (dp.toDouble() * context.resources.displayMetrics.density + 0.5f).roundToInt()
     }
 

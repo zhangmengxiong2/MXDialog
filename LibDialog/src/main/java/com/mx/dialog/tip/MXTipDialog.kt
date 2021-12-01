@@ -37,44 +37,74 @@ open class MXTipDialog(context: Context) : MXTipBaseDialog(context) {
     companion object {
         /**
          * 需要用户确认的操作，无法返回且只能点击确认/取消
+         * @param message 消息内容
+         * @param title 标题 默认=“温馨提示”
+         * @param actionButtonText 确认按钮文字
+         * @param cancelButtonText 取消按钮文字
+         * @param onActionClick 操作点击回调
          */
         fun confirm(
             context: Context,
-            message: String,
+            message: CharSequence,
+            title: CharSequence? = null,
+            actionButtonText: CharSequence? = null,
+            cancelButtonText: CharSequence? = null,
             onActionClick: ((confirm: Boolean) -> Unit)? = null
         ) {
             val dialog = MXTipDialog(context)
+            dialog.setTitle(title)
             dialog.setMessage(message)
             dialog.setCancelable(false)
-            dialog.setActionBtn(text = "确认", onclick = { onActionClick?.invoke(true) })
-            dialog.setCancelBtn(onclick = { onActionClick?.invoke(false) })
+            dialog.setActionBtn(text = actionButtonText) { onActionClick?.invoke(true) }
+            dialog.setCancelBtn(text = cancelButtonText) { onActionClick?.invoke(false) }
             dialog.setTipType(MXDialogType.WARN)
             dialog.show()
         }
 
-        fun warn(context: Context, message: String, dismissDelay: Int? = null) {
+        fun warn(
+            context: Context,
+            message: CharSequence,
+            title: CharSequence? = null,
+            dismissDelay: Int? = null,
+            onActionClick: (() -> Unit)? = null
+        ) {
             val dialog = MXTipDialog(context)
+            dialog.setTitle(title)
             dialog.setMessage(message)
             dialog.setDismissDelay(dismissDelay)
-            dialog.setActionBtn(text = "确认")
+            dialog.setActionBtn(text = "确认") { onActionClick?.invoke() }
             dialog.setTipType(MXDialogType.WARN)
             dialog.show()
         }
 
-        fun success(context: Context, message: String, dismissDelay: Int? = null) {
+        fun success(
+            context: Context,
+            message: CharSequence,
+            title: CharSequence? = null,
+            dismissDelay: Int? = null,
+            onActionClick: (() -> Unit)? = null
+        ) {
             val dialog = MXTipDialog(context)
+            dialog.setTitle(title)
             dialog.setMessage(message)
             dialog.setDismissDelay(dismissDelay)
-            dialog.setActionBtn(text = "确认")
+            dialog.setActionBtn(text = "确认") { onActionClick?.invoke() }
             dialog.setTipType(MXDialogType.SUCCESS)
             dialog.show()
         }
 
-        fun error(context: Context, message: String, dismissDelay: Int? = null) {
+        fun error(
+            context: Context,
+            message: CharSequence,
+            title: CharSequence? = null,
+            dismissDelay: Int? = null,
+            onActionClick: (() -> Unit)? = null
+        ) {
             val dialog = MXTipDialog(context)
+            dialog.setTitle(title)
             dialog.setMessage(message)
             dialog.setDismissDelay(dismissDelay)
-            dialog.setActionBtn(text = "确认")
+            dialog.setActionBtn(text = "确认") { onActionClick?.invoke() }
             dialog.setTipType(MXDialogType.ERROR)
             dialog.show()
         }

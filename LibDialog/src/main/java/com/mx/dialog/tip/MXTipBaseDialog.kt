@@ -73,7 +73,7 @@ open class MXTipBaseDialog(context: Context) : MXBaseCardDialog(context) {
 
     protected open fun initData() {
         if (titleTxv == null) return
-        titleTxv?.text = titleStr ?: "温馨提示"
+        titleTxv?.text = titleStr ?: context.getString(R.string.mx_dialog_tip_title)
         titleTxv?.gravity = titleGravity
 
         contentLay?.setMaxHeightRatio(maxContentRatio)
