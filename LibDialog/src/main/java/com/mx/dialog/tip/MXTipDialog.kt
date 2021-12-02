@@ -65,47 +65,62 @@ open class MXTipDialog(context: Context) : MXTipBaseDialog(context) {
             context: Context,
             message: CharSequence,
             title: CharSequence? = null,
+            actionButtonText: CharSequence? = null,
             dismissDelay: Int? = null,
+            dialogType: MXDialogType? = null,
             onActionClick: (() -> Unit)? = null
         ) {
-            val dialog = MXTipDialog(context)
-            dialog.setTitle(title)
-            dialog.setMessage(message)
-            dialog.setDismissDelay(dismissDelay)
-            dialog.setActionBtn(text = "确认") { onActionClick?.invoke() }
-            dialog.setTipType(MXDialogType.WARN)
-            dialog.show()
+            show(
+                context,
+                message,
+                title,
+                dialogType = dialogType ?: MXDialogType.NONE,
+                actionButtonText = actionButtonText ?: "确认",
+                dismissDelay = dismissDelay,
+                onActionClick = { confirm ->
+                    if (confirm) onActionClick?.invoke()
+                }
+            )
         }
 
-        fun success(
+        /**
+         * @param message 内容
+         * @param title 标题
+         * @param actionButtonText 活动按钮文字
+         * @param cancelButtonText 取消按钮文字
+         * @param dismissDelay x秒后弹窗消失
+         * @param cancelable 是否响应返回按钮、是否点击空白处消失
+         * @param dialogType Icon类型
+         * @param onActionClick 按钮点击响应
+         */
+        fun show(
             context: Context,
             message: CharSequence,
             title: CharSequence? = null,
+            actionButtonText: CharSequence? = null,
+            cancelButtonText: CharSequence? = null,
             dismissDelay: Int? = null,
-            onActionClick: (() -> Unit)? = null
+            cancelable: Boolean? = null,
+            dialogType: MXDialogType? = null,
+            onActionClick: ((confirm: Boolean) -> Unit)? = null
         ) {
             val dialog = MXTipDialog(context)
             dialog.setTitle(title)
             dialog.setMessage(message)
+            dialog.setCancelable(cancelable ?: true)
             dialog.setDismissDelay(dismissDelay)
-            dialog.setActionBtn(text = "确认") { onActionClick?.invoke() }
-            dialog.setTipType(MXDialogType.SUCCESS)
-            dialog.show()
-        }
 
-        fun error(
-            context: Context,
-            message: CharSequence,
-            title: CharSequence? = null,
-            dismissDelay: Int? = null,
-            onActionClick: (() -> Unit)? = null
-        ) {
-            val dialog = MXTipDialog(context)
-            dialog.setTitle(title)
-            dialog.setMessage(message)
-            dialog.setDismissDelay(dismissDelay)
-            dialog.setActionBtn(text = "确认") { onActionClick?.invoke() }
-            dialog.setTipType(MXDialogType.ERROR)
+            dialog.setCancelBtn(
+                visible = cancelButtonText != null,
+                text = cancelButtonText
+            ) { onActionClick?.invoke(false) }
+
+            dialog.setActionBtn(
+                visible = actionButtonText != null,
+                text = actionButtonText
+            ) { onActionClick?.invoke(true) }
+            dialog.setTipType(dialogType)
+
             dialog.show()
         }
     }

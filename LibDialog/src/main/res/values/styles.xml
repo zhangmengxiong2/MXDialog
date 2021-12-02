@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <style name="MXDialog_FullScreen" parent="@android:style/Theme.Dialog">
+    <!-- 弹窗样式基类 背景透明样式 -->
+    <style name="MXDialog_Base" parent="@android:style/Theme.Dialog">
         <item name="android:windowFrame">@null</item>
         <item name="android:windowIsFloating">true</item>
         <item name="android:windowIsTranslucent">false</item>
@@ -12,6 +12,12 @@
         <item name="android:backgroundDimEnabled">false</item>
     </style>
 
+    <!--  全屏弹窗样式  -->
+    <style name="MXDialog_FullScreen" parent="MXDialog_Base">
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+
     <style name="mx_dialog_style_inactive_btn">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">match_parent</item>
@@ -19,7 +25,7 @@
         <item name="android:background">@drawable/mx_dialog_bg_inactive_btn</item>
         <item name="android:gravity">center</item>
         <item name="android:textColor">@color/mx_color_text_inactive</item>
-        <item name="android:textSize">@dimen/mx_size_content</item>
+        <item name="android:textSize">@dimen/mx_size_button</item>
         <item name="android:textStyle">bold</item>
     </style>
 
@@ -30,7 +36,7 @@
         <item name="android:background">@drawable/mx_dialog_bg_active_btn</item>
         <item name="android:gravity">center</item>
         <item name="android:textColor">@color/mx_color_text_focus</item>
-        <item name="android:textSize">@dimen/mx_size_content</item>
+        <item name="android:textSize">@dimen/mx_size_button</item>
         <item name="android:textStyle">bold</item>
     </style>
 

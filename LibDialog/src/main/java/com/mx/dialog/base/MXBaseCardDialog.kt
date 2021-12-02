@@ -8,14 +8,16 @@ import com.mx.dialog.R
 import com.mx.dialog.tip.MXDialogPosition
 import com.mx.dialog.utils.MXDrawableUtils
 import com.mx.dialog.utils.MXDialogUtils
+import kotlin.math.min
 
 /**
  * 集成内容定位的功能
  * 详情见：setPosition()
  */
-open class MXBaseCardDialog(context: Context) : MXBaseDialog(context) {
+open class MXBaseCardDialog(context: Context, fullScreen: Boolean = false) :
+    MXBaseDialog(context, fullScreen) {
     private var dialogBackgroundColor: Int? = null
-    private var cardBackgroundRadiusDP: Float? = 15f
+    private var cardBackgroundRadiusDP: Float? = 10f
     private var cardMarginDP: RectF? = RectF(25f, 25f, 25f, 25f)
     private var position = MXDialogPosition.CENTER
     private var mxRootLay: ViewGroup? = null

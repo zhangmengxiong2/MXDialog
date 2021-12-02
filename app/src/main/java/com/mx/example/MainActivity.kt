@@ -3,9 +3,11 @@ package com.mx.example
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.mx.dialog.progress.MXLoadingDialog
 import com.mx.dialog.tip.MXDialogPosition
+import com.mx.dialog.tip.MXDialogType
 import com.mx.dialog.tip.MXTipDialog
 
 class MainActivity : AppCompatActivity() {
@@ -24,15 +26,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun showError(view: View) {
-        MXTipDialog.error(this, "错误提示")
+        MXTipDialog.warn(this, "错误提示", "错误", dialogType = MXDialogType.ERROR)
     }
 
     fun showSuccess(view: View) {
-        MXTipDialog.success(this, "成功提示")
+        MXTipDialog.warn(this, "成功提示", "成功", dialogType = MXDialogType.SUCCESS)
     }
 
     fun showWarn(view: View) {
-        MXTipDialog.warn(this, "Warn提示")
+        MXTipDialog.warn(this, "Warn提示", "提示", dialogType = MXDialogType.WARN)
     }
 
     fun showLoading(view: View) {
@@ -42,6 +44,9 @@ class MainActivity : AppCompatActivity() {
 //                it.translationX = 50
 //                it.translationY = -100
             })
+            setOnDismissListener {
+                Toast.makeText(this@MainActivity, "退出回调", Toast.LENGTH_SHORT).show()
+            }
             setDismissDelay(3)
 //            setIndeterminateDrawable(resources.getDrawable(com.mx.dialog.R.drawable.mx_dialog_icon_error))
             setMessage("我在加载中...")
@@ -49,5 +54,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun showToast(view: View) {
+        Toast.makeText(this, "asd", Toast.LENGTH_SHORT).show()
     }
 }

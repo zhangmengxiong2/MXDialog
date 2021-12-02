@@ -13,7 +13,8 @@ import com.mx.dialog.base.MXBaseCardDialog
 import com.mx.dialog.utils.MXButtonProps
 import com.mx.dialog.views.MXRatioFrameLayout
 
-open class MXTipBaseDialog(context: Context) : MXBaseCardDialog(context) {
+open class MXTipBaseDialog(context: Context, fullScreen: Boolean = false) :
+    MXBaseCardDialog(context, fullScreen) {
     private var btnLay: ViewGroup? = null
     private var tipTypeImg: ImageView? = null
     private var contentLay: MXRatioFrameLayout? = null
@@ -130,7 +131,6 @@ open class MXTipBaseDialog(context: Context) : MXBaseCardDialog(context) {
     ) {
         cancelProp = MXButtonProps(visible, text ?: "取消", textColor) {
             // 先触发onCancelListener,再触发用户设置的回调
-            dispatchOnCancelListener()
             onclick?.invoke()
         }
 
@@ -164,8 +164,8 @@ open class MXTipBaseDialog(context: Context) : MXBaseCardDialog(context) {
         initData()
     }
 
-    fun setTipType(type: MXDialogType) {
-        this.tipType = type
+    fun setTipType(type: MXDialogType?) {
+        this.tipType = type ?: MXDialogType.NONE
 
         initData()
     }

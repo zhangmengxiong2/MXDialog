@@ -2,6 +2,8 @@ package com.mx.dialog.utils
 
 import android.content.Context
 import com.mx.dialog.BuildConfig
+import kotlin.math.max
+import kotlin.math.min
 import kotlin.math.roundToInt
 
 internal object MXDialogUtils {
@@ -36,4 +38,26 @@ internal object MXDialogUtils {
             context.resources.getIdentifier("navigation_bar_height", "dimen", "android")
         return if (resourceId > 0) context.resources.getDimensionPixelSize(resourceId) else 0
     }
+
+    fun getScreenWidth(appContext: Context): Int = min(
+        appContext.resources.displayMetrics.widthPixels,
+        appContext.resources.displayMetrics.heightPixels
+    )
+
+    fun getScreenHeight(appContext: Context): Int = max(
+        appContext.resources.displayMetrics.widthPixels,
+        appContext.resources.displayMetrics.heightPixels
+    )
+
+    private fun getScreenDensity(appContext: Context): Float {
+        val d = appContext.resources.displayMetrics.density
+        if (d <= 0) return 1f
+        return d
+    }
+
+    fun getScreenWidthDP(appContext: Context): Int =
+        (getScreenWidth(appContext) / getScreenDensity(appContext)).roundToInt()
+
+    fun getScreenHeightDP(appContext: Context): Int =
+        (getScreenHeight(appContext) / getScreenDensity(appContext)).roundToInt()
 }

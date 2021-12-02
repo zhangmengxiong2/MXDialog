@@ -21,9 +21,10 @@ import com.mx.dialog.utils.MXDialogDelay
  * 4：统一OnCancel监听、统一返回按键处理
  * 5：设置弹窗延时消失
  */
-open class MXBaseDialog(context: Context) : Dialog(context, R.style.MXDialog_FullScreen) {
+open class MXBaseDialog(context: Context, fullScreen: Boolean = false) :
+    Dialog(context, if (fullScreen) R.style.MXDialog_FullScreen else R.style.MXDialog_Base) {
     private val dialogDelay = MXDialogDelay()
-    private var onCancelListener: DialogInterface.OnCancelListener? = null
+    private var onDismissListener: (() -> Unit)? = null
 
     private var isDialogCancelable = true
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,8 +59,8 @@ open class MXBaseDialog(context: Context) : Dialog(context, R.style.MXDialog_Ful
         dialogDelay.start()
     }
 
-    override fun setOnCancelListener(listener: DialogInterface.OnCancelListener?) {
-        onCancelListener = listener
+    override fun setOnDismissListener(listener: DialogInterface.OnDismissListener?) {
+        onDismissListener = { listener?.onDismiss(this) }
     }
 
     override fun setCancelable(cancelable: Boolean) {
@@ -71,11 +72,11 @@ open class MXBaseDialog(context: Context) : Dialog(context, R.style.MXDialog_Ful
     override fun onBackPressed() {
         if (isDialogCancelable) {
             dismiss()
-            dispatchOnCancelListener()
         }
     }
 
     override fun dismiss() {
+        dispatchOnDismissListener()
         hideSoftInput()
         dialogDelay.stop()
         super.dismiss()
@@ -114,8 +115,9 @@ open class MXBaseDialog(context: Context) : Dialog(context, R.style.MXDialog_Ful
         dismiss()
     }
 
-    fun dispatchOnCancelListener() {
-        onCancelListener?.onCancel(this)
-        onCancelListener = null
+    private fun dispatchOnDismissListener() {
+        if (isShowing) {
+            onDismissListener?.invoke()
+        }
     }
 }
