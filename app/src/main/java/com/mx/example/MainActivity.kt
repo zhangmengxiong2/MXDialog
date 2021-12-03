@@ -22,6 +22,7 @@ class MainActivity : AppCompatActivity() {
 
     fun showConfirm(view: View) {
         MXTipDialog.confirm(this, "请确认") { confirm ->
+            Toast.makeText(this@MainActivity, "操作回调 confirm=$confirm", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -44,7 +45,7 @@ class MainActivity : AppCompatActivity() {
 //                it.translationX = 50
 //                it.translationY = -100
             })
-            setOnDismissListener {
+            setOnCancelListener {
                 Toast.makeText(this@MainActivity, "退出回调", Toast.LENGTH_SHORT).show()
             }
             setDismissDelay(3)

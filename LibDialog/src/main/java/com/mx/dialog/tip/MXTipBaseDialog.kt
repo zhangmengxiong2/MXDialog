@@ -1,6 +1,7 @@
 package com.mx.dialog.tip
 
 import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
@@ -26,6 +27,7 @@ open class MXTipBaseDialog(context: Context, fullScreen: Boolean = false) :
     private var titleStr: CharSequence? = null
     private var titleGravity: Int = Gravity.LEFT
 
+    private var onCancelCall: (() -> Unit)? = null
     private var cancelProp: MXButtonProps? = null
     private var actionProp: MXButtonProps? = null
 
@@ -122,6 +124,11 @@ open class MXTipBaseDialog(context: Context, fullScreen: Boolean = false) :
 
     /**
      * 设置取消按钮
+     * @param visible 按钮是否可见
+     * @param text 按钮文字内容
+     * @param textColor 文字颜色
+     * @param onclick 取消按钮响应方法，
+     * @see #setOnCancelListener(DialogInterface.OnCancelListener)
      */
     fun setCancelBtn(
         visible: Boolean = true,
@@ -129,12 +136,24 @@ open class MXTipBaseDialog(context: Context, fullScreen: Boolean = false) :
         textColor: Int? = null,
         onclick: (() -> Unit)? = null
     ) {
+        onCancelCall = onclick
         cancelProp = MXButtonProps(visible, text ?: "取消", textColor) {
             // 先触发onCancelListener,再触发用户设置的回调
-            onclick?.invoke()
+            onCancelCall?.invoke()
         }
 
         initData()
+    }
+
+    override fun setOnCancelListener(listener: DialogInterface.OnCancelListener?) {
+        onCancelCall = { listener?.onCancel(this) }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        if (isCancelable()) {
+            onCancelCall?.invoke()
+        }
     }
 
     override fun setTitle(title: CharSequence?) {

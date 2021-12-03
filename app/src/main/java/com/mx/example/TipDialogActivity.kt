@@ -24,6 +24,9 @@ class TipDialogActivity : AppCompatActivity() {
 
     private fun initView() {
         tipDialog.setCardPosition(position)
+        tipDialog.setOnCancelListener {
+            Toast.makeText(this, "取消操作", Toast.LENGTH_SHORT).show()
+        }
         titleEdt.addTextChangedListener {
             tipDialog.setTitle(it)
         }

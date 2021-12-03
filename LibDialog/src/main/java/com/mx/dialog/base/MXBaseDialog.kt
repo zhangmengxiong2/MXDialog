@@ -70,8 +70,8 @@ open class MXBaseDialog(context: Context, fullScreen: Boolean = false) :
 
     fun isCancelable() = isDialogCancelable
     override fun onBackPressed() {
-        if (isDialogCancelable) {
-            dismiss()
+        if (isCancelable()) {
+            super.onBackPressed()
         }
     }
 
