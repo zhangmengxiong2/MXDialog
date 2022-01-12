@@ -13,6 +13,10 @@
         <entry key="..\:/DevProjects/MXDialog/LibDialog/src/main/res/drawable/mx_dialog_icon_success.xml" value="0.5142857142857143" />
         <entry key="..\:/DevProjects/MXDialog/LibDialog/src/main/res/drawable/mx_dialog_icon_warn.xml" value="0.4553846153846154" />
         <entry key="..\:/DevProjects/MXDialog/LibDialog/src/main/res/drawable/mx_dialog_progress_loading.xml" value="0.4553846153846154" />
+        <entry key="..\:/DevProjects/MXDialog/LibDialog/src/main/res/layout/mx_content_loading.xml" value="0.2957427536231884" />
+        <entry key="..\:/DevProjects/MXDialog/LibDialog/src/main/res/layout/mx_content_tip.xml" value="0.2957427536231884" />
+        <entry key="..\:/DevProjects/MXDialog/LibDialog/src/main/res/layout/mx_content_tip_textview.xml" value="0.17806484295845998" />
+        <entry key="..\:/DevProjects/MXDialog/LibDialog/src/main/res/layout/mx_dialog_base_card.xml" value="0.2957427536231884" />
         <entry key="..\:/DevProjects/MXDialog/LibDialog/src/main/res/layout/mx_dialog_loading.xml" value="0.44635416666666666" />
         <entry key="..\:/DevProjects/MXDialog/LibDialog/src/main/res/layout/mx_dialog_tip.xml" value="0.36614583333333334" />
         <entry key="..\:/DevProjects/MXDialog/LibDialog/src/main/res/layout/mx_dialog_tip_content.xml" value="0.36614583333333334" />

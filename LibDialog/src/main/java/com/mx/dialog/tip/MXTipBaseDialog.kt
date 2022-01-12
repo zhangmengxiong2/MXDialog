@@ -14,7 +14,7 @@ import com.mx.dialog.base.MXBaseCardDialog
 import com.mx.dialog.utils.MXButtonProps
 import com.mx.dialog.views.MXRatioFrameLayout
 
-open class MXTipBaseDialog(context: Context, fullScreen: Boolean = false) :
+abstract class MXTipBaseDialog(context: Context, fullScreen: Boolean = false) :
     MXBaseCardDialog(context, fullScreen) {
     private var btnLay: ViewGroup? = null
     private var tipTypeImg: ImageView? = null
@@ -35,9 +35,12 @@ open class MXTipBaseDialog(context: Context, fullScreen: Boolean = false) :
 
     private var maxContentRatio: Float = 0f
 
+    override fun getContentLayoutId(): Int {
+        return R.layout.mx_content_tip
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.mx_dialog_tip)
 
         contentLay = findViewById(R.id.contentLay)
         // 从重构方法创建Content内容
@@ -58,7 +61,7 @@ open class MXTipBaseDialog(context: Context, fullScreen: Boolean = false) :
         initData()
     }
 
-    protected open fun generalContentView(parent: FrameLayout): View? = null
+    abstract fun generalContentView(parent: FrameLayout): View?
 
     protected open fun initView() {
         btnLay = findViewById(R.id.btnLay)

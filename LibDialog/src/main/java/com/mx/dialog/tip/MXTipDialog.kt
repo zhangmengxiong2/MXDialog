@@ -14,7 +14,7 @@ open class MXTipDialog(context: Context) : MXTipBaseDialog(context) {
     private var msgTxv: TextView? = null
     private var tipScrollView: ScrollView? = null
     override fun generalContentView(parent: FrameLayout): View? {
-        return LayoutInflater.from(context).inflate(R.layout.mx_dialog_tip_content, parent, false)
+        return LayoutInflater.from(context).inflate(R.layout.mx_content_tip_textview, parent, false)
     }
 
     override fun initView() {

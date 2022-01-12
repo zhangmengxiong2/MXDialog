@@ -15,9 +15,12 @@ open class MXLoadingDialog(context: Context) : MXBaseCardDialog(context) {
     private var progressBar: ProgressBar? = null
     private var loadingTxv: TextView? = null
 
+    override fun getContentLayoutId(): Int {
+        return R.layout.mx_content_loading
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.mx_dialog_loading)
         initView()
         initData()
     }

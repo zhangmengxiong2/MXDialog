@@ -2,44 +2,75 @@ package com.mx.dialog.base
 
 import android.content.Context
 import android.graphics.RectF
+import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import com.mx.dialog.R
 import com.mx.dialog.tip.MXDialogPosition
-import com.mx.dialog.utils.MXDrawableUtils
 import com.mx.dialog.utils.MXDialogUtils
-import kotlin.math.min
+import com.mx.dialog.utils.MXDrawableUtils
 
 /**
  * 集成内容定位的功能
  * 详情见：setPosition()
  */
-open class MXBaseCardDialog(context: Context, fullScreen: Boolean = false) :
+abstract class MXBaseCardDialog(context: Context, fullScreen: Boolean = false) :
     MXBaseDialog(context, fullScreen) {
+    private var closeOnTouchOutside: Boolean = true
     private var dialogBackgroundColor: Int? = null
-    private var cardBackgroundRadiusDP: Float? = 10f
-    private var cardMarginDP: RectF? = RectF(25f, 25f, 25f, 25f)
+    private var cardBackgroundRadiusDP = 10f
+    private var cardMarginDP = RectF(25f, 25f, 25f, 25f)
     private var position = MXDialogPosition.CENTER
     private var mxRootLay: ViewGroup? = null
     private var mxCardLay: ViewGroup? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.mx_dialog_base_card)
+        initView()
+    }
+
+    private fun initView() {
+        if (mxRootLay == null) mxRootLay = findViewById(R.id.mxRootLay)
+        if (mxCardLay == null) mxCardLay = findViewById(R.id.mxCardLay)
+
+        val content = LayoutInflater.from(context).inflate(getContentLayoutId(), mxCardLay, false)
+        mxCardLay?.removeAllViews()
+        mxCardLay?.addView(
+            content,
+            FrameLayout.LayoutParams.MATCH_PARENT,
+            FrameLayout.LayoutParams.WRAP_CONTENT
+        )
+    }
+
+
+    abstract fun getContentLayoutId(): Int
 
     override fun onStart() {
         super.onStart()
         initCard()
     }
 
+    /**
+     * 点击空白处时会不会触发消失响应
+     */
+    override fun setCanceledOnTouchOutside(cancel: Boolean) {
+        closeOnTouchOutside = cancel
+        super.setCanceledOnTouchOutside(cancel)
+    }
+
     private fun initCard() {
-        if (mxRootLay == null) mxRootLay = findViewById(R.id.mxRootLay)
-        if (mxCardLay == null) mxCardLay = findViewById(R.id.mxCardLay)
         mxRootLay?.setOnClickListener {
-            onBackPressed()
+            if (closeOnTouchOutside) {
+                onBackPressed()
+            }
         }
         mxCardLay?.setOnClickListener { }
 
-        val cardRadiusDP = cardBackgroundRadiusDP
-        if (cardRadiusDP != null && cardRadiusDP > 0) {
+        if (cardBackgroundRadiusDP > 0) {
             mxCardLay?.background = MXDrawableUtils.buildGradientDrawable(
-                context, cardRadiusDP,
+                context, cardBackgroundRadiusDP,
                 context.resources.getColor(R.color.mx_dialog_color_background)
             )
         } else {
@@ -47,10 +78,10 @@ open class MXBaseCardDialog(context: Context, fullScreen: Boolean = false) :
         }
 
         kotlin.run { // 位置设置
-            val marginLeft = MXDialogUtils.dp2px(context, cardMarginDP?.left ?: 0f)
-            val marginTop = MXDialogUtils.dp2px(context, cardMarginDP?.top ?: 0)
-            val marginRight = MXDialogUtils.dp2px(context, cardMarginDP?.right ?: 0)
-            val marginBottom = MXDialogUtils.dp2px(context, cardMarginDP?.bottom ?: 0)
+            val marginLeft = MXDialogUtils.dp2px(context, cardMarginDP.left)
+            val marginTop = MXDialogUtils.dp2px(context, cardMarginDP.top)
+            val marginRight = MXDialogUtils.dp2px(context, cardMarginDP.right)
+            val marginBottom = MXDialogUtils.dp2px(context, cardMarginDP.bottom)
 
             val lp = (mxCardLay?.layoutParams as FrameLayout.LayoutParams?)
             lp?.gravity = position.gravity
