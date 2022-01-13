@@ -5,18 +5,19 @@ import android.content.DialogInterface
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
-import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import com.mx.dialog.R
 import com.mx.dialog.base.MXBaseCardDialog
 import com.mx.dialog.utils.MXButtonProps
+import com.mx.dialog.utils.MXButtonType
 import com.mx.dialog.views.MXRatioFrameLayout
 
 abstract class MXTipBaseDialog(context: Context, fullScreen: Boolean = false) :
     MXBaseCardDialog(context, fullScreen) {
-    private var btnLay: ViewGroup? = null
+    private var btnLay: LinearLayout? = null
     private var tipTypeImg: ImageView? = null
     private var contentLay: MXRatioFrameLayout? = null
     private var titleTxv: TextView? = null
@@ -31,6 +32,8 @@ abstract class MXTipBaseDialog(context: Context, fullScreen: Boolean = false) :
     private var cancelProp: MXButtonProps? = null
     private var actionProp: MXButtonProps? = null
 
+
+    private var buttonType = MXButtonType.Normal
     private var tipType = MXDialogType.NONE
 
     private var maxContentRatio: Float = 0f
@@ -56,11 +59,6 @@ abstract class MXTipBaseDialog(context: Context, fullScreen: Boolean = false) :
         initView()
     }
 
-    override fun onStart() {
-        super.onStart()
-        initData()
-    }
-
     abstract fun generalContentView(parent: FrameLayout): View?
 
     protected open fun initView() {
@@ -77,7 +75,9 @@ abstract class MXTipBaseDialog(context: Context, fullScreen: Boolean = false) :
         delayTxv?.visibility = View.VISIBLE
     }
 
-    protected open fun initData() {
+    override fun initDialog() {
+        super.initDialog()
+
         if (titleTxv == null) return
         titleTxv?.text = titleStr ?: context.getString(R.string.mx_dialog_tip_title)
         titleTxv?.gravity = titleGravity
@@ -86,8 +86,12 @@ abstract class MXTipBaseDialog(context: Context, fullScreen: Boolean = false) :
 
         attachButton(cancelBtn, cancelProp, "")
         attachButton(okBtn, actionProp, "确认")
+
         if (cancelProp != null || actionProp != null) {
             btnLay?.visibility = View.VISIBLE
+
+            val cornerDP = getCardBackgroundRadiusDP()
+            MXButtonType.attach(buttonType, btnLay, cancelBtn, okBtn, cornerDP)
         } else {
             btnLay?.visibility = View.GONE
         }
@@ -122,7 +126,7 @@ abstract class MXTipBaseDialog(context: Context, fullScreen: Boolean = false) :
     ) {
         actionProp = MXButtonProps(visible, text ?: "确认", textColor, onclick)
 
-        initData()
+        initDialog()
     }
 
     /**
@@ -145,7 +149,7 @@ abstract class MXTipBaseDialog(context: Context, fullScreen: Boolean = false) :
             onCancelCall?.invoke()
         }
 
-        initData()
+        initDialog()
     }
 
     override fun setOnCancelListener(listener: DialogInterface.OnCancelListener?) {
@@ -162,19 +166,19 @@ abstract class MXTipBaseDialog(context: Context, fullScreen: Boolean = false) :
     override fun setTitle(title: CharSequence?) {
         titleStr = title
         titleGravity = Gravity.LEFT
-        initData()
+        initDialog()
     }
 
     override fun setTitle(titleId: Int) {
         titleStr = context.getString(titleId)
         titleGravity = Gravity.LEFT
-        initData()
+        initDialog()
     }
 
     fun setTitle(title: CharSequence?, gravity: Int = Gravity.LEFT) {
         titleStr = title
         titleGravity = gravity
-        initData()
+        initDialog()
     }
 
     /**
@@ -183,13 +187,19 @@ abstract class MXTipBaseDialog(context: Context, fullScreen: Boolean = false) :
     fun setMaxContentRatio(ratio: Float) {
         maxContentRatio = ratio
 
-        initData()
+        initDialog()
     }
 
     fun setTipType(type: MXDialogType?) {
         this.tipType = type ?: MXDialogType.NONE
 
-        initData()
+        initDialog()
+    }
+
+    fun setButtonType(type: MXButtonType) {
+        this.buttonType = type
+
+        initDialog()
     }
 
     private fun attachButton(button: TextView?, inActiveProp: MXButtonProps?, s: String) {

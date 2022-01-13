@@ -1,6 +1,7 @@
 package com.mx.dialog.tip
 
 import android.content.Context
+import android.graphics.Typeface
 import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
@@ -8,9 +9,12 @@ import android.widget.FrameLayout
 import android.widget.ScrollView
 import android.widget.TextView
 import com.mx.dialog.R
+import com.mx.dialog.utils.MXButtonType
 
 open class MXTipDialog(context: Context) : MXTipBaseDialog(context) {
+    private var msgTypeface: Typeface? = null
     private var msgStr: CharSequence? = null
+    private var msgColor: Int? = null
     private var msgTxv: TextView? = null
     private var tipScrollView: ScrollView? = null
     override fun generalContentView(parent: FrameLayout): View? {
@@ -23,14 +27,27 @@ open class MXTipDialog(context: Context) : MXTipBaseDialog(context) {
         tipScrollView = findViewById(R.id.tipScrollView)
     }
 
-    override fun initData() {
-        super.initData()
+    override fun initDialog() {
+        super.initDialog()
+
         msgTxv?.text = msgStr
+        msgTxv?.setTextColor(msgColor ?: context.resources.getColor(R.color.mx_color_text))
+        msgTxv?.typeface = msgTypeface ?: Typeface.DEFAULT
     }
 
-    fun setMessage(message: CharSequence?) {
+    fun setMessage(
+        message: CharSequence?,
+        textColor: Int? = null,
+        typeface: Typeface? = null
+    ) {
         msgStr = message
+        msgColor = textColor
+        msgTypeface = typeface
+
         msgTxv?.text = msgStr
+        msgTxv?.setTextColor(textColor ?: context.resources.getColor(R.color.mx_color_text))
+        msgTxv?.typeface = typeface ?: Typeface.DEFAULT
+
         msgTxv?.movementMethod = LinkMovementMethod.getInstance()
     }
 

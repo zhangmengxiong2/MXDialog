@@ -49,7 +49,7 @@ abstract class MXBaseCardDialog(context: Context, fullScreen: Boolean = false) :
 
     override fun onStart() {
         super.onStart()
-        initCard()
+        initDialog()
     }
 
     /**
@@ -60,7 +60,7 @@ abstract class MXBaseCardDialog(context: Context, fullScreen: Boolean = false) :
         super.setCanceledOnTouchOutside(cancel)
     }
 
-    private fun initCard() {
+    protected open fun initDialog() {
         mxRootLay?.setOnClickListener {
             if (closeOnTouchOutside) {
                 onBackPressed()
@@ -70,8 +70,8 @@ abstract class MXBaseCardDialog(context: Context, fullScreen: Boolean = false) :
 
         if (cardBackgroundRadiusDP > 0) {
             mxCardLay?.background = MXDrawableUtils.buildGradientDrawable(
-                context, cardBackgroundRadiusDP,
-                context.resources.getColor(R.color.mx_dialog_color_background)
+                context, context.resources.getColor(R.color.mx_dialog_color_background),
+                cardBackgroundRadiusDP
             )
         } else {
             mxCardLay?.setBackgroundResource(R.drawable.mx_dialog_card_bg)
@@ -108,7 +108,7 @@ abstract class MXBaseCardDialog(context: Context, fullScreen: Boolean = false) :
     fun setDialogBackGroundColor(color: Int) {
         dialogBackgroundColor = color
 
-        initCard()
+        initDialog()
     }
 
     /**
@@ -117,8 +117,10 @@ abstract class MXBaseCardDialog(context: Context, fullScreen: Boolean = false) :
     fun setCardBackgroundRadius(radiusDP: Float) {
         cardBackgroundRadiusDP = radiusDP
 
-        initCard()
+        initDialog()
     }
+
+    fun getCardBackgroundRadiusDP() = cardBackgroundRadiusDP
 
     /**
      * 设置弹窗位置
@@ -126,7 +128,7 @@ abstract class MXBaseCardDialog(context: Context, fullScreen: Boolean = false) :
     fun setCardPosition(position: MXDialogPosition) {
         this.position = position
 
-        initCard()
+        initDialog()
     }
 
     /**
@@ -136,7 +138,7 @@ abstract class MXBaseCardDialog(context: Context, fullScreen: Boolean = false) :
     fun setCardMargin(margin: Float) {
         cardMarginDP = RectF(margin, margin, margin, margin)
 
-        initCard()
+        initDialog()
     }
 
     /**
@@ -146,7 +148,7 @@ abstract class MXBaseCardDialog(context: Context, fullScreen: Boolean = false) :
     fun setCardMargin(horizontal: Float, vertical: Float) {
         cardMarginDP = RectF(horizontal, vertical, horizontal, vertical)
 
-        initCard()
+        initDialog()
     }
 
     /**
@@ -156,6 +158,6 @@ abstract class MXBaseCardDialog(context: Context, fullScreen: Boolean = false) :
     fun setCardMargin(left: Float, top: Float, right: Float, bottom: Float) {
         cardMarginDP = RectF(left, top, right, bottom)
 
-        initCard()
+        initDialog()
     }
 }

@@ -65,7 +65,6 @@
         android:id="@+id/btnLay"
         android:layout_width="match_parent"
         android:layout_height="65dp"
-        android:background="@drawable/mx_dialog_btn_bg"
         android:gravity="center"
         android:padding="@dimen/mx_size_divider_space">
 
