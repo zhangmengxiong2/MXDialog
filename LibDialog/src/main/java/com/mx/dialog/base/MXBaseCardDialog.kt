@@ -18,8 +18,8 @@ import com.mx.dialog.utils.MXDrawableUtils
 abstract class MXBaseCardDialog(context: Context, fullScreen: Boolean = false) :
     MXBaseDialog(context, fullScreen) {
     private var closeOnTouchOutside: Boolean = true
-    private var includeStatusBarHeight: Boolean = true
-    private var includeNavigationBarHeight: Boolean = true
+    private var includeStatusBarHeight: Boolean = false
+    private var includeNavigationBarHeight: Boolean = false
 
     private var dialogBackgroundColor: Int? = null
     private var cardBackgroundRadiusDP = 10f
@@ -149,8 +149,8 @@ abstract class MXBaseCardDialog(context: Context, fullScreen: Boolean = false) :
      */
     fun setCardMargin(
         margin: Float,
-        includeStatusBarHeight: Boolean = true,
-        includeNavigationBarHeight: Boolean = true
+        includeStatusBarHeight: Boolean = false,
+        includeNavigationBarHeight: Boolean = false
     ) {
         cardMarginDP = RectF(margin, margin, margin, margin)
         this.includeStatusBarHeight = includeStatusBarHeight
@@ -169,8 +169,8 @@ abstract class MXBaseCardDialog(context: Context, fullScreen: Boolean = false) :
      */
     fun setCardMargin(
         horizontal: Float, vertical: Float,
-        includeStatusBarHeight: Boolean = true,
-        includeNavigationBarHeight: Boolean = true
+        includeStatusBarHeight: Boolean = false,
+        includeNavigationBarHeight: Boolean = false
     ) {
         cardMarginDP = RectF(horizontal, vertical, horizontal, vertical)
         this.includeStatusBarHeight = includeStatusBarHeight

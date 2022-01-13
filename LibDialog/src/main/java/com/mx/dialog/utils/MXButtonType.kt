@@ -28,8 +28,7 @@ enum class MXButtonType {
             val context = content?.context ?: return
             when (type) {
                 Rounded -> {
-                    val padding =
-                        context.resources.getDimensionPixelOffset(R.dimen.mx_size_divider_space)
+                    val padding = context.resources.getDimensionPixelOffset(R.dimen.mx_size_divider_space)
                     content.setPadding(padding, padding, padding, padding)
                     cancelBtn?.setBackgroundResource(R.drawable.mx_dialog_bg_inactive_round_btn)
                     actionBtn?.setBackgroundResource(R.drawable.mx_dialog_bg_active_round_btn)

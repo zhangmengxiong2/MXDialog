@@ -9,7 +9,6 @@ import android.widget.FrameLayout
 import android.widget.ScrollView
 import android.widget.TextView
 import com.mx.dialog.R
-import com.mx.dialog.utils.MXButtonType
 
 open class MXTipDialog(context: Context) : MXTipBaseDialog(context) {
     private var msgTypeface: Typeface? = null

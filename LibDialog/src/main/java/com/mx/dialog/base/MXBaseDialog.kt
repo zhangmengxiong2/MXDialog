@@ -3,8 +3,6 @@ package com.mx.dialog.base
 import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
-import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
@@ -36,12 +34,7 @@ open class MXBaseDialog(context: Context, private val fullScreen: Boolean = fals
                 lp.height = WindowManager.LayoutParams.MATCH_PARENT
                 window.attributes = lp
             }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-                window.statusBarColor = Color.TRANSPARENT
-            } else {
-                window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-            }
+
             window.setWindowAnimations(R.style.mx_dialog_animation)
         }
         dialogDelay.setTicketCall { finish, maxSecond, remindSecond ->

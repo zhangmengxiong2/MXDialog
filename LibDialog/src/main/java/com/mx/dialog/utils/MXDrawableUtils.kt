@@ -2,7 +2,6 @@ package com.mx.dialog.utils
 
 import android.content.Context
 import android.graphics.drawable.GradientDrawable
-import android.os.Build
 
 internal object MXDrawableUtils {
     /**

@@ -119,12 +119,12 @@ abstract class MXTipBaseDialog(context: Context, fullScreen: Boolean = false) :
      * 设置活动按钮
      */
     fun setActionBtn(
-        visible: Boolean = true,
         text: CharSequence? = null,
+        visible: Boolean = true,
         textColor: Int? = null,
         onclick: (() -> Unit)? = null
     ) {
-        actionProp = MXButtonProps(visible, text ?: "确认", textColor, onclick)
+        actionProp = MXButtonProps(text ?: "确认", visible, textColor, onclick)
 
         initDialog()
     }
@@ -138,13 +138,13 @@ abstract class MXTipBaseDialog(context: Context, fullScreen: Boolean = false) :
      * @see #setOnCancelListener(DialogInterface.OnCancelListener)
      */
     fun setCancelBtn(
-        visible: Boolean = true,
         text: CharSequence? = null,
+        visible: Boolean = true,
         textColor: Int? = null,
         onclick: (() -> Unit)? = null
     ) {
         onCancelCall = onclick
-        cancelProp = MXButtonProps(visible, text ?: "取消", textColor) {
+        cancelProp = MXButtonProps(text ?: "取消", visible, textColor) {
             // 先触发onCancelListener,再触发用户设置的回调
             onCancelCall?.invoke()
         }
