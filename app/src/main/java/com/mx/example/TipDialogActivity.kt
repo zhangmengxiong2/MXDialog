@@ -33,6 +33,11 @@ class TipDialogActivity : AppCompatActivity() {
         infoEdt.addTextChangedListener {
             tipDialog.setMessage(it)
         }
+        widthRatioEdt.addTextChangedListener {
+            tipDialog.setMaxContentRatio(it?.toString()?.toFloatOrNull() ?: 0f)
+        }
+        tipDialog.setMaxContentRatio(0.5f)
+
         radioSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 tipDialog.setCardBackgroundRadius(progress.toFloat())
