@@ -20,7 +20,7 @@ import com.mx.dialog.utils.MXDialogDelay
  * 4：统一OnCancel监听、统一返回按键处理
  * 5：设置弹窗延时消失
  */
-open class MXBaseDialog(context: Context, fullScreen: Boolean = false) :
+open class MXBaseDialog(context: Context, private val fullScreen: Boolean = false) :
     Dialog(context, if (fullScreen) R.style.MXDialog_FullScreen else R.style.MXDialog_Base) {
     private val dialogDelay = MXDialogDelay()
     private var onDismissListener: (() -> Unit)? = null
@@ -52,6 +52,8 @@ open class MXBaseDialog(context: Context, fullScreen: Boolean = false) :
             }
         }
     }
+
+    fun isFullScreen() = fullScreen
 
     override fun onStart() {
         super.onStart()

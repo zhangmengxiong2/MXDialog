@@ -18,6 +18,9 @@ import com.mx.dialog.utils.MXDrawableUtils
 abstract class MXBaseCardDialog(context: Context, fullScreen: Boolean = false) :
     MXBaseDialog(context, fullScreen) {
     private var closeOnTouchOutside: Boolean = true
+    private var includeStatusBarHeight: Boolean = true
+    private var includeNavigationBarHeight: Boolean = true
+
     private var dialogBackgroundColor: Int? = null
     private var cardBackgroundRadiusDP = 10f
     private var cardMarginDP = RectF(25f, 25f, 25f, 25f)
@@ -79,9 +82,15 @@ abstract class MXBaseCardDialog(context: Context, fullScreen: Boolean = false) :
 
         kotlin.run { // 位置设置
             val marginLeft = MXDialogUtils.dp2px(context, cardMarginDP.left)
-            val marginTop = MXDialogUtils.dp2px(context, cardMarginDP.top)
+            val marginTop = MXDialogUtils.dp2px(
+                context,
+                cardMarginDP.top
+            ) + if (includeStatusBarHeight) MXDialogUtils.getStatusBarHeight(context) else 0
             val marginRight = MXDialogUtils.dp2px(context, cardMarginDP.right)
-            val marginBottom = MXDialogUtils.dp2px(context, cardMarginDP.bottom)
+            val marginBottom = MXDialogUtils.dp2px(
+                context,
+                cardMarginDP.bottom
+            ) + if (includeNavigationBarHeight) MXDialogUtils.getNavigationBarHeight(context) else 0
 
             val lp = (mxCardLay?.layoutParams as FrameLayout.LayoutParams?)
             lp?.gravity = position.gravity
@@ -134,9 +143,18 @@ abstract class MXBaseCardDialog(context: Context, fullScreen: Boolean = false) :
     /**
      * 设置内容外边距
      * 单位：DP
+     * @param margin 左/右/上/下 边框宽度
+     * @param includeStatusBarHeight 上边框宽度是否加上状态栏高度
+     * @param includeNavigationBarHeight 下边框宽度是否加上导航栏高度
      */
-    fun setCardMargin(margin: Float) {
+    fun setCardMargin(
+        margin: Float,
+        includeStatusBarHeight: Boolean = true,
+        includeNavigationBarHeight: Boolean = true
+    ) {
         cardMarginDP = RectF(margin, margin, margin, margin)
+        this.includeStatusBarHeight = includeStatusBarHeight
+        this.includeNavigationBarHeight = includeNavigationBarHeight
 
         initDialog()
     }
@@ -144,9 +162,19 @@ abstract class MXBaseCardDialog(context: Context, fullScreen: Boolean = false) :
     /**
      * 设置内容外边距
      * 单位：DP
+     * @param horizontal 左/右 边框宽度
+     * @param vertical 上/下 边框宽度
+     * @param includeStatusBarHeight 上边框宽度是否加上状态栏高度
+     * @param includeNavigationBarHeight 下边框宽度是否加上导航栏高度
      */
-    fun setCardMargin(horizontal: Float, vertical: Float) {
+    fun setCardMargin(
+        horizontal: Float, vertical: Float,
+        includeStatusBarHeight: Boolean = true,
+        includeNavigationBarHeight: Boolean = true
+    ) {
         cardMarginDP = RectF(horizontal, vertical, horizontal, vertical)
+        this.includeStatusBarHeight = includeStatusBarHeight
+        this.includeNavigationBarHeight = includeNavigationBarHeight
 
         initDialog()
     }
@@ -154,9 +182,21 @@ abstract class MXBaseCardDialog(context: Context, fullScreen: Boolean = false) :
     /**
      * 设置内容外边距
      * 单位：DP
+     * @param left 左 边框宽度
+     * @param top 上 边框宽度
+     * @param right 右 边框宽度
+     * @param bottom 下 边框宽度
+     * @param includeStatusBarHeight 上边框宽度是否加上状态栏高度
+     * @param includeNavigationBarHeight 下边框宽度是否加上导航栏高度
      */
-    fun setCardMargin(left: Float, top: Float, right: Float, bottom: Float) {
+    fun setCardMargin(
+        left: Float, top: Float, right: Float, bottom: Float,
+        includeStatusBarHeight: Boolean = true,
+        includeNavigationBarHeight: Boolean = true
+    ) {
         cardMarginDP = RectF(left, top, right, bottom)
+        this.includeStatusBarHeight = includeStatusBarHeight
+        this.includeNavigationBarHeight = includeNavigationBarHeight
 
         initDialog()
     }
