@@ -89,6 +89,11 @@ open class MXListDialog(context: Context, fullScreen: Boolean = false) :
         }
         mxCardLay?.setOnClickListener { }
         cancelBtn?.setOnClickListener { onBackPressed() }
+        if (isCancelable()) {
+            cancelBtn?.visibility = View.VISIBLE
+        } else {
+            cancelBtn?.visibility = View.GONE
+        }
 
         if (contentCornerRadiusDP > 0) {
             mxCardLay?.background = MXDrawableUtils.buildGradientDrawable(
@@ -143,6 +148,12 @@ open class MXListDialog(context: Context, fullScreen: Boolean = false) :
 
     override fun setTitle(titleId: Int) {
         titleStr = context.resources.getString(titleId)
+
+        initDialog()
+    }
+
+    override fun setCancelable(cancelable: Boolean) {
+        super.setCancelable(cancelable)
 
         initDialog()
     }

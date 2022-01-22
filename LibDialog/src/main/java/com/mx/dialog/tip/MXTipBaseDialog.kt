@@ -11,7 +11,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.mx.dialog.R
 import com.mx.dialog.base.MXBaseCardDialog
-import com.mx.dialog.utils.MXButtonProps
+import com.mx.dialog.utils.MXTextProp
 import com.mx.dialog.utils.MXButtonType
 import com.mx.dialog.views.MXRatioFrameLayout
 
@@ -29,8 +29,8 @@ abstract class MXTipBaseDialog(context: Context, fullScreen: Boolean = false) :
     private var titleGravity: Int = Gravity.LEFT
 
     private var onCancelCall: (() -> Unit)? = null
-    private var cancelProp: MXButtonProps? = null
-    private var actionProp: MXButtonProps? = null
+    private var cancelProp: MXTextProp? = null
+    private var actionProp: MXTextProp? = null
 
 
     private var buttonType = MXButtonType.Normal
@@ -124,7 +124,7 @@ abstract class MXTipBaseDialog(context: Context, fullScreen: Boolean = false) :
         textColor: Int? = null,
         onclick: (() -> Unit)? = null
     ) {
-        actionProp = MXButtonProps(text ?: "确认", visible, textColor, onclick)
+        actionProp = MXTextProp(text ?: "确认", visible, textColor, onclick)
 
         initDialog()
     }
@@ -144,7 +144,7 @@ abstract class MXTipBaseDialog(context: Context, fullScreen: Boolean = false) :
         onclick: (() -> Unit)? = null
     ) {
         onCancelCall = onclick
-        cancelProp = MXButtonProps(text ?: "取消", visible, textColor) {
+        cancelProp = MXTextProp(text ?: "取消", visible, textColor) {
             // 先触发onCancelListener,再触发用户设置的回调
             onCancelCall?.invoke()
         }
@@ -202,15 +202,15 @@ abstract class MXTipBaseDialog(context: Context, fullScreen: Boolean = false) :
         initDialog()
     }
 
-    private fun attachButton(button: TextView?, inActiveProp: MXButtonProps?, s: String) {
+    private fun attachButton(button: TextView?, prop: MXTextProp?, s: String) {
         button?.text = s
-        if (inActiveProp != null) {
-            button?.text = inActiveProp.text
-            button?.visibility = if (inActiveProp.visible) View.VISIBLE else View.GONE
-            inActiveProp.textColor?.let { button?.setTextColor(it) }
+        if (prop != null) {
+            button?.text = prop.text
+            button?.visibility = if (prop.visible) View.VISIBLE else View.GONE
+            prop.textColor?.let { button?.setTextColor(it) }
             button?.setOnClickListener {
                 dismiss()
-                inActiveProp.onclick?.invoke()
+                prop.onclick?.invoke()
             }
         } else {
             button?.visibility = View.GONE
