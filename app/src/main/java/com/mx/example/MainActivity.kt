@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.mx.dialog.progress.MXLoadingDialog
+import com.mx.dialog.list.MXListDialog
 import com.mx.dialog.tip.MXDialogPosition
 import com.mx.dialog.tip.MXDialogType
 import com.mx.dialog.tip.MXTipDialog
@@ -56,5 +57,17 @@ class MainActivity : AppCompatActivity() {
 
     fun showToast(view: View) {
         Toast.makeText(this, "asd", Toast.LENGTH_SHORT).show()
+    }
+
+    fun showSelect(view: View) {
+        MXListDialog(this).apply {
+//            setTitle("请选择")
+//            setContentMaxHeightRatio(0.8f)
+//            setContentCornerRadius(20f)
+            val list = ('A'..'C').toMutableList().map { it.toString() }
+            setItems(list) { index ->
+                MXTipDialog.confirm(this@MainActivity, "点击了：$index")
+            }
+        }.show()
     }
 }
