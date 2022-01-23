@@ -1,7 +1,9 @@
 package com.mx.example
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
+import android.view.Gravity
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -64,8 +66,14 @@ class MainActivity : AppCompatActivity() {
 //            setTitle("请选择")
 //            setContentMaxHeightRatio(0.8f)
 //            setContentCornerRadius(20f)
-            val list = ('A'..'C').toMutableList().map { it.toString() }
-            setItems(list) { index ->
+            val list = ('A'..'Z').toMutableList().map { it.toString() }
+            setItems(
+                list,
+                textColor = Color.RED,
+                textSizeSP = 12f,
+                itemHeightDP = 52f,
+                textGravity = Gravity.RIGHT or Gravity.CENTER_VERTICAL
+            ) { index ->
                 MXTipDialog.confirm(this@MainActivity, "点击了：$index")
             }
         }.show()

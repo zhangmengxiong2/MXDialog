@@ -11,6 +11,7 @@ import androidx.core.widget.addTextChangedListener
 import com.mx.dialog.tip.MXDialogPosition
 import com.mx.dialog.tip.MXDialogType
 import com.mx.dialog.tip.MXTipDialog
+import com.mx.dialog.utils.MXButtonType
 import kotlinx.android.synthetic.main.activity_tip_dialog.*
 
 class TipDialogActivity : AppCompatActivity() {
@@ -24,6 +25,7 @@ class TipDialogActivity : AppCompatActivity() {
 
     private fun initView() {
         tipDialog.setCardPosition(position)
+        tipDialog.setButtonType(MXButtonType.Rounded)
         tipDialog.setOnCancelListener {
             Toast.makeText(this, "取消操作", Toast.LENGTH_SHORT).show()
         }

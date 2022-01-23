@@ -9,12 +9,12 @@
 
     <ProgressBar
         android:id="@+id/progressBar"
-        android:layout_width="@dimen/mx_dialog_progress_img_size"
-        android:layout_height="@dimen/mx_dialog_progress_img_size"
+        android:layout_width="@dimen/mx_dialog_size_progress_img"
+        android:layout_height="@dimen/mx_dialog_size_progress_img"
         android:indeterminate="true"
         android:indeterminateDrawable="@drawable/mx_dialog_progress_loading"
         android:indeterminateDuration="1000"
-        android:indeterminateTint="@color/mx_color_focus" />
+        android:indeterminateTint="@color/mx_dialog_color_focus" />
 
     <TextView
         android:id="@+id/loadingTxv"
@@ -25,6 +25,6 @@
         android:minEms="5"
         android:singleLine="true"
         android:text="正在加载中..."
-        android:textColor="@color/mx_color_text"
-        android:textSize="@dimen/mx_size_content" />
+        android:textColor="@color/mx_dialog_color_text"
+        android:textSize="@dimen/mx_dialog_text_size_content" />
 </LinearLayout>

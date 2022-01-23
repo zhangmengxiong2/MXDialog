@@ -84,8 +84,8 @@ abstract class MXTipBaseDialog(context: Context, fullScreen: Boolean = false) :
 
         contentLay?.setMaxHeightRatio(maxContentRatio)
 
-        attachButton(cancelBtn, cancelProp, "")
-        attachButton(okBtn, actionProp, "确认")
+        attachButton(cancelBtn, cancelProp, "", R.color.mx_dialog_color_text_inactive)
+        attachButton(okBtn, actionProp, "确认", R.color.mx_dialog_color_text_focus)
 
         if (cancelProp != null || actionProp != null) {
             btnLay?.visibility = View.VISIBLE
@@ -122,9 +122,10 @@ abstract class MXTipBaseDialog(context: Context, fullScreen: Boolean = false) :
         text: CharSequence? = null,
         visible: Boolean = true,
         textColor: Int? = null,
+        textSizeSP: Float? = null,
         onclick: (() -> Unit)? = null
     ) {
-        actionProp = MXTextProp(text ?: "确认", visible, textColor, onclick)
+        actionProp = MXTextProp(text ?: "确认", visible, textColor, textSizeSP, onclick = onclick)
 
         initDialog()
     }
@@ -141,10 +142,11 @@ abstract class MXTipBaseDialog(context: Context, fullScreen: Boolean = false) :
         text: CharSequence? = null,
         visible: Boolean = true,
         textColor: Int? = null,
+        textSizeSP: Float? = null,
         onclick: (() -> Unit)? = null
     ) {
         onCancelCall = onclick
-        cancelProp = MXTextProp(text ?: "取消", visible, textColor) {
+        cancelProp = MXTextProp(text ?: "取消", visible, textColor, textSizeSP) {
             // 先触发onCancelListener,再触发用户设置的回调
             onCancelCall?.invoke()
         }
@@ -202,12 +204,14 @@ abstract class MXTipBaseDialog(context: Context, fullScreen: Boolean = false) :
         initDialog()
     }
 
-    private fun attachButton(button: TextView?, prop: MXTextProp?, s: String) {
+    private fun attachButton(button: TextView?, prop: MXTextProp?, s: String, defColorRes: Int) {
         button?.text = s
         if (prop != null) {
             button?.text = prop.text
             button?.visibility = if (prop.visible) View.VISIBLE else View.GONE
-            prop.textColor?.let { button?.setTextColor(it) }
+            prop.attachTextColor(button, defColorRes)
+            prop.attachTextSize(button, R.dimen.mx_dialog_text_size_button)
+
             button?.setOnClickListener {
                 dismiss()
                 prop.onclick?.invoke()

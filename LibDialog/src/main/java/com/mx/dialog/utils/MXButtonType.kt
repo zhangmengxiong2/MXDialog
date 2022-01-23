@@ -28,7 +28,8 @@ enum class MXButtonType {
             val context = content?.context ?: return
             when (type) {
                 Rounded -> {
-                    val padding = context.resources.getDimensionPixelOffset(R.dimen.mx_size_divider_space)
+                    val padding =
+                        context.resources.getDimensionPixelOffset(R.dimen.mx_dialog_size_divider_space)
                     content.setPadding(padding, padding, padding, padding)
                     cancelBtn?.setBackgroundResource(R.drawable.mx_dialog_bg_inactive_round_btn)
                     actionBtn?.setBackgroundResource(R.drawable.mx_dialog_bg_active_round_btn)
@@ -46,13 +47,11 @@ enum class MXButtonType {
 
                     content.setPadding(0, 0, 0, 0)
                     cancelBtn?.background = MXDrawableUtils.buildGradientDrawable(
-                        context,
-                        Color.TRANSPARENT,
+                        context, R.color.mx_dialog_color_transparent,
                         floatArrayOf(0f, 0f, 0f, cornerDP)
                     )
                     actionBtn?.background = MXDrawableUtils.buildGradientDrawable(
-                        context,
-                        context.resources.getColor(R.color.mx_color_focus),
+                        context, R.color.mx_dialog_color_focus,
                         floatArrayOf(0f, 0f, cornerDP, if (isCancelShow) 0f else cornerDP)
                     )
 

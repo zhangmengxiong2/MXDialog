@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="mx_dialog_color_transparent">#00000000</color>
     <color name="mx_dialog_color_background_alpha">#aa000000</color>
     <color name="mx_dialog_color_background">#ffffff</color>
     <color name="mx_dialog_color_divider">#11666666</color>
     <color name="mx_dialog_color_border">#DEDEDE</color>
-    <color name="mx_color_focus">#008EFF</color>
+    <color name="mx_dialog_color_focus">#008EFF</color>
 
-    <color name="mx_color_text_inactive">#666666</color>
-    <color name="mx_color_text_ticket">#666666</color>
-    <color name="mx_color_text">#333333</color>
-    <color name="mx_color_text_focus">#ffffff</color>
+    <color name="mx_dialog_color_text_inactive">#666666</color>
+    <color name="mx_dialog_color_text_ticket">#666666</color>
+    <color name="mx_dialog_color_text">#333333</color>
+    <color name="mx_dialog_color_text_focus">#ffffff</color>
 </resources>

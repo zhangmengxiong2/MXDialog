@@ -73,7 +73,7 @@ abstract class MXBaseCardDialog(context: Context, fullScreen: Boolean = false) :
 
         if (cardBackgroundRadiusDP > 0) {
             mxCardLay?.background = MXDrawableUtils.buildGradientDrawable(
-                context, context.resources.getColor(R.color.mx_dialog_color_background),
+                context, R.color.mx_dialog_color_background,
                 cardBackgroundRadiusDP
             )
         } else {

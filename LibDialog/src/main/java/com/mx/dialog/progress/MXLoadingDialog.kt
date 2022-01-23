@@ -35,7 +35,7 @@ open class MXLoadingDialog(context: Context) : MXBaseCardDialog(context) {
 
         kotlin.run { // Icon设置
             val width =
-                context.resources.getDimensionPixelOffset(R.dimen.mx_dialog_progress_img_size)
+                context.resources.getDimensionPixelOffset(R.dimen.mx_dialog_size_progress_img)
             val drawable = indeterminateDrawable
                 ?: context.resources.getDrawable(R.drawable.mx_dialog_progress_loading)
             drawable.setBounds(0, 0, width, width)

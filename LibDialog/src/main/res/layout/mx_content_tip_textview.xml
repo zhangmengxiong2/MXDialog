@@ -12,6 +12,6 @@
         android:paddingHorizontal="25dp"
         android:paddingVertical="20dp"
         android:text="测试"
-        android:textColor="@color/mx_color_text"
-        android:textSize="@dimen/mx_size_content" />
+        android:textColor="@color/mx_dialog_color_text"
+        android:textSize="@dimen/mx_dialog_text_size_content" />
 </ScrollView>

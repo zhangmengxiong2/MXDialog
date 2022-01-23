@@ -30,7 +30,7 @@ open class MXTipDialog(context: Context) : MXTipBaseDialog(context) {
         super.initDialog()
 
         msgTxv?.text = msgStr
-        msgTxv?.setTextColor(msgColor ?: context.resources.getColor(R.color.mx_color_text))
+        msgTxv?.setTextColor(msgColor ?: context.resources.getColor(R.color.mx_dialog_color_text))
         msgTxv?.typeface = msgTypeface ?: Typeface.DEFAULT
     }
 
@@ -44,7 +44,7 @@ open class MXTipDialog(context: Context) : MXTipBaseDialog(context) {
         msgTypeface = typeface
 
         msgTxv?.text = msgStr
-        msgTxv?.setTextColor(textColor ?: context.resources.getColor(R.color.mx_color_text))
+        msgTxv?.setTextColor(textColor ?: context.resources.getColor(R.color.mx_dialog_color_text))
         msgTxv?.typeface = typeface ?: Typeface.DEFAULT
 
         msgTxv?.movementMethod = LinkMovementMethod.getInstance()
@@ -65,6 +65,7 @@ open class MXTipDialog(context: Context) : MXTipBaseDialog(context) {
             title: CharSequence? = null,
             actionButtonText: CharSequence? = null,
             cancelButtonText: CharSequence? = null,
+            showCancelButton: Boolean = true,
             onActionClick: ((confirm: Boolean) -> Unit)? = null
         ) {
             val dialog = MXTipDialog(context)
@@ -72,7 +73,10 @@ open class MXTipDialog(context: Context) : MXTipBaseDialog(context) {
             dialog.setMessage(message)
             dialog.setCancelable(false)
             dialog.setActionBtn(text = actionButtonText) { onActionClick?.invoke(true) }
-            dialog.setCancelBtn(text = cancelButtonText) { onActionClick?.invoke(false) }
+            dialog.setCancelBtn(
+                text = cancelButtonText,
+                visible = showCancelButton
+            ) { onActionClick?.invoke(false) }
             dialog.setTipType(MXDialogType.WARN)
             dialog.show()
         }

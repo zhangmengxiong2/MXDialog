@@ -7,7 +7,7 @@
     android:background="@color/mx_dialog_color_border"
     android:gravity="bottom"
     android:orientation="vertical"
-    android:padding="@dimen/mx_dialog_card_corner_radius">
+    android:padding="@dimen/mx_dialog_size_card_corner_radius">
 
     <LinearLayout
         android:id="@+id/mxCardLay"
@@ -19,13 +19,13 @@
         <TextView
             android:id="@+id/titleTxv"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/mx_list_item_height"
+            android:layout_height="@dimen/mx_dialog_size_list_item_height"
             android:ellipsize="end"
             android:gravity="center"
             android:singleLine="true"
             android:text="请选择"
-            android:textColor="@color/mx_color_text"
-            android:textSize="@dimen/mx_size_title"
+            android:textColor="@color/mx_dialog_color_text"
+            android:textSize="@dimen/mx_dialog_text_size_title"
             android:visibility="gone" />
 
         <com.mx.dialog.views.MXRatioFrameLayout
@@ -49,11 +49,11 @@
     <TextView
         android:id="@+id/cancelBtn"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/mx_list_item_height"
-        android:layout_marginTop="@dimen/mx_size_divider_space"
+        android:layout_height="@dimen/mx_dialog_size_list_item_height"
+        android:layout_marginTop="@dimen/mx_dialog_size_divider_space"
         android:background="@drawable/mx_dialog_bg_select_cancel"
         android:gravity="center"
         android:text="取消"
-        android:textColor="@color/mx_color_text"
-        android:textSize="@dimen/mx_size_title" />
+        android:textColor="@color/mx_dialog_color_text"
+        android:textSize="@dimen/mx_dialog_text_size_title" />
 </LinearLayout>

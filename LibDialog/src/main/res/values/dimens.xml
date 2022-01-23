@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="mx_size_title">17sp</dimen>
-    <dimen name="mx_size_content">15sp</dimen>
-    <dimen name="mx_size_button">15sp</dimen>
-    <dimen name="mx_dialog_card_corner_radius">14dp</dimen>
-    <dimen name="mx_size_small">13sp</dimen>
-    <dimen name="mx_dialog_progress_img_size">45dp</dimen>
-    <dimen name="mx_size_divider_space">12dp</dimen>
-    <dimen name="mx_list_item_height">52dp</dimen>
-    <dimen name="mx_list_card_corner_radius">8dp</dimen>
+    <dimen name="mx_dialog_text_size_small">13sp</dimen>
+    <dimen name="mx_dialog_text_size_content">15sp</dimen>
+    <dimen name="mx_dialog_text_size_button">15sp</dimen>
+    <dimen name="mx_dialog_text_size_title">17sp</dimen>
+    <dimen name="mx_dialog_size_card_corner_radius">14dp</dimen>
+    <dimen name="mx_dialog_size_progress_img">45dp</dimen>
+    <dimen name="mx_dialog_size_divider_space">12dp</dimen>
+    <dimen name="mx_dialog_size_list_item_height">52dp</dimen>
 </resources>

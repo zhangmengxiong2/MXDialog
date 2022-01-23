@@ -29,8 +29,8 @@
             android:ellipsize="end"
             android:singleLine="true"
             android:text="温馨提示"
-            android:textColor="@color/mx_color_text"
-            android:textSize="@dimen/mx_size_title"
+            android:textColor="@color/mx_dialog_color_text"
+            android:textSize="@dimen/mx_dialog_text_size_title"
             android:textStyle="bold" />
 
         <TextView
@@ -39,8 +39,8 @@
             android:layout_height="wrap_content"
             android:singleLine="true"
             android:text="2 秒后消失"
-            android:textColor="@color/mx_color_text_ticket"
-            android:textSize="@dimen/mx_size_small"
+            android:textColor="@color/mx_dialog_color_text_ticket"
+            android:textSize="@dimen/mx_dialog_text_size_small"
             android:visibility="gone" />
     </LinearLayout>
 
@@ -66,12 +66,12 @@
         android:layout_width="match_parent"
         android:layout_height="65dp"
         android:gravity="center"
-        android:padding="@dimen/mx_size_divider_space">
+        android:padding="@dimen/mx_dialog_size_divider_space">
 
         <TextView
             android:id="@+id/cancelBtn"
             style="@style/mx_dialog_style_inactive_btn"
-            android:layout_marginRight="@dimen/mx_size_divider_space"
+            android:layout_marginRight="@dimen/mx_dialog_size_divider_space"
             android:text="取消" />
 
         <TextView

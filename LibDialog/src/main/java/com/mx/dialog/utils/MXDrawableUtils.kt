@@ -7,9 +7,10 @@ internal object MXDrawableUtils {
     /**
      * 构建圆角背景图
      */
-    fun buildGradientDrawable(context: Context, color: Int, cornerDP: Float): GradientDrawable {
+    fun buildGradientDrawable(context: Context, colorRes: Int, cornerDP: Float): GradientDrawable {
         val drawable = GradientDrawable()
         drawable.cornerRadius = MXDialogUtils.dp2px(context, cornerDP).toFloat()
+        val color = context.resources.getColor(colorRes)
         drawable.setColor(color)
         return drawable
     }
@@ -19,7 +20,7 @@ internal object MXDrawableUtils {
      */
     fun buildGradientDrawable(
         context: Context,
-        color: Int,
+        colorRes: Int,
         cornerArrayDP: FloatArray,
     ): GradientDrawable {
         val drawable = GradientDrawable()
@@ -33,6 +34,7 @@ internal object MXDrawableUtils {
             MXDialogUtils.dp2px(context, cornerArrayDP[3]).toFloat(),
             MXDialogUtils.dp2px(context, cornerArrayDP[3]).toFloat()
         )
+        val color = context.resources.getColor(colorRes)
         drawable.setColor(color)
         return drawable
     }

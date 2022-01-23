@@ -3,6 +3,8 @@ package com.mx.dialog.list
 import android.content.Context
 import android.graphics.RectF
 import android.os.Bundle
+import android.util.TypedValue
+import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
@@ -10,9 +12,11 @@ import android.widget.ListView
 import android.widget.TextView
 import com.mx.dialog.R
 import com.mx.dialog.base.MXBaseDialog
+import com.mx.dialog.base.MXBaseListAdapt
 import com.mx.dialog.tip.MXDialogPosition
 import com.mx.dialog.utils.MXDialogUtils
 import com.mx.dialog.utils.MXDrawableUtils
+import com.mx.dialog.utils.MXTextProp
 import com.mx.dialog.views.MXRatioFrameLayout
 
 open class MXListDialog(context: Context, fullScreen: Boolean = false) :
@@ -27,6 +31,7 @@ open class MXListDialog(context: Context, fullScreen: Boolean = false) :
     private var dialogBackgroundColor: Int? = null
     private var contentCornerRadiusDP = 12f
     private var contentMaxHeightRatioDP = 0.8f
+    private val listItemProp = MXTextProp()
     private var cardMarginDP = RectF(15f, 15f, 15f, 15f)
     private var position = MXDialogPosition.BOTTOM
     private var mxRootLay: LinearLayout? = null
@@ -36,7 +41,18 @@ open class MXListDialog(context: Context, fullScreen: Boolean = false) :
     private var titleTxv: TextView? = null
     private var listView: ListView? = null
 
-    private val listAdapt by lazy { MXListItemAdapt(context) }
+    private val listAdapt by lazy {
+        MXBaseListAdapt<String>(context, R.layout.mx_dialog_list_item) { itemView, item ->
+            val infoTxv = itemView.findViewById<TextView>(R.id.infoTxv)
+            listItemProp.attachTextHeight(infoTxv, R.dimen.mx_dialog_size_list_item_height)
+            listItemProp.attachTextColor(infoTxv, R.color.mx_dialog_color_text)
+            listItemProp.attachTextSize(infoTxv, R.dimen.mx_dialog_text_size_content)
+            listItemProp.attachTextGravity(infoTxv, Gravity.CENTER)
+
+            infoTxv?.text = item
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.mx_dialog_list)
@@ -97,11 +113,11 @@ open class MXListDialog(context: Context, fullScreen: Boolean = false) :
 
         if (contentCornerRadiusDP > 0) {
             mxCardLay?.background = MXDrawableUtils.buildGradientDrawable(
-                context, context.resources.getColor(R.color.mx_dialog_color_background),
+                context, R.color.mx_dialog_color_background,
                 contentCornerRadiusDP
             )
             cancelBtn?.background = MXDrawableUtils.buildGradientDrawable(
-                context, context.resources.getColor(R.color.mx_dialog_color_background),
+                context, R.color.mx_dialog_color_background,
                 contentCornerRadiusDP
             )
         } else {
@@ -194,11 +210,21 @@ open class MXListDialog(context: Context, fullScreen: Boolean = false) :
         initDialog()
     }
 
-    fun setItems(list: List<String>, onItemClick: ((index: Int) -> Unit)? = null) {
+    fun setItems(
+        list: List<String>,
+        itemHeightDP: Float? = null,
+        textColor: Int? = null,
+        textSizeSP: Float? = null,
+        textGravity: Int? = null,
+        onItemClick: ((index: Int) -> Unit)? = null
+    ) {
         listAdapt.list.clear()
         listAdapt.list.addAll(list)
-        listAdapt.notifyDataSetChanged()
         this.onItemClick = onItemClick
+        this.listItemProp.textHeightDP = itemHeightDP
+        this.listItemProp.textColor = textColor
+        this.listItemProp.textSizeSP = textSizeSP
+        this.listItemProp.textGravity = textGravity
 
         initDialog()
     }
