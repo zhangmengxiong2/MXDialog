@@ -32,6 +32,7 @@ open class MXTipDialog(context: Context) : MXTipBaseDialog(context) {
         msgTxv?.text = msgStr
         msgTxv?.setTextColor(msgColor ?: context.resources.getColor(R.color.mx_dialog_color_text))
         msgTxv?.typeface = msgTypeface ?: Typeface.DEFAULT
+        msgTxv?.movementMethod = LinkMovementMethod.getInstance()
     }
 
     fun setMessage(
@@ -43,11 +44,7 @@ open class MXTipDialog(context: Context) : MXTipBaseDialog(context) {
         msgColor = textColor
         msgTypeface = typeface
 
-        msgTxv?.text = msgStr
-        msgTxv?.setTextColor(textColor ?: context.resources.getColor(R.color.mx_dialog_color_text))
-        msgTxv?.typeface = typeface ?: Typeface.DEFAULT
-
-        msgTxv?.movementMethod = LinkMovementMethod.getInstance()
+        initDialog()
     }
 
     companion object {
