@@ -1,4 +1,4 @@
-package com.mx.dialog.base
+package com.mx.dialog.list
 
 import android.content.Context
 import android.view.LayoutInflater

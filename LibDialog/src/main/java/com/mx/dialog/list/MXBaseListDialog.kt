@@ -1,54 +1,56 @@
-package com.mx.dialog.base
+package com.mx.dialog.list
 
 import android.content.Context
 import android.graphics.RectF
 import android.os.Bundle
-import android.view.LayoutInflater
+import android.view.Gravity
+import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
+import android.widget.LinearLayout
+import android.widget.ListView
+import android.widget.TextView
 import com.mx.dialog.R
+import com.mx.dialog.base.MXBaseDialog
 import com.mx.dialog.tip.MXDialogPosition
 import com.mx.dialog.utils.MXDialogUtils
 import com.mx.dialog.utils.MXDrawableUtils
+import com.mx.dialog.utils.MXTextProp
+import com.mx.dialog.views.MXRatioFrameLayout
 
-/**
- * 集成内容定位的功能
- * 详情见：setPosition()
- */
-abstract class MXBaseCardDialog(context: Context, fullScreen: Boolean = false) :
+open class MXBaseListDialog(context: Context, fullScreen: Boolean) :
     MXBaseDialog(context, fullScreen) {
     private var closeOnTouchOutside: Boolean = true
     private var includeStatusBarHeight: Boolean = false
     private var includeNavigationBarHeight: Boolean = false
 
+    private var titleStr: CharSequence? = null
+
     private var dialogBackgroundColor: Int? = null
-    private var cardBackgroundRadiusDP = 10f
-    private var cardMarginDP = RectF(25f, 25f, 25f, 25f)
-    private var position = MXDialogPosition.CENTER
-    private var mxRootLay: ViewGroup? = null
+    private var contentCornerRadiusDP = 12f
+    private var contentMaxHeightRatioDP = 0.8f
+    private var cardMarginDP = RectF(15f, 15f, 15f, 15f)
+    private var position = MXDialogPosition.BOTTOM
+    private var mxRootLay: LinearLayout? = null
     private var mxCardLay: ViewGroup? = null
+    private var contentLay: MXRatioFrameLayout? = null
+    private var cancelBtn: TextView? = null
+    private var titleTxv: TextView? = null
+    protected var listView: ListView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.mx_dialog_base_card)
+        setContentView(R.layout.mx_dialog_list)
         initView()
     }
 
     private fun initView() {
         if (mxRootLay == null) mxRootLay = findViewById(R.id.mxRootLay)
         if (mxCardLay == null) mxCardLay = findViewById(R.id.mxCardLay)
-
-        val content = LayoutInflater.from(context).inflate(getContentLayoutId(), mxCardLay, false)
-        mxCardLay?.removeAllViews()
-        mxCardLay?.addView(
-            content,
-            FrameLayout.LayoutParams.MATCH_PARENT,
-            FrameLayout.LayoutParams.WRAP_CONTENT
-        )
+        if (contentLay == null) contentLay = findViewById(R.id.contentLay)
+        if (cancelBtn == null) cancelBtn = findViewById(R.id.cancelBtn)
+        if (titleTxv == null) titleTxv = findViewById(R.id.titleTxv)
+        if (listView == null) listView = findViewById(R.id.listView)
     }
-
-
-    abstract fun getContentLayoutId(): Int
 
     override fun onStart() {
         super.onStart()
@@ -64,20 +66,42 @@ abstract class MXBaseCardDialog(context: Context, fullScreen: Boolean = false) :
     }
 
     protected open fun initDialog() {
+        if (listView == null) return
+
+        contentLay?.setMaxHeightRatio(contentMaxHeightRatioDP)
+
+        if (titleStr != null) {
+            titleTxv?.text = titleStr
+            titleTxv?.visibility = View.VISIBLE
+        } else {
+            titleTxv?.visibility = View.GONE
+        }
+
         mxRootLay?.setOnClickListener {
             if (closeOnTouchOutside) {
                 onBackPressed()
             }
         }
         mxCardLay?.setOnClickListener { }
+        cancelBtn?.setOnClickListener { onBackPressed() }
+        if (isCancelable()) {
+            cancelBtn?.visibility = View.VISIBLE
+        } else {
+            cancelBtn?.visibility = View.GONE
+        }
 
-        if (cardBackgroundRadiusDP >= 0) {
+        if (contentCornerRadiusDP >= 0) {
             mxCardLay?.background = MXDrawableUtils.buildGradientDrawable(
                 context, R.color.mx_dialog_color_background,
-                cardBackgroundRadiusDP
+                contentCornerRadiusDP
+            )
+            cancelBtn?.background = MXDrawableUtils.buildGradientDrawable(
+                context, R.color.mx_dialog_color_background,
+                contentCornerRadiusDP
             )
         } else {
-            mxCardLay?.setBackgroundResource(R.drawable.mx_dialog_card_bg)
+            mxCardLay?.setBackgroundResource(R.drawable.mx_dialog_bg_select_cancel)
+            cancelBtn?.setBackgroundResource(R.drawable.mx_dialog_bg_select_cancel)
         }
 
         kotlin.run { // 位置设置
@@ -92,16 +116,7 @@ abstract class MXBaseCardDialog(context: Context, fullScreen: Boolean = false) :
                 cardMarginDP.bottom
             ) + if (includeNavigationBarHeight) MXDialogUtils.getNavigationBarHeight(context) else 0
 
-            val lp = (mxCardLay?.layoutParams as FrameLayout.LayoutParams?)
-            lp?.gravity = position.gravity
-            mxCardLay?.layoutParams = lp
-
             mxRootLay?.setPadding(marginLeft, marginTop, marginRight, marginBottom)
-
-            mxCardLay?.translationX =
-                MXDialogUtils.dp2px(context, position.translationX ?: 0).toFloat()
-            mxCardLay?.translationY =
-                MXDialogUtils.dp2px(context, position.translationY ?: 0).toFloat()
         }
 
         kotlin.run {
@@ -109,6 +124,33 @@ abstract class MXBaseCardDialog(context: Context, fullScreen: Boolean = false) :
                 ?: context.resources.getColor(R.color.mx_dialog_color_background_alpha)
             mxRootLay?.setBackgroundColor(color)
         }
+
+        kotlin.run {
+            mxRootLay?.gravity = position.gravity
+
+            mxCardLay?.translationX =
+                MXDialogUtils.dp2px(context, position.translationX ?: 0).toFloat()
+            mxCardLay?.translationY =
+                MXDialogUtils.dp2px(context, position.translationY ?: 0).toFloat()
+        }
+    }
+
+    override fun setTitle(title: CharSequence?) {
+        titleStr = title
+
+        initDialog()
+    }
+
+    override fun setTitle(titleId: Int) {
+        titleStr = context.resources.getString(titleId)
+
+        initDialog()
+    }
+
+    override fun setCancelable(cancelable: Boolean) {
+        super.setCancelable(cancelable)
+
+        initDialog()
     }
 
     /**
@@ -123,18 +165,25 @@ abstract class MXBaseCardDialog(context: Context, fullScreen: Boolean = false) :
     /**
      * 设置内容ViewGroup 背景圆角半径
      */
-    fun setCardBackgroundRadius(radiusDP: Float) {
-        cardBackgroundRadiusDP = radiusDP
+    fun setContentCornerRadius(radiusDP: Float) {
+        contentCornerRadiusDP = radiusDP
 
         initDialog()
     }
 
-    fun getCardBackgroundRadiusDP() = cardBackgroundRadiusDP
+    /**
+     * 设置内容最大宽高比
+     */
+    fun setContentMaxHeightRatio(ratioDP: Float) {
+        contentMaxHeightRatioDP = ratioDP
+
+        initDialog()
+    }
 
     /**
      * 设置弹窗位置
      */
-    fun setCardPosition(position: MXDialogPosition) {
+    fun setContentPosition(position: MXDialogPosition) {
         this.position = position
 
         initDialog()
@@ -147,7 +196,7 @@ abstract class MXBaseCardDialog(context: Context, fullScreen: Boolean = false) :
      * @param includeStatusBarHeight 上边框宽度是否加上状态栏高度
      * @param includeNavigationBarHeight 下边框宽度是否加上导航栏高度
      */
-    fun setCardMargin(
+    fun setContentMargin(
         margin: Float,
         includeStatusBarHeight: Boolean = false,
         includeNavigationBarHeight: Boolean = false
@@ -167,7 +216,7 @@ abstract class MXBaseCardDialog(context: Context, fullScreen: Boolean = false) :
      * @param includeStatusBarHeight 上边框宽度是否加上状态栏高度
      * @param includeNavigationBarHeight 下边框宽度是否加上导航栏高度
      */
-    fun setCardMargin(
+    fun setContentMargin(
         horizontal: Float, vertical: Float,
         includeStatusBarHeight: Boolean = false,
         includeNavigationBarHeight: Boolean = false
@@ -189,7 +238,7 @@ abstract class MXBaseCardDialog(context: Context, fullScreen: Boolean = false) :
      * @param includeStatusBarHeight 上边框宽度是否加上状态栏高度
      * @param includeNavigationBarHeight 下边框宽度是否加上导航栏高度
      */
-    fun setCardMargin(
+    fun setContentMargin(
         left: Float, top: Float, right: Float, bottom: Float,
         includeStatusBarHeight: Boolean = true,
         includeNavigationBarHeight: Boolean = true
