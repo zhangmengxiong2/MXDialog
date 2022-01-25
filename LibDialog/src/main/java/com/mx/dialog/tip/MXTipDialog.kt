@@ -133,8 +133,8 @@ open class MXTipDialog(context: Context) : MXTipBaseDialog(context) {
             ) { onActionClick?.invoke(false) }
 
             dialog.setActionBtn(
-                visible = actionButtonText != null,
-                text = actionButtonText
+                visible = true,
+                text = actionButtonText ?: "确认"
             ) { onActionClick?.invoke(true) }
             dialog.setTipType(dialogType)
 
