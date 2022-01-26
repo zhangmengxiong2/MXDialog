@@ -92,7 +92,8 @@ open class MXTipDialog(context: Context) : MXTipBaseDialog(context) {
                 message,
                 title,
                 dialogType = dialogType ?: MXDialogType.NONE,
-                actionButtonText = actionButtonText ?: "确认",
+                actionButtonText = actionButtonText
+                    ?: context.resources.getString(R.string.mx_dialog_button_action_text),
                 dismissDelay = dismissDelay,
                 onActionClick = { confirm ->
                     if (confirm) onActionClick?.invoke()

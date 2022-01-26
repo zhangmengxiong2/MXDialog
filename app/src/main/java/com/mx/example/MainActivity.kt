@@ -63,12 +63,12 @@ class MainActivity : AppCompatActivity() {
 
     fun showSelect(view: View) {
         MXListDialog(this).apply {
-            setTitle("请选择")
-            setContentMaxHeightRatio(1.5f)
-            setContentCornerRadius(0f)
-            setContentPosition(MXDialogPosition.CENTER)
-            setContentMargin(horizontal = 50f, vertical = 10f)
-            setCancelable(false)
+//            setTitle("请选择")
+//            setContentMaxHeightRatio(1.5f)
+//            setContentCornerRadius(0f)
+//            setContentPosition(MXDialogPosition.CENTER)
+//            setContentMargin(horizontal = 50f, vertical = 10f)
+//            setCancelable(false)
             val list = ('A'..'Z').toMutableList().map { it.toString() }
             setItems(
                 list,

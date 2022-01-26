@@ -3,7 +3,6 @@ package com.mx.dialog.list
 import android.content.Context
 import android.graphics.RectF
 import android.os.Bundle
-import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
@@ -28,14 +27,17 @@ open class MXBaseListDialog(context: Context, fullScreen: Boolean) :
     private var dialogBackgroundColor: Int? = null
     private var contentCornerRadiusDP = 12f
     private var contentMaxHeightRatioDP = 0.8f
-    private var cardMarginDP = RectF(15f, 15f, 15f, 15f)
+    private var cardMarginDP = RectF(22f, 22f, 22f, 22f)
     private var position = MXDialogPosition.BOTTOM
-    private var mxRootLay: LinearLayout? = null
-    private var mxCardLay: ViewGroup? = null
-    private var contentLay: MXRatioFrameLayout? = null
-    private var cancelBtn: TextView? = null
-    private var titleTxv: TextView? = null
+    protected var mxRootLay: LinearLayout? = null
+    protected var mxCardLay: ViewGroup? = null
+    protected var contentLay: MXRatioFrameLayout? = null
+    protected var cancelBtn: TextView? = null
+    protected var okBtn: TextView? = null
+    protected var titleTxv: TextView? = null
     protected var listView: ListView? = null
+
+    private var actionProp: MXTextProp? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +50,7 @@ open class MXBaseListDialog(context: Context, fullScreen: Boolean) :
         if (mxCardLay == null) mxCardLay = findViewById(R.id.mxCardLay)
         if (contentLay == null) contentLay = findViewById(R.id.contentLay)
         if (cancelBtn == null) cancelBtn = findViewById(R.id.cancelBtn)
+        if (okBtn == null) okBtn = findViewById(R.id.okBtn)
         if (titleTxv == null) titleTxv = findViewById(R.id.titleTxv)
         if (listView == null) listView = findViewById(R.id.listView)
     }
@@ -90,18 +93,26 @@ open class MXBaseListDialog(context: Context, fullScreen: Boolean) :
             cancelBtn?.visibility = View.GONE
         }
 
+        if (actionProp?.visible == true) {
+            okBtn?.visibility = View.VISIBLE
+            okBtn?.text = actionProp?.text
+            actionProp?.attachTextColor(okBtn, R.color.mx_dialog_color_text_focus)
+            actionProp?.attachTextSize(okBtn, R.dimen.mx_dialog_text_size_button)
+            okBtn?.setOnClickListener {
+                dismiss()
+                actionProp?.onclick?.invoke()
+            }
+        } else {
+            okBtn?.visibility = View.GONE
+        }
+
         if (contentCornerRadiusDP >= 0) {
             mxCardLay?.background = MXDrawableUtils.buildGradientDrawable(
                 context, R.color.mx_dialog_color_background,
                 contentCornerRadiusDP
             )
-            cancelBtn?.background = MXDrawableUtils.buildGradientDrawable(
-                context, R.color.mx_dialog_color_background,
-                contentCornerRadiusDP
-            )
         } else {
-            mxCardLay?.setBackgroundResource(R.drawable.mx_dialog_bg_select_cancel)
-            cancelBtn?.setBackgroundResource(R.drawable.mx_dialog_bg_select_cancel)
+            mxCardLay?.setBackgroundResource(R.drawable.mx_dialog_card_bg)
         }
 
         kotlin.run { // 位置设置
@@ -149,6 +160,27 @@ open class MXBaseListDialog(context: Context, fullScreen: Boolean) :
 
     override fun setCancelable(cancelable: Boolean) {
         super.setCancelable(cancelable)
+
+        initDialog()
+    }
+
+    /**
+     * 设置活动按钮
+     */
+    fun setActionBtn(
+        text: CharSequence? = null,
+        visible: Boolean = true,
+        textColor: Int? = null,
+        textSizeSP: Float? = null,
+        onclick: (() -> Unit)? = null
+    ) {
+        actionProp = MXTextProp(
+            text ?: context.resources.getString(R.string.mx_dialog_button_action_text),
+            visible,
+            textColor,
+            textSizeSP,
+            onclick = onclick
+        )
 
         initDialog()
     }

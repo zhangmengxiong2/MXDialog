@@ -26,6 +26,7 @@ open class MXListDialog(context: Context, fullScreen: Boolean = false) :
     override fun initDialog() {
         super.initDialog()
         if (listView == null) return
+
         listView?.adapter = listAdapt
         listView?.setOnItemClickListener { parent, view, position, id ->
             onItemClick?.invoke(position)

@@ -18,13 +18,12 @@
     </style>
 
 
-    <style name="mx_dialog_style_inactive_btn">
+    <style name="mx_dialog_style_cancel_btn">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_weight">1</item>
-        <item name="android:background">@drawable/mx_dialog_bg_inactive_round_btn</item>
         <item name="android:gravity">center</item>
-        <item name="android:textColor">@color/mx_dialog_color_text_inactive</item>
+        <item name="android:textColor">@color/mx_dialog_color_text_cancel</item>
         <item name="android:textSize">@dimen/mx_dialog_text_size_button</item>
         <item name="android:textStyle">bold</item>
     </style>
@@ -33,7 +32,6 @@
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_weight">1</item>
-        <item name="android:background">@drawable/mx_dialog_bg_active_round_btn</item>
         <item name="android:gravity">center</item>
         <item name="android:textColor">@color/mx_dialog_color_text_focus</item>
         <item name="android:textSize">@dimen/mx_dialog_text_size_button</item>

@@ -13,7 +13,7 @@
         android:id="@+id/mxCardLay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/mx_dialog_bg_select_cancel"
+        android:background="@drawable/mx_dialog_card_bg"
         android:orientation="vertical">
 
         <TextView
@@ -46,14 +46,25 @@
         </com.mx.dialog.views.MXRatioFrameLayout>
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/cancelBtn"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/mx_dialog_size_list_item_height"
-        android:layout_marginTop="@dimen/mx_dialog_size_divider_space"
-        android:background="@drawable/mx_dialog_bg_select_cancel"
-        android:gravity="center"
-        android:text="取消"
-        android:textColor="@color/mx_dialog_color_text"
-        android:textSize="@dimen/mx_dialog_text_size_title" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/mx_dialog_size_divider_space">
+
+        <TextView
+            android:id="@+id/cancelBtn"
+            style="@style/mx_dialog_style_cancel_btn"
+            android:layout_height="@dimen/mx_dialog_size_list_item_height"
+            android:background="@drawable/mx_dialog_btn_bg_cancel_corner"
+            android:text="@string/mx_dialog_button_cancel_text" />
+
+        <TextView
+            android:id="@+id/okBtn"
+            style="@style/mx_dialog_style_active_btn"
+            android:layout_height="@dimen/mx_dialog_size_list_item_height"
+            android:layout_marginLeft="@dimen/mx_dialog_size_divider_space"
+            android:background="@drawable/mx_dialog_btn_bg_action_corner"
+            android:text="@string/mx_dialog_button_action_text"
+            android:visibility="gone" />
+    </LinearLayout>
 </LinearLayout>
