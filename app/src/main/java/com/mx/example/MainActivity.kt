@@ -64,15 +64,19 @@ class MainActivity : AppCompatActivity() {
     fun showSelect(view: View) {
         MXListDialog(this).apply {
 //            setTitle("请选择")
-//            setContentMaxHeightRatio(0.8f)
-//            setContentCornerRadius(20f)
+//            setContentMaxHeightRatio(1.5f)
+//            setContentCornerRadius(0f)
+//            setContentPosition(MXDialogPosition.CENTER)
+            setContentMargin(horizontal = 50f, vertical = 10f)
+//            setCancelable(false)
             val list = ('A'..'Z').toMutableList().map { it.toString() }
-            setItems(
+            setMultipleItems(
                 list,
+                selectIndexList = arrayListOf(2),
                 textColor = Color.RED,
                 textSizeSP = 12f,
                 itemHeightDP = 52f,
-                textGravity = Gravity.RIGHT or Gravity.CENTER_VERTICAL
+                textGravity = Gravity.LEFT or Gravity.CENTER_VERTICAL
             ) { index ->
                 MXTipDialog.confirm(this@MainActivity, "点击了：$index")
             }

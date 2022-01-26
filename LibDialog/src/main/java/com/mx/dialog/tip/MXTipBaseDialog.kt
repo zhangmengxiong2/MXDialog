@@ -84,8 +84,13 @@ abstract class MXTipBaseDialog(context: Context, fullScreen: Boolean = false) :
 
         contentLay?.setMaxHeightRatio(maxContentRatio)
 
-        attachButton(cancelBtn, cancelProp, "", R.color.mx_dialog_color_text_inactive)
-        attachButton(okBtn, actionProp, "确认", R.color.mx_dialog_color_text_focus)
+        attachButton(cancelBtn, cancelProp, "", R.color.mx_dialog_color_text_cancel)
+        attachButton(
+            okBtn,
+            actionProp,
+            context.resources.getString(R.string.mx_dialog_button_action_text),
+            R.color.mx_dialog_color_text_action
+        )
 
         if (cancelProp != null || actionProp != null) {
             btnLay?.visibility = View.VISIBLE
@@ -125,7 +130,13 @@ abstract class MXTipBaseDialog(context: Context, fullScreen: Boolean = false) :
         textSizeSP: Float? = null,
         onclick: (() -> Unit)? = null
     ) {
-        actionProp = MXTextProp(text ?: "确认", visible, textColor, textSizeSP, onclick = onclick)
+        actionProp = MXTextProp(
+            text ?: context.resources.getString(R.string.mx_dialog_button_action_text),
+            visible,
+            textColor,
+            textSizeSP,
+            onclick = onclick
+        )
 
         initDialog()
     }
@@ -146,7 +157,12 @@ abstract class MXTipBaseDialog(context: Context, fullScreen: Boolean = false) :
         onclick: (() -> Unit)? = null
     ) {
         onCancelCall = onclick
-        cancelProp = MXTextProp(text ?: "取消", visible, textColor, textSizeSP) {
+        cancelProp = MXTextProp(
+            text ?: context.resources.getString(R.string.mx_dialog_button_cancel_text),
+            visible,
+            textColor,
+            textSizeSP
+        ) {
             // 先触发onCancelListener,再触发用户设置的回调
             onCancelCall?.invoke()
         }

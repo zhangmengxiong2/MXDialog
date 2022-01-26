@@ -14,7 +14,7 @@
         android:indeterminate="true"
         android:indeterminateDrawable="@drawable/mx_dialog_progress_loading"
         android:indeterminateDuration="1000"
-        android:indeterminateTint="@color/mx_dialog_color_focus" />
+        android:indeterminateTint="@color/mx_dialog_color_action" />
 
     <TextView
         android:id="@+id/loadingTxv"

@@ -1,6 +1,5 @@
 package com.mx.dialog.utils
 
-import android.graphics.Color
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -31,8 +30,8 @@ enum class MXButtonType {
                     val padding =
                         context.resources.getDimensionPixelOffset(R.dimen.mx_dialog_size_divider_space)
                     content.setPadding(padding, padding, padding, padding)
-                    cancelBtn?.setBackgroundResource(R.drawable.mx_dialog_bg_inactive_round_btn)
-                    actionBtn?.setBackgroundResource(R.drawable.mx_dialog_bg_active_round_btn)
+                    cancelBtn?.setBackgroundResource(R.drawable.mx_dialog_btn_bg_cancel_circular)
+                    actionBtn?.setBackgroundResource(R.drawable.mx_dialog_btn_bg_action_circular)
 
                     val lp = (cancelBtn?.layoutParams as LinearLayout.LayoutParams?)
                     lp?.rightMargin = padding
@@ -51,7 +50,7 @@ enum class MXButtonType {
                         floatArrayOf(0f, 0f, 0f, cornerDP)
                     )
                     actionBtn?.background = MXDrawableUtils.buildGradientDrawable(
-                        context, R.color.mx_dialog_color_focus,
+                        context, R.color.mx_dialog_color_action,
                         floatArrayOf(0f, 0f, cornerDP, if (isCancelShow) 0f else cornerDP)
                     )
 
