@@ -96,7 +96,7 @@ open class MXBaseListDialog(context: Context, fullScreen: Boolean) :
         if (actionProp?.visible == true) {
             okBtn?.visibility = View.VISIBLE
             okBtn?.text = actionProp?.text
-            actionProp?.attachTextColor(okBtn, R.color.mx_dialog_color_text_focus)
+            actionProp?.attachTextColor(okBtn, R.color.mx_dialog_color_text_action)
             actionProp?.attachTextSize(okBtn, R.dimen.mx_dialog_text_size_button)
             okBtn?.setOnClickListener {
                 dismiss()

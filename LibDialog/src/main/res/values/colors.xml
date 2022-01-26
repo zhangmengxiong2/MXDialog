@@ -5,11 +5,11 @@
     <color name="mx_dialog_color_background">#ffffff</color>
     <color name="mx_dialog_color_divider">#11666666</color>
     <color name="mx_dialog_color_border">#DEDEDE</color>
-    <color name="mx_dialog_color_un_focus">#ffffff</color>
-    <color name="mx_dialog_color_focus">#008EFF</color>
+    <color name="mx_dialog_color_cancel">#ffffff</color>
+    <color name="mx_dialog_color_action">#008EFF</color>
 
     <color name="mx_dialog_color_text_cancel">#333333</color>
+    <color name="mx_dialog_color_text_action">#ffffff</color>
     <color name="mx_dialog_color_text_ticket">#666666</color>
     <color name="mx_dialog_color_text">#333333</color>
-    <color name="mx_dialog_color_text_focus">#ffffff</color>
 </resources>

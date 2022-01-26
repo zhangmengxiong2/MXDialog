@@ -50,7 +50,7 @@ enum class MXButtonType {
                         floatArrayOf(0f, 0f, 0f, cornerDP)
                     )
                     actionBtn?.background = MXDrawableUtils.buildGradientDrawable(
-                        context, R.color.mx_dialog_color_focus,
+                        context, R.color.mx_dialog_color_action,
                         floatArrayOf(0f, 0f, cornerDP, if (isCancelShow) 0f else cornerDP)
                     )
 

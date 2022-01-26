@@ -89,7 +89,7 @@ abstract class MXTipBaseDialog(context: Context, fullScreen: Boolean = false) :
             okBtn,
             actionProp,
             context.resources.getString(R.string.mx_dialog_button_action_text),
-            R.color.mx_dialog_color_text_focus
+            R.color.mx_dialog_color_text_action
         )
 
         if (cancelProp != null || actionProp != null) {
