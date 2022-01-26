@@ -67,11 +67,12 @@ class MainActivity : AppCompatActivity() {
 //            setContentMaxHeightRatio(1.5f)
 //            setContentCornerRadius(0f)
 //            setContentPosition(MXDialogPosition.CENTER)
-//            setContentMargin(horizontal = 50f, vertical = 10f)
+            setContentMargin(horizontal = 50f, vertical = 10f)
 //            setCancelable(false)
             val list = ('A'..'Z').toMutableList().map { it.toString() }
-            setItems(
+            setMultipleItems(
                 list,
+                selectIndexList = arrayListOf(2),
                 textColor = Color.RED,
                 textSizeSP = 12f,
                 itemHeightDP = 52f,

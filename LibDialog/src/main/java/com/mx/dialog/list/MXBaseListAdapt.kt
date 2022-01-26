@@ -11,13 +11,13 @@ internal class MXBaseListAdapt<T>(
     context: Context,
     private val resource: Int,
     val list: ArrayList<T> = ArrayList(),
-    private val viewAttach: ((itemView: View, item: T?) -> Unit)
+    private val viewAttach: ((itemView: View, position: Int, item: T?) -> Unit)
 ) : ArrayAdapter<T>(context, resource, list) {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val item = list.getOrNull(position)
         val view: View =
             convertView ?: LayoutInflater.from(context).inflate(resource, parent, false)
-        viewAttach.invoke(view, item)
+        viewAttach.invoke(view, position, item)
         return view
     }
 }
