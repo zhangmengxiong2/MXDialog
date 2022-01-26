@@ -111,8 +111,19 @@ open class MXBaseListDialog(context: Context, fullScreen: Boolean) :
                 context, R.color.mx_dialog_color_background,
                 contentCornerRadiusDP
             )
+
+            cancelBtn?.background = MXDrawableUtils.buildGradientDrawable(
+                context, R.color.mx_dialog_color_cancel,
+                contentCornerRadiusDP
+            )
+            okBtn?.background = MXDrawableUtils.buildGradientDrawable(
+                context, R.color.mx_dialog_color_action,
+                contentCornerRadiusDP
+            )
         } else {
             mxCardLay?.setBackgroundResource(R.drawable.mx_dialog_card_bg)
+            cancelBtn?.setBackgroundResource(R.drawable.mx_dialog_btn_bg_cancel_corner)
+            okBtn?.setBackgroundResource(R.drawable.mx_dialog_btn_bg_action_corner)
         }
 
         kotlin.run { // 位置设置
