@@ -134,7 +134,6 @@ open class MXTipDialog(context: Context) : MXTipBaseDialog(context) {
             ) { onActionClick?.invoke(false) }
 
             dialog.setActionBtn(
-                visible = true,
                 text = actionButtonText
                     ?: context.resources.getString(R.string.mx_dialog_button_action_text)
             ) { onActionClick?.invoke(true) }
