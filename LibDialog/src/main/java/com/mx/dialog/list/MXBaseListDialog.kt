@@ -35,6 +35,7 @@ open class MXBaseListDialog(context: Context, fullScreen: Boolean) :
     protected var cancelBtn: TextView? = null
     protected var okBtn: TextView? = null
     protected var titleTxv: TextView? = null
+    protected var titleLay: LinearLayout? = null
     protected var listView: ListView? = null
 
     private var actionProp: MXTextProp? = null
@@ -52,6 +53,7 @@ open class MXBaseListDialog(context: Context, fullScreen: Boolean) :
         if (cancelBtn == null) cancelBtn = findViewById(R.id.cancelBtn)
         if (okBtn == null) okBtn = findViewById(R.id.okBtn)
         if (titleTxv == null) titleTxv = findViewById(R.id.titleTxv)
+        if (titleLay == null) titleLay = findViewById(R.id.titleLay)
         if (listView == null) listView = findViewById(R.id.listView)
     }
 
@@ -75,9 +77,9 @@ open class MXBaseListDialog(context: Context, fullScreen: Boolean) :
 
         if (titleStr != null) {
             titleTxv?.text = titleStr
-            titleTxv?.visibility = View.VISIBLE
+            titleLay?.visibility = View.VISIBLE
         } else {
-            titleTxv?.visibility = View.GONE
+            titleLay?.visibility = View.GONE
         }
 
         mxRootLay?.setOnClickListener {
@@ -131,12 +133,12 @@ open class MXBaseListDialog(context: Context, fullScreen: Boolean) :
             val marginTop = MXDialogUtils.dp2px(
                 context,
                 cardMarginDP.top
-            ) + if (includeStatusBarHeight) MXDialogUtils.getStatusBarHeight(context) else 0
+            ) + (if (includeStatusBarHeight) MXDialogUtils.getStatusBarHeight(context) else 0)
             val marginRight = MXDialogUtils.dp2px(context, cardMarginDP.right)
             val marginBottom = MXDialogUtils.dp2px(
                 context,
                 cardMarginDP.bottom
-            ) + if (includeNavigationBarHeight) MXDialogUtils.getNavigationBarHeight(context) else 0
+            ) + (if (includeNavigationBarHeight) MXDialogUtils.getNavigationBarHeight(context) else 0)
 
             mxRootLay?.setPadding(marginLeft, marginTop, marginRight, marginBottom)
         }

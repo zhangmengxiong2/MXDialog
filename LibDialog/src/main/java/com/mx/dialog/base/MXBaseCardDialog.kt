@@ -85,12 +85,12 @@ abstract class MXBaseCardDialog(context: Context, fullScreen: Boolean = false) :
             val marginTop = MXDialogUtils.dp2px(
                 context,
                 cardMarginDP.top
-            ) + if (includeStatusBarHeight) MXDialogUtils.getStatusBarHeight(context) else 0
+            ) + (if (includeStatusBarHeight) MXDialogUtils.getStatusBarHeight(context) else 0)
             val marginRight = MXDialogUtils.dp2px(context, cardMarginDP.right)
             val marginBottom = MXDialogUtils.dp2px(
                 context,
                 cardMarginDP.bottom
-            ) + if (includeNavigationBarHeight) MXDialogUtils.getNavigationBarHeight(context) else 0
+            ) + (if (includeNavigationBarHeight) MXDialogUtils.getNavigationBarHeight(context) else 0)
 
             val lp = (mxCardLay?.layoutParams as FrameLayout.LayoutParams?)
             lp?.gravity = position.gravity

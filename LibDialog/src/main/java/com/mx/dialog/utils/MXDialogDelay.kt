@@ -15,16 +15,25 @@ internal class MXDialogDelay {
     }
 
     fun setDelayTime(delay: Int) {
-        if (isActive) throw java.lang.Exception("已经开始的弹窗不能再设置计时！")
-
-        ticketTime = delay
-        ticketLeft = delay
+        if (isActive) {
+            stop()
+            ticketTime = delay
+            ticketLeft = delay
+            if (delay > 0) {
+                start()
+            }
+        } else {
+            ticketTime = delay
+            ticketLeft = delay
+        }
     }
 
     fun start() {
         isActive = true
         mHandler.removeCallbacksAndMessages(null)
-        mHandler.post(ticketRun)
+        if (ticketTime > 0) {
+            mHandler.post(ticketRun)
+        }
     }
 
     fun stop() {
