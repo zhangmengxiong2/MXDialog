@@ -14,7 +14,7 @@ enum class MXButtonType {
     /**
      * 填充，无边距
      */
-    Normal;
+    Fill;
 
     companion object {
         fun attach(
@@ -41,7 +41,7 @@ enum class MXButtonType {
                     lp1.height = MXDialogUtils.dp2px(context, 65f)
                     content.layoutParams = lp1
                 }
-                Normal -> {
+                Fill -> {
                     val isCancelShow = (cancelBtn?.visibility == View.VISIBLE)
 
                     content.setPadding(0, 0, 0, 0)

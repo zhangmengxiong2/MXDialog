@@ -33,7 +33,7 @@ abstract class MXTipBaseDialog(context: Context, fullScreen: Boolean = false) :
     private var actionProp: MXTextProp? = null
 
 
-    private var buttonType = MXButtonType.Normal
+    private var buttonType = MXButtonType.Fill
     private var tipType = MXDialogType.NONE
 
     private var maxContentRatio: Float = 0f

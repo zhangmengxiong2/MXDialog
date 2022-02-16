@@ -47,6 +47,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/btnLay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/mx_dialog_size_divider_space">
@@ -54,14 +55,14 @@
         <TextView
             android:id="@+id/cancelBtn"
             style="@style/mx_dialog_style_cancel_btn"
-            android:layout_height="@dimen/mx_dialog_size_list_item_height"
+            android:layout_height="@dimen/mx_dialog_size_action_height"
             android:background="@drawable/mx_dialog_btn_bg_cancel_corner"
             android:text="@string/mx_dialog_button_cancel_text" />
 
         <TextView
             android:id="@+id/okBtn"
             style="@style/mx_dialog_style_active_btn"
-            android:layout_height="@dimen/mx_dialog_size_list_item_height"
+            android:layout_height="@dimen/mx_dialog_size_action_height"
             android:layout_marginLeft="@dimen/mx_dialog_size_divider_space"
             android:background="@drawable/mx_dialog_btn_bg_action_corner"
             android:text="@string/mx_dialog_button_action_text"
