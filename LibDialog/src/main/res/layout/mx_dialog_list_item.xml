@@ -2,6 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:clickable="false"
+    android:focusable="false"
+    android:focusableInTouchMode="false"
     android:gravity="center_vertical"
     android:orientation="horizontal">
 
@@ -10,7 +13,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:clickable="false"
         android:ellipsize="end"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
         android:gravity="center"
         android:paddingHorizontal="@dimen/mx_dialog_size_divider_space"
         android:singleLine="true"
@@ -22,6 +28,9 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginHorizontal="@dimen/mx_dialog_size_divider_space"
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
         android:src="@drawable/mx_dialog_icon_unselect"
         android:visibility="gone" />
 </LinearLayout>

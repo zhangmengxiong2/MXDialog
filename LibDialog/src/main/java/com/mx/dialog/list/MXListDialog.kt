@@ -46,13 +46,13 @@ open class MXListDialog(context: Context, fullScreen: Boolean = false) :
 
         listView?.adapter = listAdapt
         if (isSingleSelectMod) {
-            listView?.setOnItemClickListener { parent, view, position, id ->
+            listView?.setOnItemClickListener { _, _, position, _ ->
                 dismiss()
                 onSingleSelect?.invoke(position)
             }
             okBtn?.visibility = View.GONE
         } else {
-            listView?.setOnItemClickListener { parent, view, position, id ->
+            listView?.setOnItemClickListener { _, _, position, _ ->
                 if (selectIndexList.contains(position)) {
                     selectIndexList.remove(position)
                 } else {
