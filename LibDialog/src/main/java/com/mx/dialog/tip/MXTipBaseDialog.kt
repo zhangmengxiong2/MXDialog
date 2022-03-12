@@ -23,6 +23,7 @@ abstract class MXTipBaseDialog(context: Context, fullScreen: Boolean = false) :
     private var titleTxv: TextView? = null
     private var delayTxv: TextView? = null
     private var cancelBtn: TextView? = null
+    private var btnDivider: View? = null
     private var okBtn: TextView? = null
 
     private var titleStr: CharSequence? = null
@@ -33,7 +34,7 @@ abstract class MXTipBaseDialog(context: Context, fullScreen: Boolean = false) :
     private var actionProp: MXTextProp? = null
 
 
-    private var buttonType = MXButtonType.Fill
+    private var buttonType = MXButtonType.ActionFocus
     private var tipType = MXDialogType.NONE
 
     private var maxContentRatio: Float = 0f
@@ -67,6 +68,7 @@ abstract class MXTipBaseDialog(context: Context, fullScreen: Boolean = false) :
         titleTxv = findViewById(R.id.titleTxv)
         delayTxv = findViewById(R.id.delayTxv)
         cancelBtn = findViewById(R.id.cancelBtn)
+        btnDivider = findViewById(R.id.btnDivider)
         okBtn = findViewById(R.id.okBtn)
     }
 
@@ -96,7 +98,7 @@ abstract class MXTipBaseDialog(context: Context, fullScreen: Boolean = false) :
             btnLay?.visibility = View.VISIBLE
 
             val cornerDP = getCardBackgroundRadiusDP()
-            MXButtonType.attach(buttonType, btnLay, cancelBtn, okBtn, cornerDP)
+            MXButtonType.attach(buttonType, btnLay, cancelBtn, okBtn, btnDivider, cornerDP)
         } else {
             btnLay?.visibility = View.GONE
         }

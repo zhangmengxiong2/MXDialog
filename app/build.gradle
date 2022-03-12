@@ -7,7 +7,6 @@ androidExtensions {
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
     defaultConfig {
         applicationId "com.mx.example"
         minSdkVersion rootProject.ext.minSdkVersion

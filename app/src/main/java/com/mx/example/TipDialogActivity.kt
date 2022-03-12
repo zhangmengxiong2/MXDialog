@@ -25,7 +25,7 @@ class TipDialogActivity : AppCompatActivity() {
 
     private fun initView() {
         tipDialog.setCardPosition(position)
-        tipDialog.setButtonType(MXButtonType.Rounded)
+        tipDialog.setButtonType(MXButtonType.ActionFocus)
         tipDialog.setOnCancelListener {
             Toast.makeText(this, "取消操作", Toast.LENGTH_SHORT).show()
         }
@@ -77,6 +77,17 @@ class TipDialogActivity : AppCompatActivity() {
             )
             view.setOnClickListener {
                 tipDialog.setTipType(types[index])
+                tipDialog.show()
+            }
+        }
+        actionGroup.children.forEachIndexed { index, view ->
+            val types = arrayOf(
+                MXButtonType.Rounded,
+                MXButtonType.FillBackground,
+                MXButtonType.ActionFocus
+            )
+            view.setOnClickListener {
+                tipDialog.setButtonType(types[index])
                 tipDialog.show()
             }
         }

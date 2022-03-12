@@ -1,5 +1,6 @@
 package com.mx.dialog.utils
 
+import android.content.res.ColorStateList
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -12,9 +13,14 @@ enum class MXButtonType {
     Rounded,
 
     /**
-     * 填充，无边距
+     * 背景填充，无边距
      */
-    Fill;
+    FillBackground,
+
+    /**
+     * 空白填充，设置焦点文字颜色
+     */
+    ActionFocus;
 
     companion object {
         fun attach(
@@ -22,6 +28,7 @@ enum class MXButtonType {
             content: LinearLayout?,
             cancelBtn: TextView?,
             actionBtn: TextView?,
+            btnDivider: View?,
             cornerDP: Float
         ) {
             val context = content?.context ?: return
@@ -33,15 +40,18 @@ enum class MXButtonType {
                     cancelBtn?.setBackgroundResource(R.drawable.mx_dialog_btn_bg_cancel_circular)
                     actionBtn?.setBackgroundResource(R.drawable.mx_dialog_btn_bg_action_circular)
 
-                    val lp = (cancelBtn?.layoutParams as LinearLayout.LayoutParams?)
-                    lp?.rightMargin = padding
-                    cancelBtn?.layoutParams = lp
-
                     val lp1 = (content.layoutParams as LinearLayout.LayoutParams)
                     lp1.height = MXDialogUtils.dp2px(context, 65f)
                     content.layoutParams = lp1
+
+
+                    val lp = (btnDivider?.layoutParams as LinearLayout.LayoutParams?)
+                    lp?.leftMargin = padding / 2
+                    lp?.rightMargin = padding / 2
+                    btnDivider?.layoutParams = lp
+                    btnDivider?.visibility = View.INVISIBLE
                 }
-                Fill -> {
+                FillBackground -> {
                     val isCancelShow = (cancelBtn?.visibility == View.VISIBLE)
 
                     content.setPadding(0, 0, 0, 0)
@@ -54,13 +64,39 @@ enum class MXButtonType {
                         floatArrayOf(0f, 0f, cornerDP, if (isCancelShow) 0f else cornerDP)
                     )
 
-                    val lp = (cancelBtn?.layoutParams as LinearLayout.LayoutParams?)
+                    val lp1 = (content.layoutParams as LinearLayout.LayoutParams)
+                    lp1.height = MXDialogUtils.dp2px(context, 50f)
+                    content.layoutParams = lp1
+
+                    val lp = (btnDivider?.layoutParams as LinearLayout.LayoutParams?)
+                    lp?.leftMargin = 0
                     lp?.rightMargin = 0
-                    cancelBtn?.layoutParams = lp
+                    btnDivider?.layoutParams = lp
+                    btnDivider?.visibility = View.VISIBLE
+                }
+                ActionFocus -> {
+                    val isCancelShow = (cancelBtn?.visibility == View.VISIBLE)
+
+                    content.setPadding(0, 0, 0, 0)
+                    cancelBtn?.background = MXDrawableUtils.buildGradientDrawable(
+                        context, R.color.mx_dialog_color_transparent,
+                        floatArrayOf(0f, 0f, 0f, cornerDP)
+                    )
+                    actionBtn?.background = MXDrawableUtils.buildGradientDrawable(
+                        context, R.color.mx_dialog_color_transparent,
+                        floatArrayOf(0f, 0f, cornerDP, if (isCancelShow) 0f else cornerDP)
+                    )
+                    actionBtn?.setTextColor(ColorStateList.valueOf(content.resources.getColor(R.color.mx_dialog_color_action)))
 
                     val lp1 = (content.layoutParams as LinearLayout.LayoutParams)
                     lp1.height = MXDialogUtils.dp2px(context, 50f)
                     content.layoutParams = lp1
+
+                    val lp = (btnDivider?.layoutParams as LinearLayout.LayoutParams?)
+                    lp?.leftMargin = 0
+                    lp?.rightMargin = 0
+                    btnDivider?.layoutParams = lp
+                    btnDivider?.visibility = View.VISIBLE
                 }
             }
         }
