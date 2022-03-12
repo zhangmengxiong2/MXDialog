@@ -11,7 +11,7 @@ import androidx.core.widget.addTextChangedListener
 import com.mx.dialog.tip.MXDialogPosition
 import com.mx.dialog.tip.MXDialogType
 import com.mx.dialog.tip.MXTipDialog
-import com.mx.dialog.utils.MXButtonType
+import com.mx.dialog.utils.MXButtonStyle
 import kotlinx.android.synthetic.main.activity_tip_dialog.*
 
 class TipDialogActivity : AppCompatActivity() {
@@ -25,7 +25,7 @@ class TipDialogActivity : AppCompatActivity() {
 
     private fun initView() {
         tipDialog.setCardPosition(position)
-        tipDialog.setButtonType(MXButtonType.ActionFocus)
+        tipDialog.setButtonStyle(MXButtonStyle.ActionFocus)
         tipDialog.setOnCancelListener {
             Toast.makeText(this, "取消操作", Toast.LENGTH_SHORT).show()
         }
@@ -38,7 +38,7 @@ class TipDialogActivity : AppCompatActivity() {
         widthRatioEdt.addTextChangedListener {
             tipDialog.setMaxContentRatio(it?.toString()?.toFloatOrNull() ?: 0f)
         }
-        tipDialog.setMaxContentRatio(0.5f)
+        tipDialog.setMaxContentRatio(0.6f)
 
         radioSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
@@ -82,12 +82,12 @@ class TipDialogActivity : AppCompatActivity() {
         }
         actionGroup.children.forEachIndexed { index, view ->
             val types = arrayOf(
-                MXButtonType.Rounded,
-                MXButtonType.FillBackground,
-                MXButtonType.ActionFocus
+                MXButtonStyle.Rounded,
+                MXButtonStyle.FillBackground,
+                MXButtonStyle.ActionFocus
             )
             view.setOnClickListener {
-                tipDialog.setButtonType(types[index])
+                tipDialog.setButtonStyle(types[index])
                 tipDialog.show()
             }
         }

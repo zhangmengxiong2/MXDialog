@@ -12,7 +12,8 @@ import android.widget.TextView
 import com.mx.dialog.R
 import com.mx.dialog.base.MXBaseCardDialog
 import com.mx.dialog.utils.MXTextProp
-import com.mx.dialog.utils.MXButtonType
+import com.mx.dialog.utils.MXButtonStyle
+import com.mx.dialog.utils.MXDialogUtils
 import com.mx.dialog.views.MXRatioFrameLayout
 
 abstract class MXTipBaseDialog(context: Context, fullScreen: Boolean = false) :
@@ -33,11 +34,11 @@ abstract class MXTipBaseDialog(context: Context, fullScreen: Boolean = false) :
     private var cancelProp: MXTextProp? = null
     private var actionProp: MXTextProp? = null
 
-
-    private var buttonType = MXButtonType.ActionFocus
+    private var buttonStyle = MXButtonStyle.FillBackground
     private var tipType = MXDialogType.NONE
 
     private var maxContentRatio: Float = 0f
+    private var minContentHeightDP: Float = 0f
 
     override fun getContentLayoutId(): Int {
         return R.layout.mx_content_tip
@@ -85,6 +86,7 @@ abstract class MXTipBaseDialog(context: Context, fullScreen: Boolean = false) :
         titleTxv?.gravity = titleGravity
 
         contentLay?.setMaxHeightRatio(maxContentRatio)
+        contentLay?.minimumHeight = MXDialogUtils.dp2px(context, minContentHeightDP)
 
         attachButton(cancelBtn, cancelProp, "", R.color.mx_dialog_color_text_cancel)
         attachButton(
@@ -98,7 +100,7 @@ abstract class MXTipBaseDialog(context: Context, fullScreen: Boolean = false) :
             btnLay?.visibility = View.VISIBLE
 
             val cornerDP = getCardBackgroundRadiusDP()
-            MXButtonType.attach(buttonType, btnLay, cancelBtn, okBtn, btnDivider, cornerDP)
+            MXButtonStyle.attach(buttonStyle, btnLay, cancelBtn, okBtn, btnDivider, cornerDP)
         } else {
             btnLay?.visibility = View.GONE
         }
@@ -210,14 +212,23 @@ abstract class MXTipBaseDialog(context: Context, fullScreen: Boolean = false) :
         initDialog()
     }
 
+    /**
+     * 设置内容最大宽高比
+     */
+    fun setMinContentHeightDP(heightDP: Float) {
+        minContentHeightDP = heightDP
+
+        initDialog()
+    }
+
     fun setTipType(type: MXDialogType?) {
         this.tipType = type ?: MXDialogType.NONE
 
         initDialog()
     }
 
-    fun setButtonType(type: MXButtonType) {
-        this.buttonType = type
+    fun setButtonStyle(style: MXButtonStyle) {
+        this.buttonStyle = style
 
         initDialog()
     }

@@ -6,12 +6,11 @@
 
     <TextView
         android:id="@+id/msgTxv"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:lineSpacingExtra="5dp"
         android:paddingHorizontal="25dp"
-        android:paddingVertical="20dp"
-        android:text="测试"
+        android:paddingVertical="22dp"
         android:textColor="@color/mx_dialog_color_text"
         android:textSize="@dimen/mx_dialog_text_size_content" />
 </ScrollView>

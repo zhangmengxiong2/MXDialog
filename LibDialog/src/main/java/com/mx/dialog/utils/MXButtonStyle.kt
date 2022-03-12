@@ -6,7 +6,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.mx.dialog.R
 
-enum class MXButtonType {
+enum class MXButtonStyle {
     /**
      * 圆角带边距
      */
@@ -24,7 +24,7 @@ enum class MXButtonType {
 
     companion object {
         fun attach(
-            type: MXButtonType,
+            style: MXButtonStyle,
             content: LinearLayout?,
             cancelBtn: TextView?,
             actionBtn: TextView?,
@@ -32,7 +32,8 @@ enum class MXButtonType {
             cornerDP: Float
         ) {
             val context = content?.context ?: return
-            when (type) {
+            val isCancelShow = (cancelBtn?.visibility == View.VISIBLE)
+            when (style) {
                 Rounded -> {
                     val padding =
                         context.resources.getDimensionPixelOffset(R.dimen.mx_dialog_size_divider_space)
@@ -44,16 +45,17 @@ enum class MXButtonType {
                     lp1.height = MXDialogUtils.dp2px(context, 65f)
                     content.layoutParams = lp1
 
-
-                    val lp = (btnDivider?.layoutParams as LinearLayout.LayoutParams?)
-                    lp?.leftMargin = padding / 2
-                    lp?.rightMargin = padding / 2
-                    btnDivider?.layoutParams = lp
-                    btnDivider?.visibility = View.INVISIBLE
+                    if (isCancelShow) {
+                        val lp = (btnDivider?.layoutParams as LinearLayout.LayoutParams?)
+                        lp?.leftMargin = padding / 2
+                        lp?.rightMargin = padding / 2
+                        btnDivider?.layoutParams = lp
+                        btnDivider?.visibility = View.INVISIBLE
+                    } else {
+                        btnDivider?.visibility = View.GONE
+                    }
                 }
                 FillBackground -> {
-                    val isCancelShow = (cancelBtn?.visibility == View.VISIBLE)
-
                     content.setPadding(0, 0, 0, 0)
                     cancelBtn?.background = MXDrawableUtils.buildGradientDrawable(
                         context, R.color.mx_dialog_color_transparent,
@@ -68,15 +70,17 @@ enum class MXButtonType {
                     lp1.height = MXDialogUtils.dp2px(context, 50f)
                     content.layoutParams = lp1
 
-                    val lp = (btnDivider?.layoutParams as LinearLayout.LayoutParams?)
-                    lp?.leftMargin = 0
-                    lp?.rightMargin = 0
-                    btnDivider?.layoutParams = lp
-                    btnDivider?.visibility = View.VISIBLE
+                    if (isCancelShow) {
+                        val lp = (btnDivider?.layoutParams as LinearLayout.LayoutParams?)
+                        lp?.leftMargin = 0
+                        lp?.rightMargin = 0
+                        btnDivider?.layoutParams = lp
+                        btnDivider?.visibility = View.VISIBLE
+                    } else {
+                        btnDivider?.visibility = View.GONE
+                    }
                 }
                 ActionFocus -> {
-                    val isCancelShow = (cancelBtn?.visibility == View.VISIBLE)
-
                     content.setPadding(0, 0, 0, 0)
                     cancelBtn?.background = MXDrawableUtils.buildGradientDrawable(
                         context, R.color.mx_dialog_color_transparent,
@@ -92,11 +96,15 @@ enum class MXButtonType {
                     lp1.height = MXDialogUtils.dp2px(context, 50f)
                     content.layoutParams = lp1
 
-                    val lp = (btnDivider?.layoutParams as LinearLayout.LayoutParams?)
-                    lp?.leftMargin = 0
-                    lp?.rightMargin = 0
-                    btnDivider?.layoutParams = lp
-                    btnDivider?.visibility = View.VISIBLE
+                    if (isCancelShow) {
+                        val lp = (btnDivider?.layoutParams as LinearLayout.LayoutParams?)
+                        lp?.leftMargin = 0
+                        lp?.rightMargin = 0
+                        btnDivider?.layoutParams = lp
+                        btnDivider?.visibility = View.VISIBLE
+                    } else {
+                        btnDivider?.visibility = View.GONE
+                    }
                 }
             }
         }
