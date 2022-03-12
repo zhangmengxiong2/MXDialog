@@ -34,7 +34,7 @@ abstract class MXTipBaseDialog(context: Context, fullScreen: Boolean = false) :
     private var cancelProp: MXTextProp? = null
     private var actionProp: MXTextProp? = null
 
-    private var buttonStyle = MXButtonStyle.FillBackground
+    private var buttonStyle = MXButtonStyle.ActionFocus
     private var tipType = MXDialogType.NONE
 
     private var maxContentRatio: Float = 0f

@@ -22,7 +22,7 @@ abstract class MXBaseCardDialog(context: Context, fullScreen: Boolean = false) :
     private var includeNavigationBarHeight: Boolean = false
 
     private var dialogBackgroundColor: Int? = null
-    private var cardBackgroundRadiusDP = 10f
+    private var cardBackgroundRadiusDP = 12f
     private var cardMarginDP = RectF(25f, 25f, 25f, 25f)
     private var position = MXDialogPosition.CENTER
     private var mxRootLay: ViewGroup? = null
