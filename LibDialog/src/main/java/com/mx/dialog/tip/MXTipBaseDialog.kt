@@ -88,6 +88,23 @@ abstract class MXTipBaseDialog(context: Context, fullScreen: Boolean = false) :
         contentLay?.setMaxHeightRatio(maxContentRatio)
         contentLay?.minimumHeight = MXDialogUtils.dp2px(context, minContentHeightDP)
 
+        var cancelProp: MXTextProp? = cancelProp
+        if (isCancelable()) {
+            if (cancelProp == null) {
+                cancelProp = MXTextProp(
+                    context.resources.getString(R.string.mx_dialog_button_cancel_text),
+                    true,
+                    context.resources.getColor(R.color.mx_dialog_color_text_cancel),
+                    context.resources.getDimension(R.dimen.mx_dialog_text_size_button)
+                ) {
+                    // 先触发onCancelListener,再触发用户设置的回调
+                    onCancelCall?.invoke()
+                }
+            }
+        } else {
+            cancelProp = null
+        }
+
         attachButton(cancelBtn, cancelProp, "", R.color.mx_dialog_color_text_cancel)
         attachButton(
             okBtn,
