@@ -290,26 +290,4 @@ abstract class MXTipBaseDialog(context: Context, fullScreen: Boolean = false) :
 
         initDialog()
     }
-
-    private fun attachButton(
-        button: TextView?,
-        prop: MXTextProp?,
-        s: String,
-        defColorRes: Int
-    ) {
-        button?.text = s
-        if (prop != null) {
-            button?.text = prop.text
-            button?.visibility = if (prop.visible) View.VISIBLE else View.GONE
-            prop.attachTextColor(button, defColorRes)
-            prop.attachTextSize(button, R.dimen.mx_dialog_text_size_button)
-
-            button?.setOnClickListener {
-                dismiss()
-                prop.onclick?.invoke()
-            }
-        } else {
-            button?.visibility = View.GONE
-        }
-    }
 }
