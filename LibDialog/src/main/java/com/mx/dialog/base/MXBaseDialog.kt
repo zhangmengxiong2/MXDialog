@@ -20,10 +20,22 @@ import com.mx.dialog.utils.MXDialogDelay
  */
 open class MXBaseDialog(context: Context, private val fullScreen: Boolean = false) :
     Dialog(context, if (fullScreen) R.style.MXDialog_FullScreen else R.style.MXDialog_Base) {
+    fun isFullScreen() = fullScreen
+
     private val dialogDelay = MXDialogDelay()
+
+    // 弹窗消失回调
     private var onDismissListener: (() -> Unit)? = null
 
+    // 返回功能回调
+    private var onCancelListener: (() -> Unit)? = null
+
+    // 当前Dialog是否可以手动取消
     private var isDialogCancelable = true
+
+    // 当前Dialog在空白区域点击时是否会消失
+    private var isDismissOnTouchOutside = true
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window?.let { window ->
@@ -46,8 +58,6 @@ open class MXBaseDialog(context: Context, private val fullScreen: Boolean = fals
         }
     }
 
-    fun isFullScreen() = fullScreen
-
     override fun onStart() {
         super.onStart()
         dialogDelay.start()
@@ -57,20 +67,42 @@ open class MXBaseDialog(context: Context, private val fullScreen: Boolean = fals
         onDismissListener = { listener?.onDismiss(this) }
     }
 
+    fun setOnDismissListener(listener: (() -> Unit)?) {
+        onDismissListener = listener
+    }
+
+    override fun setOnCancelListener(listener: DialogInterface.OnCancelListener?) {
+        onCancelListener = { listener?.onCancel(this) }
+    }
+
+    fun setOnCancelListener(listener: (() -> Unit)?) {
+        onCancelListener = listener
+    }
+
     override fun setCancelable(cancelable: Boolean) {
         isDialogCancelable = cancelable
         super.setCancelable(cancelable)
     }
 
+    override fun setCanceledOnTouchOutside(cancel: Boolean) {
+        isDismissOnTouchOutside = cancel
+        super.setCanceledOnTouchOutside(cancel)
+    }
+
+    fun isCanceledOnTouchOutside() = isDismissOnTouchOutside
     fun isCancelable() = isDialogCancelable
+
     override fun onBackPressed() {
         if (isCancelable()) {
-            super.onBackPressed()
+            dismiss()
+            onCancelListener?.invoke()
         }
     }
 
     override fun dismiss() {
-        dispatchOnDismissListener()
+        if (isShowing) {
+            onDismissListener?.invoke()
+        }
         hideSoftInput()
         dialogDelay.stop()
         super.dismiss()
@@ -107,11 +139,5 @@ open class MXBaseDialog(context: Context, private val fullScreen: Boolean = fals
      */
     open fun onDismissTicketEnd() {
         dismiss()
-    }
-
-    private fun dispatchOnDismissListener() {
-        if (isShowing) {
-            onDismissListener?.invoke()
-        }
     }
 }

@@ -17,7 +17,6 @@ import com.mx.dialog.utils.MXDrawableUtils
  */
 abstract class MXBaseCardDialog(context: Context, fullScreen: Boolean = false) :
     MXBaseDialog(context, fullScreen) {
-    private var closeOnTouchOutside: Boolean = true
     private var includeStatusBarHeight: Boolean = false
     private var includeNavigationBarHeight: Boolean = false
 
@@ -55,17 +54,9 @@ abstract class MXBaseCardDialog(context: Context, fullScreen: Boolean = false) :
         initDialog()
     }
 
-    /**
-     * 点击空白处时会不会触发消失响应
-     */
-    override fun setCanceledOnTouchOutside(cancel: Boolean) {
-        closeOnTouchOutside = cancel
-        super.setCanceledOnTouchOutside(cancel)
-    }
-
     protected open fun initDialog() {
         mxRootLay?.setOnClickListener {
-            if (closeOnTouchOutside) {
+            if (isCanceledOnTouchOutside()) {
                 onBackPressed()
             }
         }

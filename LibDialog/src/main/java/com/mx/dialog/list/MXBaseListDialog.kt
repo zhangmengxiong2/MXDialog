@@ -18,7 +18,6 @@ import com.mx.dialog.views.MXRatioFrameLayout
 
 open class MXBaseListDialog(context: Context, fullScreen: Boolean) :
     MXBaseDialog(context, fullScreen) {
-    private var closeOnTouchOutside: Boolean = true
     private var includeStatusBarHeight: Boolean = false
     private var includeNavigationBarHeight: Boolean = false
 
@@ -62,14 +61,6 @@ open class MXBaseListDialog(context: Context, fullScreen: Boolean) :
         initDialog()
     }
 
-    /**
-     * 点击空白处时会不会触发消失响应
-     */
-    override fun setCanceledOnTouchOutside(cancel: Boolean) {
-        closeOnTouchOutside = cancel
-        super.setCanceledOnTouchOutside(cancel)
-    }
-
     protected open fun initDialog() {
         if (listView == null) return
 
@@ -83,7 +74,7 @@ open class MXBaseListDialog(context: Context, fullScreen: Boolean) :
         }
 
         mxRootLay?.setOnClickListener {
-            if (closeOnTouchOutside) {
+            if (isCanceledOnTouchOutside()) {
                 onBackPressed()
             }
         }

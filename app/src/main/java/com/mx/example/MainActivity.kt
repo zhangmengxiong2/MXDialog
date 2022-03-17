@@ -68,11 +68,22 @@ class MainActivity : AppCompatActivity() {
             setContentCornerRadius(10f)
             setContentPosition(MXDialogPosition.BOTTOM)
             setContentMargin(horizontal = 20f, vertical = 20f)
-//            setCancelable(false)
+            setCancelable(false)
+//            setCanceledOnTouchOutside(false)
             val list = ('A'..'Z').toMutableList().map { it.toString() }
-            setMultipleItems(
+//            setMultipleItems(
+//                list,
+//                selectIndexList = arrayListOf(2),
+//                textColor = Color.RED,
+//                textSizeSP = 12f,
+//                itemHeightDP = 52f,
+//                textGravity = Gravity.LEFT or Gravity.CENTER_VERTICAL
+//            ) { index ->
+//                MXTipDialog.confirm(this@MainActivity, "点击了：$index")
+//            }
+            setItems(
                 list,
-                selectIndexList = arrayListOf(2),
+                selectIndex = 2,
                 textColor = Color.RED,
                 textSizeSP = 12f,
                 itemHeightDP = 52f,

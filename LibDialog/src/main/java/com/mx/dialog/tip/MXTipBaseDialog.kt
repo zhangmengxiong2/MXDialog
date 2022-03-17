@@ -30,7 +30,6 @@ abstract class MXTipBaseDialog(context: Context, fullScreen: Boolean = false) :
     private var titleStr: CharSequence? = null
     private var titleGravity: Int = Gravity.LEFT
 
-    private var onCancelCall: (() -> Unit)? = null
     private var cancelProp: MXTextProp? = null
     private var actionProp: MXTextProp? = null
 
@@ -138,10 +137,7 @@ abstract class MXTipBaseDialog(context: Context, fullScreen: Boolean = false) :
                 true,
                 context.resources.getColor(R.color.mx_dialog_color_text_cancel),
                 15f
-            ) {
-                // 先触发onCancelListener,再触发用户设置的回调
-                onCancelCall?.invoke()
-            }
+            ) { onBackPressed() }
 
             button.text = cancelProp.text
             cancelProp.attachTextColor(button, R.color.mx_dialog_color_text_cancel)
@@ -218,29 +214,11 @@ abstract class MXTipBaseDialog(context: Context, fullScreen: Boolean = false) :
         textSizeSP: Float? = null,
         onclick: (() -> Unit)? = null
     ) {
-        onCancelCall = onclick
         cancelProp = MXTextProp(
             text ?: context.resources.getString(R.string.mx_dialog_button_cancel_text),
-            visible,
-            textColor,
-            textSizeSP
-        ) {
-            // 先触发onCancelListener,再触发用户设置的回调
-            onCancelCall?.invoke()
-        }
-
+            visible, textColor, textSizeSP, onclick = onclick
+        )
         initDialog()
-    }
-
-    override fun setOnCancelListener(listener: DialogInterface.OnCancelListener?) {
-        onCancelCall = { listener?.onCancel(this) }
-    }
-
-    override fun onBackPressed() {
-        super.onBackPressed()
-        if (isCancelable()) {
-            onCancelCall?.invoke()
-        }
     }
 
     override fun setTitle(title: CharSequence?) {
