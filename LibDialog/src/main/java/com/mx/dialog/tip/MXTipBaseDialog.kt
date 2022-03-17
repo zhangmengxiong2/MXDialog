@@ -137,7 +137,7 @@ abstract class MXTipBaseDialog(context: Context, fullScreen: Boolean = false) :
                 context.resources.getString(R.string.mx_dialog_button_cancel_text),
                 true,
                 context.resources.getColor(R.color.mx_dialog_color_text_cancel),
-                context.resources.getDimension(R.dimen.mx_dialog_text_size_button)
+                15f
             ) {
                 // 先触发onCancelListener,再触发用户设置的回调
                 onCancelCall?.invoke()
@@ -166,7 +166,7 @@ abstract class MXTipBaseDialog(context: Context, fullScreen: Boolean = false) :
                 context.resources.getString(R.string.mx_dialog_button_action_text),
                 true,
                 context.resources.getColor(R.color.mx_dialog_color_text_action),
-                context.resources.getDimension(R.dimen.mx_dialog_text_size_button)
+                15f
             )
             button.text = actionProp.text
             actionProp.attachTextColor(button, R.color.mx_dialog_color_text_action)
