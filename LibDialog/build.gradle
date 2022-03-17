@@ -32,7 +32,7 @@ afterEvaluate {
                 from components.release
 
                 groupId = 'com.mx.dialog'
-                artifactId = 'final'
+                artifactId = 'MXDialog'
                 version = '1.0.0'
             }
         }
