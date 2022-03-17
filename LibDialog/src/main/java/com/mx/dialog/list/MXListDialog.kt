@@ -42,17 +42,14 @@ open class MXListDialog(context: Context, fullScreen: Boolean = false) :
 
     override fun initDialog() {
         super.initDialog()
-        if (listView == null) return
-
-        listView?.adapter = listAdapt
+        setAdapt(listAdapt)
         if (isSingleSelectMod) {
-            listView?.setOnItemClickListener { _, _, position, _ ->
+            setItemClick { position ->
                 dismiss()
                 onSingleSelect?.invoke(position)
             }
-            okBtn?.visibility = View.GONE
         } else {
-            listView?.setOnItemClickListener { _, _, position, _ ->
+            setItemClick { position ->
                 if (selectIndexList.contains(position)) {
                     selectIndexList.remove(position)
                 } else {
@@ -60,13 +57,16 @@ open class MXListDialog(context: Context, fullScreen: Boolean = false) :
                 }
                 listAdapt.notifyDataSetChanged()
             }
-            okBtn?.visibility = View.VISIBLE
-            okBtn?.setOnClickListener {
+            setActionClick {
                 dismiss()
                 val list = selectIndexList.toList().sorted()
                 onMultipleSelect?.invoke(list)
             }
         }
+    }
+
+    override fun showActionBtn(): Boolean {
+        return !isSingleSelectMod
     }
 
     /**

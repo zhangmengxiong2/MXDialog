@@ -62,9 +62,7 @@
         android:id="@+id/btnLay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/mx_dialog_size_divider_space"
-        android:divider="@drawable/mx_dialog_divider"
-        android:showDividers="middle">
+        android:layout_marginTop="@dimen/mx_dialog_size_divider_space">
 
         <TextView
             android:id="@+id/cancelBtn"
@@ -72,6 +70,12 @@
             android:layout_height="@dimen/mx_dialog_size_action_height"
             android:background="@drawable/mx_dialog_btn_bg_cancel_corner"
             android:text="@string/mx_dialog_button_cancel_text" />
+
+        <View
+            android:id="@+id/btnDivider"
+            android:layout_width="@dimen/mx_dialog_size_divider_space"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/okBtn"

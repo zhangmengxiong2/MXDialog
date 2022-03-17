@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.ListAdapter
 import android.widget.ListView
 import android.widget.TextView
 import com.mx.dialog.R
@@ -28,16 +29,18 @@ open class MXBaseListDialog(context: Context, fullScreen: Boolean) :
     private var contentMaxHeightRatioDP = 0.8f
     private var cardMarginDP = RectF(22f, 22f, 22f, 22f)
     private var position = MXDialogPosition.BOTTOM
-    protected var mxRootLay: LinearLayout? = null
-    protected var mxCardLay: ViewGroup? = null
-    protected var contentLay: MXRatioFrameLayout? = null
-    protected var cancelBtn: TextView? = null
-    protected var okBtn: TextView? = null
-    protected var titleTxv: TextView? = null
-    protected var titleLay: LinearLayout? = null
-    protected var listView: ListView? = null
+    private var mxRootLay: LinearLayout? = null
+    private var mxCardLay: ViewGroup? = null
+    private var contentLay: MXRatioFrameLayout? = null
+    private var btnDivider: View? = null
+    private var cancelBtn: TextView? = null
+    private var okBtn: TextView? = null
+    private var titleTxv: TextView? = null
+    private var titleLay: LinearLayout? = null
+    private var listView: ListView? = null
 
-    private var actionProp: MXTextProp? = null
+    private val cancelProp = MXTextProp()
+    private val actionProp = MXTextProp()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +52,7 @@ open class MXBaseListDialog(context: Context, fullScreen: Boolean) :
         if (mxRootLay == null) mxRootLay = findViewById(R.id.mxRootLay)
         if (mxCardLay == null) mxCardLay = findViewById(R.id.mxCardLay)
         if (contentLay == null) contentLay = findViewById(R.id.contentLay)
+        if (btnDivider == null) btnDivider = findViewById(R.id.btnDivider)
         if (cancelBtn == null) cancelBtn = findViewById(R.id.cancelBtn)
         if (okBtn == null) okBtn = findViewById(R.id.okBtn)
         if (titleTxv == null) titleTxv = findViewById(R.id.titleTxv)
@@ -79,24 +83,15 @@ open class MXBaseListDialog(context: Context, fullScreen: Boolean) :
             }
         }
         mxCardLay?.setOnClickListener { }
-        cancelBtn?.setOnClickListener { onBackPressed() }
-        if (isCancelable()) {
-            cancelBtn?.visibility = View.VISIBLE
-        } else {
-            cancelBtn?.visibility = View.GONE
-        }
 
-        if (actionProp?.visible == true) {
-            okBtn?.visibility = View.VISIBLE
-            okBtn?.text = actionProp?.text
-            actionProp?.attachTextColor(okBtn, R.color.mx_dialog_color_text_action)
-            actionProp?.attachTextSize(okBtn, R.dimen.mx_dialog_text_size_button)
-            okBtn?.setOnClickListener {
-                dismiss()
-                actionProp?.onclick?.invoke()
+        kotlin.run {
+            processCancelBtn()
+            processActionBtn()
+            if (cancelBtn?.visibility == View.VISIBLE && okBtn?.visibility == View.VISIBLE) {
+                btnDivider?.visibility = View.VISIBLE
+            } else {
+                btnDivider?.visibility = View.GONE
             }
-        } else {
-            okBtn?.visibility = View.GONE
         }
 
         if (contentCornerRadiusDP >= 0) {
@@ -104,19 +99,8 @@ open class MXBaseListDialog(context: Context, fullScreen: Boolean) :
                 context, R.color.mx_dialog_color_background,
                 contentCornerRadiusDP
             )
-
-            cancelBtn?.background = MXDrawableUtils.buildGradientDrawable(
-                context, R.color.mx_dialog_color_cancel,
-                contentCornerRadiusDP
-            )
-            okBtn?.background = MXDrawableUtils.buildGradientDrawable(
-                context, R.color.mx_dialog_color_action,
-                contentCornerRadiusDP
-            )
         } else {
             mxCardLay?.setBackgroundResource(R.drawable.mx_dialog_card_bg)
-            cancelBtn?.setBackgroundResource(R.drawable.mx_dialog_btn_bg_cancel_corner)
-            okBtn?.setBackgroundResource(R.drawable.mx_dialog_btn_bg_action_corner)
         }
 
         kotlin.run { // 位置设置
@@ -150,6 +134,59 @@ open class MXBaseListDialog(context: Context, fullScreen: Boolean) :
         }
     }
 
+    protected open fun showCancelBtn() = true
+    protected open fun showActionBtn() = false
+
+    private fun processCancelBtn() {
+        val button = cancelBtn ?: return
+        val visible = showCancelBtn() && isCancelable()
+        if (!visible) {
+            button.visibility = View.GONE
+            return
+        }
+        button.visibility = View.VISIBLE
+        button.text =
+            cancelProp.text ?: context.resources.getString(R.string.mx_dialog_button_cancel_text)
+        cancelProp.attachTextColor(cancelBtn, R.color.mx_dialog_color_text_cancel)
+        cancelProp.attachTextSize(cancelBtn, R.dimen.mx_dialog_text_size_button)
+        button.setOnClickListener { onBackPressed() }
+        if (contentCornerRadiusDP >= 0) {
+            button.background = MXDrawableUtils.buildGradientDrawable(
+                context, R.color.mx_dialog_color_cancel,
+                contentCornerRadiusDP
+            )
+        } else {
+            button.setBackgroundResource(R.drawable.mx_dialog_btn_bg_cancel_corner)
+        }
+    }
+
+    private fun processActionBtn() {
+        val button = okBtn ?: return
+        val visible = showActionBtn()
+        if (!visible) {
+            button.visibility = View.GONE
+            return
+        }
+
+        button.visibility = View.VISIBLE
+        button.text =
+            actionProp.text ?: context.resources.getString(R.string.mx_dialog_button_action_text)
+        actionProp.attachTextColor(okBtn, R.color.mx_dialog_color_text_action)
+        actionProp.attachTextSize(okBtn, R.dimen.mx_dialog_text_size_button)
+        button.setOnClickListener {
+            dismiss()
+            actionProp.onclick?.invoke()
+        }
+        if (contentCornerRadiusDP >= 0) {
+            button.background = MXDrawableUtils.buildGradientDrawable(
+                context, R.color.mx_dialog_color_action,
+                contentCornerRadiusDP
+            )
+        } else {
+            button.setBackgroundResource(R.drawable.mx_dialog_btn_bg_action_corner)
+        }
+    }
+
     override fun setTitle(title: CharSequence?) {
         titleStr = title
 
@@ -168,23 +205,48 @@ open class MXBaseListDialog(context: Context, fullScreen: Boolean) :
         initDialog()
     }
 
+    fun setAdapt(adapt: ListAdapter) {
+        listView?.adapter = adapt
+    }
+
+    fun setItemClick(call: (Int) -> Unit) {
+        listView?.setOnItemClickListener { _, _, position, _ ->
+            call.invoke(position)
+        }
+    }
+
     /**
      * 设置活动按钮
      */
     fun setActionBtn(
         text: CharSequence? = null,
-        visible: Boolean = true,
         textColor: Int? = null,
-        textSizeSP: Float? = null,
-        onclick: (() -> Unit)? = null
+        textSizeSP: Float? = null
     ) {
-        actionProp = MXTextProp(
-            text ?: context.resources.getString(R.string.mx_dialog_button_action_text),
-            visible,
-            textColor,
-            textSizeSP,
-            onclick = onclick
-        )
+        actionProp.text = text
+        actionProp.textColor = textColor
+        actionProp.textSizeSP = textSizeSP
+
+        initDialog()
+    }
+
+    /**
+     * 设置取消按钮
+     */
+    fun setCancelBtn(
+        text: CharSequence? = null,
+        textColor: Int? = null,
+        textSizeSP: Float? = null
+    ) {
+        cancelProp.text = text ?: context.resources.getString(R.string.mx_dialog_button_cancel_text)
+        cancelProp.textColor = textColor
+        cancelProp.textSizeSP = textSizeSP
+
+        initDialog()
+    }
+
+    protected fun setActionClick(click: (() -> Unit)? = null) {
+        actionProp.onclick = click
 
         initDialog()
     }
