@@ -25,7 +25,7 @@ abstract class MXTipBaseDialog(context: Context, fullScreen: Boolean = false) :
     private var delayTxv: TextView? = null
     private var cancelBtn: TextView? = null
     private var btnDivider: View? = null
-    private var okBtn: TextView? = null
+    private var actionBtn: TextView? = null
 
     private var titleStr: CharSequence? = null
     private var titleGravity: Int = Gravity.LEFT
@@ -70,12 +70,17 @@ abstract class MXTipBaseDialog(context: Context, fullScreen: Boolean = false) :
         delayTxv = findViewById(R.id.delayTxv)
         cancelBtn = findViewById(R.id.cancelBtn)
         btnDivider = findViewById(R.id.btnDivider)
-        okBtn = findViewById(R.id.okBtn)
+        actionBtn = findViewById(R.id.okBtn)
     }
 
     override fun onDismissTicket(maxSecond: Int, remindSecond: Int) {
         delayTxv?.text = "$remindSecond s"
         delayTxv?.visibility = View.VISIBLE
+    }
+
+    override fun setCancelable(cancelable: Boolean) {
+        super.setCancelable(cancelable)
+        initDialog()
     }
 
     override fun initDialog() {
@@ -88,38 +93,19 @@ abstract class MXTipBaseDialog(context: Context, fullScreen: Boolean = false) :
         contentLay?.setMaxHeightRatio(maxContentRatio)
         contentLay?.minimumHeight = MXDialogUtils.dp2px(context, minContentHeightDP)
 
-        var cancelProp: MXTextProp? = cancelProp
-        if (isCancelable()) {
-            if (cancelProp == null) {
-                cancelProp = MXTextProp(
-                    context.resources.getString(R.string.mx_dialog_button_cancel_text),
-                    true,
-                    context.resources.getColor(R.color.mx_dialog_color_text_cancel),
-                    context.resources.getDimension(R.dimen.mx_dialog_text_size_button)
-                ) {
-                    // 先触发onCancelListener,再触发用户设置的回调
-                    onCancelCall?.invoke()
-                }
+        kotlin.run { // 处理按钮
+            processCancelBtn()
+            processActionBtn()
+            if (cancelBtn?.visibility == View.VISIBLE || actionBtn?.visibility == View.VISIBLE) {
+                btnLay?.visibility = View.VISIBLE
+                val cornerDP = getCardBackgroundRadiusDP()
+                MXButtonStyle.attach(
+                    buttonStyle, btnLay, cancelBtn,
+                    actionBtn, btnDivider, cornerDP
+                )
+            } else {
+                btnLay?.visibility = View.GONE
             }
-        } else {
-            cancelProp = null
-        }
-
-        attachButton(cancelBtn, cancelProp, "", R.color.mx_dialog_color_text_cancel)
-        attachButton(
-            okBtn,
-            actionProp,
-            context.resources.getString(R.string.mx_dialog_button_action_text),
-            R.color.mx_dialog_color_text_action
-        )
-
-        if (cancelProp != null || actionProp != null) {
-            btnLay?.visibility = View.VISIBLE
-
-            val cornerDP = getCardBackgroundRadiusDP()
-            MXButtonStyle.attach(buttonStyle, btnLay, cancelBtn, okBtn, btnDivider, cornerDP)
-        } else {
-            btnLay?.visibility = View.GONE
         }
 
         when (tipType) {
@@ -138,6 +124,61 @@ abstract class MXTipBaseDialog(context: Context, fullScreen: Boolean = false) :
                 tipTypeImg?.visibility = View.VISIBLE
                 tipTypeImg?.setImageResource(R.drawable.mx_dialog_icon_error)
             }
+        }
+    }
+
+    private fun processCancelBtn() {
+        val button = cancelBtn ?: return
+        val prop = cancelProp
+        val showCancelBtn = (prop == null || prop.visible) && isCancelable()
+
+        if (showCancelBtn) {
+            val cancelProp = prop ?: MXTextProp(
+                context.resources.getString(R.string.mx_dialog_button_cancel_text),
+                true,
+                context.resources.getColor(R.color.mx_dialog_color_text_cancel),
+                context.resources.getDimension(R.dimen.mx_dialog_text_size_button)
+            ) {
+                // 先触发onCancelListener,再触发用户设置的回调
+                onCancelCall?.invoke()
+            }
+
+            button.text = cancelProp.text
+            cancelProp.attachTextColor(button, R.color.mx_dialog_color_text_cancel)
+            cancelProp.attachTextSize(button, R.dimen.mx_dialog_text_size_button)
+            button.setOnClickListener {
+                dismiss()
+                cancelProp.onclick?.invoke()
+            }
+
+            button.visibility = View.VISIBLE
+        } else {
+            button.visibility = View.GONE
+        }
+    }
+
+    private fun processActionBtn() {
+        val button = actionBtn ?: return
+        val prop = actionProp
+        val showActionBtn = (prop == null || prop.visible)
+        if (showActionBtn) {
+            val actionProp = prop ?: MXTextProp(
+                context.resources.getString(R.string.mx_dialog_button_action_text),
+                true,
+                context.resources.getColor(R.color.mx_dialog_color_text_action),
+                context.resources.getDimension(R.dimen.mx_dialog_text_size_button)
+            )
+            button.text = actionProp.text
+            actionProp.attachTextColor(button, R.color.mx_dialog_color_text_action)
+            actionProp.attachTextSize(button, R.dimen.mx_dialog_text_size_button)
+            button.setOnClickListener {
+                dismiss()
+                actionProp.onclick?.invoke()
+            }
+
+            button.visibility = View.VISIBLE
+        } else {
+            button.visibility = View.GONE
         }
     }
 
@@ -250,7 +291,12 @@ abstract class MXTipBaseDialog(context: Context, fullScreen: Boolean = false) :
         initDialog()
     }
 
-    private fun attachButton(button: TextView?, prop: MXTextProp?, s: String, defColorRes: Int) {
+    private fun attachButton(
+        button: TextView?,
+        prop: MXTextProp?,
+        s: String,
+        defColorRes: Int
+    ) {
         button?.text = s
         if (prop != null) {
             button?.text = prop.text
