@@ -1,7 +1,6 @@
 package com.mx.dialog.tip
 
 import android.content.Context
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
@@ -11,9 +10,9 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.mx.dialog.R
 import com.mx.dialog.base.MXBaseCardDialog
-import com.mx.dialog.utils.MXTextProp
 import com.mx.dialog.utils.MXButtonStyle
 import com.mx.dialog.utils.MXDialogUtils
+import com.mx.dialog.utils.MXTextProp
 import com.mx.dialog.views.MXRatioFrameLayout
 
 abstract class MXTipBaseDialog(context: Context, fullScreen: Boolean = false) :
