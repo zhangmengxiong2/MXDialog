@@ -81,6 +81,13 @@ abstract class MXTipBaseDialog(context: Context, fullScreen: Boolean = false) :
         initDialog()
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        if (isCancelable()) {
+            cancelProp?.onclick?.invoke()
+        }
+    }
+
     override fun initDialog() {
         super.initDialog()
 
@@ -136,16 +143,12 @@ abstract class MXTipBaseDialog(context: Context, fullScreen: Boolean = false) :
                 true,
                 context.resources.getColor(R.color.mx_dialog_color_text_cancel),
                 15f
-            ) { onBackPressed() }
+            )
 
             button.text = cancelProp.text
             cancelProp.attachTextColor(button, R.color.mx_dialog_color_text_cancel)
             cancelProp.attachTextSize(button, R.dimen.mx_dialog_text_size_button)
-            button.setOnClickListener {
-                dismiss()
-                cancelProp.onclick?.invoke()
-            }
-
+            button.setOnClickListener { onBackPressed() }
             button.visibility = View.VISIBLE
         } else {
             button.visibility = View.GONE
