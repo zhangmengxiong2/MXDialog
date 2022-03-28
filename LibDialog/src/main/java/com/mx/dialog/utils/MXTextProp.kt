@@ -1,5 +1,6 @@
 package com.mx.dialog.utils
 
+import android.graphics.Typeface
 import android.util.TypedValue
 import android.widget.TextView
 
@@ -9,6 +10,7 @@ internal data class MXTextProp(
     var textColor: Int? = null,
     var textSizeSP: Float? = null,
     var textHeightDP: Float? = null,
+    var textStyle: Int? = null,
     var textGravity: Int? = null,
     var onclick: (() -> Unit)? = null
 ) {
@@ -17,6 +19,12 @@ internal data class MXTextProp(
         val context = view.context ?: return
         val color = textColor ?: context.resources.getColor(defaultRes)
         view.setTextColor(color)
+    }
+
+    fun attachTextStyle(textView: TextView?, defaultType: Int) {
+        val view = textView ?: return
+        val style = textStyle ?: defaultType
+        view.setTypeface(Typeface.DEFAULT, style)
     }
 
     fun attachTextSize(textView: TextView?, defaultRes: Int) {

@@ -2,6 +2,7 @@ package com.mx.example
 
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
@@ -30,15 +31,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun showError(view: View) {
-        MXTipDialog.warn(this, "错误提示", "错误", dialogType = MXDialogType.ERROR)
+        MXTipDialog.show(this, "错误提示", "错误", dialogType = MXDialogType.ERROR)
     }
 
     fun showSuccess(view: View) {
-        MXTipDialog.warn(this, "成功提示", "成功", dialogType = MXDialogType.SUCCESS)
+        MXTipDialog.show(this, "成功提示", "成功", dialogType = MXDialogType.SUCCESS)
     }
 
     fun showWarn(view: View) {
-        MXTipDialog.warn(this, "Warn提示", "提示", dialogType = MXDialogType.WARN)
+        MXTipDialog.show(this, "Warn提示", "提示", dialogType = MXDialogType.WARN)
     }
 
     fun showLoading(view: View) {
@@ -63,7 +64,7 @@ class MainActivity : AppCompatActivity() {
 
     fun showSelect(view: View) {
         MXListDialog(this).apply {
-//            setTitle("请选择")
+            setTitle("请选择")
 //            setContentMaxHeightRatio(1.5f)
             setContentCornerRadius(10f)
             setContentPosition(MXDialogPosition.BOTTOM)
@@ -84,9 +85,10 @@ class MainActivity : AppCompatActivity() {
             setItems(
                 list,
                 selectIndex = 2,
-                textColor = Color.RED,
-                textSizeSP = 12f,
-                itemHeightDP = 52f,
+//                textColor = Color.RED,
+//                textSizeSP = 14f,
+//                textStyle = Typeface.BOLD_ITALIC,
+//                itemHeightDP = 55f,
                 textGravity = Gravity.LEFT or Gravity.CENTER_VERTICAL
             ) { index ->
                 MXTipDialog.confirm(this@MainActivity, "点击了：$index")

@@ -79,31 +79,12 @@ open class MXTipDialog(context: Context) : MXTipBaseDialog(context) {
                 dialog.setCancelBtn(text = cancelButtonText) {
                     onActionClick?.invoke(false)
                 }
+                dialog.setOnCancelListener {
+                    onActionClick?.invoke(false)
+                }
             }
             dialog.setTipType(MXDialogType.WARN)
             dialog.show()
-        }
-
-        fun warn(
-            context: Context,
-            message: CharSequence,
-            title: CharSequence? = null,
-            actionButtonText: CharSequence? = null,
-            cancelable: Boolean = true,
-            cancelButtonText: CharSequence? = null,
-            dismissDelay: Int? = null,
-            dialogType: MXDialogType? = null,
-            onActionClick: (() -> Unit)? = null
-        ) {
-            show(
-                context, message, title,
-                cancelable = cancelable, cancelButtonText = cancelButtonText,
-                dialogType = dialogType ?: MXDialogType.NONE, actionButtonText = actionButtonText,
-                dismissDelay = dismissDelay,
-                onActionClick = { confirm ->
-                    if (confirm) onActionClick?.invoke()
-                }
-            )
         }
 
         /**
@@ -118,9 +99,12 @@ open class MXTipDialog(context: Context) : MXTipBaseDialog(context) {
          */
         fun show(
             context: Context, message: CharSequence, title: CharSequence? = null,
-            actionButtonText: CharSequence? = null, cancelable: Boolean = true,
-            cancelButtonText: CharSequence? = null, dismissDelay: Int? = null,
-            dialogType: MXDialogType? = null, onActionClick: ((confirm: Boolean) -> Unit)? = null
+            actionButtonText: CharSequence? = null,
+            onActionClick: ((confirm: Boolean) -> Unit)? = null,
+            cancelable: Boolean = true,
+            cancelButtonText: CharSequence? = null,
+            onCancelListener: (() -> Unit)? = null,
+            dismissDelay: Int? = null, dialogType: MXDialogType? = null
         ) {
             val dialog = MXTipDialog(context)
             dialog.setTitle(title)
@@ -133,6 +117,8 @@ open class MXTipDialog(context: Context) : MXTipBaseDialog(context) {
                     visible = cancelButtonText != null,
                     text = cancelButtonText
                 ) { onActionClick?.invoke(false) }
+
+                dialog.setOnCancelListener(onCancelListener)
             }
 
             dialog.setActionBtn(

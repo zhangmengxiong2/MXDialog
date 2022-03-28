@@ -7,6 +7,7 @@
     <dimen name="mx_dialog_size_card_corner_radius">14dp</dimen>
     <dimen name="mx_dialog_size_progress_img">45dp</dimen>
     <dimen name="mx_dialog_size_divider_space">12dp</dimen>
-    <dimen name="mx_dialog_size_list_item_height">52dp</dimen>
+    <dimen name="mx_dialog_size_list_item_padding">25dp</dimen>
+    <dimen name="mx_dialog_size_list_item_height">60dp</dimen>
     <dimen name="mx_dialog_size_action_height">45dp</dimen>
 </resources>

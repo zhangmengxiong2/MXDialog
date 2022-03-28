@@ -32,7 +32,8 @@
                 android:singleLine="true"
                 android:text="请选择"
                 android:textColor="@color/mx_dialog_color_text"
-                android:textSize="@dimen/mx_dialog_text_size_title" />
+                android:textSize="@dimen/mx_dialog_text_size_title"
+                android:textStyle="bold" />
 
             <View
                 android:layout_width="match_parent"

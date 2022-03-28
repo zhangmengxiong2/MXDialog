@@ -1,6 +1,7 @@
 package com.mx.dialog.list
 
 import android.content.Context
+import android.graphics.Typeface
 import android.view.Gravity
 import android.view.View
 import android.widget.ImageView
@@ -22,10 +23,12 @@ open class MXListDialog(context: Context, fullScreen: Boolean = false) :
             val selectTag = itemView.findViewById<ImageView>(R.id.selectTag)
             listItemProp.attachTextHeight(infoTxv, R.dimen.mx_dialog_size_list_item_height)
             listItemProp.attachTextColor(infoTxv, R.color.mx_dialog_color_text)
+            listItemProp.attachTextStyle(infoTxv, Typeface.NORMAL)
             listItemProp.attachTextSize(infoTxv, R.dimen.mx_dialog_text_size_content)
             listItemProp.attachTextGravity(infoTxv, Gravity.CENTER)
             if (showSelectTag) {
                 if (selectIndexList.contains(position)) {
+                    listItemProp.attachTextStyle(infoTxv, Typeface.BOLD)
                     selectTag?.setImageResource(R.drawable.mx_dialog_icon_select)
                 } else {
                     selectTag?.setImageResource(R.drawable.mx_dialog_icon_unselect)
@@ -77,6 +80,7 @@ open class MXListDialog(context: Context, fullScreen: Boolean = false) :
      * @param itemHeightDP 数据Item文字行高度
      * @param textColor 数据Item文字颜色
      * @param textSizeSP 数据Item文字大小
+     * @param textStyle 数据Item文字样式 （默认： Typeface.NORMAL  斜体：Typeface.ITALIC  粗体：Typeface.BOLD  粗斜体：Typeface.BOLD_ITALIC）
      * @param textGravity 数据Item文字Gravity方向
      * @param onSelect 数据Item选中点击回调
      */
@@ -87,6 +91,7 @@ open class MXListDialog(context: Context, fullScreen: Boolean = false) :
         itemHeightDP: Float? = null,
         textColor: Int? = null,
         textSizeSP: Float? = null,
+        textStyle: Int? = null,
         textGravity: Int? = null,
         onSelect: ((index: Int) -> Unit)? = null
     ) {
@@ -99,6 +104,7 @@ open class MXListDialog(context: Context, fullScreen: Boolean = false) :
         this.listItemProp.textHeightDP = itemHeightDP
         this.listItemProp.textColor = textColor
         this.listItemProp.textSizeSP = textSizeSP
+        this.listItemProp.textStyle = textStyle
         this.listItemProp.textGravity = textGravity
         this.isSingleSelectMod = true
 

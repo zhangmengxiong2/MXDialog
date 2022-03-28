@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:clickable="false"
@@ -10,17 +10,18 @@
 
     <TextView
         android:id="@+id/infoTxv"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:clickable="false"
         android:ellipsize="end"
         android:focusable="false"
         android:focusableInTouchMode="false"
         android:gravity="center"
         android:minHeight="@dimen/mx_dialog_size_list_item_height"
-        android:paddingHorizontal="@dimen/mx_dialog_size_divider_space"
+        android:paddingHorizontal="@dimen/mx_dialog_size_list_item_padding"
+        android:paddingVertical="@dimen/mx_dialog_size_divider_space"
         android:singleLine="true"
+        android:text="A"
         android:textColor="@color/mx_dialog_color_text"
         android:textSize="@dimen/mx_dialog_text_size_content" />
 
@@ -28,10 +29,10 @@
         android:id="@+id/selectTag"
         android:layout_width="30dp"
         android:layout_height="30dp"
+        android:layout_gravity="right|center_vertical"
         android:layout_marginHorizontal="@dimen/mx_dialog_size_divider_space"
         android:clickable="false"
         android:focusable="false"
         android:focusableInTouchMode="false"
-        android:src="@drawable/mx_dialog_icon_unselect"
-        android:visibility="gone" />
-</LinearLayout>
+        android:src="@drawable/mx_dialog_icon_unselect" />
+</FrameLayout>
