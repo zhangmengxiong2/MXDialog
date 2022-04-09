@@ -3,6 +3,8 @@ package com.mx.dialog.progress
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import com.mx.dialog.R
@@ -23,6 +25,13 @@ open class MXLoadingDialog(context: Context) : MXBaseCardDialog(context) {
         super.onCreate(savedInstanceState)
         initView()
         initData()
+    }
+
+    override fun initCardView(cardLay: ViewGroup) {
+        super.initCardView(cardLay)
+        val lp = cardLay.layoutParams as FrameLayout.LayoutParams
+        lp.width = FrameLayout.LayoutParams.WRAP_CONTENT
+        cardLay.layoutParams = lp
     }
 
     private fun initView() {

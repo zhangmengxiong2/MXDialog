@@ -54,55 +54,58 @@ abstract class MXBaseCardDialog(context: Context, fullScreen: Boolean = false) :
         initDialog()
     }
 
+    private val marginLeft: Int get() = MXDialogUtils.dp2px(context, cardMarginDP.left)
+    private val marginTop: Int
+        get() {
+            var top = MXDialogUtils.dp2px(context, cardMarginDP.top)
+            if (includeStatusBarHeight) {
+                top += MXDialogUtils.getStatusBarHeight(context)
+            }
+            return top
+        }
+    private val marginRight: Int get() = MXDialogUtils.dp2px(context, cardMarginDP.right)
+    private val marginBottom: Int
+        get() = MXDialogUtils.dp2px(
+            context,
+            cardMarginDP.bottom
+        ) + (if (includeNavigationBarHeight) MXDialogUtils.getNavigationBarHeight(context) else 0)
+
     protected open fun initDialog() {
-        mxRootLay?.setOnClickListener {
+        initRootView(mxRootLay ?: return)
+        initCardView(mxCardLay ?: return)
+    }
+
+    open fun initRootView(rootLay: ViewGroup) {
+        rootLay.setOnClickListener {
             if (isCanceledOnTouchOutside()) {
                 onBackPressed()
             }
         }
-        mxCardLay?.setOnClickListener { }
+        rootLay.setPadding(marginLeft, marginTop, marginRight, marginBottom)
+        val color = dialogBackgroundColor
+            ?: context.resources.getColor(R.color.mx_dialog_color_background_alpha)
+        rootLay.setBackgroundColor(color)
+    }
 
+    open fun initCardView(cardLay: ViewGroup) {
+        cardLay.setOnClickListener { }
         if (cardBackgroundRadiusDP >= 0) {
-            mxCardLay?.background = MXDrawableUtils.buildGradientDrawable(
+            cardLay.background = MXDrawableUtils.buildGradientDrawable(
                 context, R.color.mx_dialog_color_background,
                 cardBackgroundRadiusDP
             )
         } else {
-            mxCardLay?.setBackgroundResource(R.drawable.mx_dialog_card_bg)
+            cardLay.setBackgroundResource(R.drawable.mx_dialog_card_bg)
         }
 
-        kotlin.run { // 位置设置
-            val marginLeft = MXDialogUtils.dp2px(context, cardMarginDP.left)
-            val marginTop = MXDialogUtils.dp2px(
-                context,
-                cardMarginDP.top
-            ) + (if (includeStatusBarHeight) MXDialogUtils.getStatusBarHeight(context) else 0)
-            val marginRight = MXDialogUtils.dp2px(context, cardMarginDP.right)
-            val marginBottom = MXDialogUtils.dp2px(
-                context,
-                cardMarginDP.bottom
-            ) + (if (includeNavigationBarHeight) MXDialogUtils.getNavigationBarHeight(context) else 0)
-
-            val lp = (mxCardLay?.layoutParams as FrameLayout.LayoutParams?)
-            lp?.gravity = position.gravity
-            mxCardLay?.layoutParams = lp
-
-            mxRootLay?.setPadding(marginLeft, marginTop, marginRight, marginBottom)
-
-            mxCardLay?.translationX =
-                MXDialogUtils.dp2px(context, position.translationX ?: 0).toFloat()
-            mxCardLay?.translationY =
-                MXDialogUtils.dp2px(context, position.translationY ?: 0).toFloat()
-
-            mxCardLay?.layoutParams?.width =
-                MXDialogUtils.getScreenWidth(context) - marginLeft - marginRight
-        }
-
-        kotlin.run {
-            val color = dialogBackgroundColor
-                ?: context.resources.getColor(R.color.mx_dialog_color_background_alpha)
-            mxRootLay?.setBackgroundColor(color)
-        }
+        val lp = (cardLay.layoutParams as FrameLayout.LayoutParams?)
+        lp?.gravity = position.gravity
+        lp?.width = MXDialogUtils.getScreenWidth(context) - marginLeft - marginRight
+        cardLay.layoutParams = lp
+        cardLay.translationX =
+            MXDialogUtils.dp2px(context, position.translationX ?: 0).toFloat()
+        cardLay.translationY =
+            MXDialogUtils.dp2px(context, position.translationY ?: 0).toFloat()
     }
 
     /**
