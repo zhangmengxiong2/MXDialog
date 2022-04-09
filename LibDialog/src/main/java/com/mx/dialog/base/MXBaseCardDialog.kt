@@ -93,6 +93,9 @@ abstract class MXBaseCardDialog(context: Context, fullScreen: Boolean = false) :
                 MXDialogUtils.dp2px(context, position.translationX ?: 0).toFloat()
             mxCardLay?.translationY =
                 MXDialogUtils.dp2px(context, position.translationY ?: 0).toFloat()
+
+            mxCardLay?.layoutParams?.width =
+                MXDialogUtils.getScreenWidth(context) - marginLeft - marginRight
         }
 
         kotlin.run {

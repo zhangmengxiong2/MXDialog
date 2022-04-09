@@ -3,6 +3,7 @@ package com.mx.dialog.views
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.FrameLayout
+import kotlin.math.min
 
 /**
  * 可以设置最大宽高比的FrameLayout
@@ -13,20 +14,37 @@ class MXRatioFrameLayout @JvmOverloads constructor(
 ) : FrameLayout(context, attrs) {
 
     private var mMaxHeightRatio: Float = 0f
+    private var mMaxHeight: Int = 0
 
-    fun setMaxHeightRatio(height: Float) {
-        mMaxHeightRatio = height
-        postInvalidate()
+    fun setMaxHeightRatio(ratio: Float) {
+        mMaxHeightRatio = ratio
+        if (ratio > 0) {
+            mMaxHeight = 0
+        }
+        requestLayout()
+    }
+
+    fun setMaxHeight(maxHeight: Int) {
+        mMaxHeight = maxHeight
+        if (maxHeight > 0) {
+            mMaxHeightRatio = 0f
+        }
+        requestLayout()
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        if (mMaxHeightRatio <= 0f && mMaxHeight <= 0) {
+            super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+            return
+        }
         val heightMode = MeasureSpec.getMode(heightMeasureSpec)
         var heightSize = MeasureSpec.getSize(heightMeasureSpec)
         val widthSize = MeasureSpec.getSize(widthMeasureSpec)
 
-        val maxHeight = widthSize * mMaxHeightRatio
-        if (maxHeight > 0) {
-            heightSize = if (heightSize <= maxHeight) heightSize else maxHeight.toInt()
+        if (mMaxHeightRatio > 0) {
+            heightSize = min((widthSize * mMaxHeightRatio).toInt(), heightSize)
+        } else if (mMaxHeight > 0) {
+            heightSize = min(mMaxHeight, heightSize)
         }
 
         val maxHeightMeasureSpec = MeasureSpec.makeMeasureSpec(

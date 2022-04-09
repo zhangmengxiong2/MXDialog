@@ -31,6 +31,7 @@ open class MXBaseListDialog(context: Context, fullScreen: Boolean) :
     private var position = MXDialogPosition.BOTTOM
     private var mxRootLay: LinearLayout? = null
     private var mxCardLay: ViewGroup? = null
+    private var btnLay: ViewGroup? = null
     private var contentLay: MXRatioFrameLayout? = null
     private var btnDivider: View? = null
     private var cancelBtn: TextView? = null
@@ -51,6 +52,7 @@ open class MXBaseListDialog(context: Context, fullScreen: Boolean) :
     private fun initView() {
         if (mxRootLay == null) mxRootLay = findViewById(R.id.mxRootLay)
         if (mxCardLay == null) mxCardLay = findViewById(R.id.mxCardLay)
+        if (btnLay == null) btnLay = findViewById(R.id.btnLay)
         if (contentLay == null) contentLay = findViewById(R.id.contentLay)
         if (btnDivider == null) btnDivider = findViewById(R.id.btnDivider)
         if (cancelBtn == null) cancelBtn = findViewById(R.id.cancelBtn)
@@ -68,7 +70,6 @@ open class MXBaseListDialog(context: Context, fullScreen: Boolean) :
     protected open fun initDialog() {
         if (listView == null) return
 
-        contentLay?.setMaxHeightRatio(contentMaxHeightRatioDP)
 
         if (titleStr != null) {
             titleTxv?.text = titleStr
@@ -116,6 +117,11 @@ open class MXBaseListDialog(context: Context, fullScreen: Boolean) :
             ) + (if (includeNavigationBarHeight) MXDialogUtils.getNavigationBarHeight(context) else 0)
 
             mxRootLay?.setPadding(marginLeft, marginTop, marginRight, marginBottom)
+
+
+            val screenWidth = MXDialogUtils.getScreenWidth(context) - marginLeft - marginRight
+            mxCardLay?.layoutParams?.width = screenWidth
+            btnLay?.layoutParams?.width = screenWidth
         }
 
         kotlin.run {
@@ -131,6 +137,31 @@ open class MXBaseListDialog(context: Context, fullScreen: Boolean) :
                 MXDialogUtils.dp2px(context, position.translationX ?: 0).toFloat()
             mxCardLay?.translationY =
                 MXDialogUtils.dp2px(context, position.translationY ?: 0).toFloat()
+        }
+
+        contentLay?.setMaxHeightRatio(contentMaxHeightRatioDP)
+        mxRootLay?.post {
+            calculatorListHeight()
+        }
+    }
+
+    /**
+     * 动态计算列表高度
+     */
+    private fun calculatorListHeight() {
+        val mxRootLay = mxRootLay ?: return
+        var maxHeight = mxRootLay.height - mxRootLay.paddingTop - mxRootLay.paddingBottom
+        if (cancelBtn?.visibility == View.VISIBLE) {
+            maxHeight -= context.resources.getDimensionPixelOffset(R.dimen.mx_dialog_size_action_height)
+            maxHeight -= context.resources.getDimensionPixelOffset(R.dimen.mx_dialog_size_divider_space)
+        }
+        if (titleLay?.visibility == View.VISIBLE) {
+            maxHeight -= context.resources.getDimensionPixelOffset(R.dimen.mx_dialog_size_list_item_height)
+        }
+
+//        maxHeight -= context.resources.getDimensionPixelOffset(R.dimen.mx_dialog_size_divider_space)
+        if (maxHeight > 0) {
+            contentLay?.setMaxHeight(maxHeight)
         }
     }
 
