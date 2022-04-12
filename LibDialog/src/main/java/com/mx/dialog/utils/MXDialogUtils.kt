@@ -7,9 +7,13 @@ import kotlin.math.min
 import kotlin.math.roundToInt
 
 internal object MXDialogUtils {
+    private var debug = BuildConfig.DEBUG
+    fun setDebug(debug: Boolean) {
+        this.debug = debug
+    }
 
     fun log(message: Any) {
-        if (BuildConfig.DEBUG) {
+        if (debug) {
             println("MXDialog - $message")
         }
     }

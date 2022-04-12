@@ -27,8 +27,8 @@
 
     <ImageView
         android:id="@+id/selectTag"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:layout_gravity="right|center_vertical"
         android:layout_marginHorizontal="@dimen/mx_dialog_size_divider_space"
         android:clickable="false"

@@ -18,17 +18,11 @@ class MXRatioFrameLayout @JvmOverloads constructor(
 
     fun setMaxHeightRatio(ratio: Float) {
         mMaxHeightRatio = ratio
-        if (ratio > 0) {
-            mMaxHeight = 0
-        }
         requestLayout()
     }
 
     fun setMaxHeight(maxHeight: Int) {
         mMaxHeight = maxHeight
-        if (maxHeight > 0) {
-            mMaxHeightRatio = 0f
-        }
         requestLayout()
     }
 
@@ -43,7 +37,8 @@ class MXRatioFrameLayout @JvmOverloads constructor(
 
         if (mMaxHeightRatio > 0) {
             heightSize = min((widthSize * mMaxHeightRatio).toInt(), heightSize)
-        } else if (mMaxHeight > 0) {
+        }
+        if (mMaxHeight > 0) {
             heightSize = min(mMaxHeight, heightSize)
         }
 
