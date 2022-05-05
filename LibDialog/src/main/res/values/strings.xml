@@ -2,4 +2,5 @@
     <string name="mx_dialog_tip_title">提示</string>
     <string name="mx_dialog_button_action_text">确认</string>
     <string name="mx_dialog_button_cancel_text">取消</string>
+    <string name="mx_dialog_upgrade_title">发现有新版本</string>
 </resources>

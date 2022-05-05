@@ -6,9 +6,9 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.mx.dialog.MXDialog
-import com.mx.dialog.progress.MXLoadingDialog
 import com.mx.dialog.tip.MXDialogPosition
 import com.mx.dialog.tip.MXDialogType
+import com.mx.dialog.upgrade.MXUpgradeDialog
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun showLoading(view: View) {
-        MXLoadingDialog(this).apply {
+        MXUpgradeDialog(this).apply {
             setCancelable(false)
             setCardPosition(MXDialogPosition.CENTER.also {
 //                it.translationX = 50
@@ -48,9 +48,9 @@ class MainActivity : AppCompatActivity() {
             setOnCancelListener {
                 Toast.makeText(this@MainActivity, "退出回调", Toast.LENGTH_SHORT).show()
             }
-            setDismissDelay(3)
+            setDismissDelay(30)
 //            setIndeterminateDrawable(resources.getDrawable(com.mx.dialog.R.drawable.mx_dialog_icon_error))
-            setMessage("我在加载中...")
+//            setMessage("我在加载中... ${MXProgressDialog.REPLACE_PROGRESS}")
         }.show()
     }
 
