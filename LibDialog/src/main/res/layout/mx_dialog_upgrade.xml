@@ -33,28 +33,15 @@
         android:textColor="@color/mx_dialog_color_text"
         android:textSize="@dimen/mx_dialog_text_size_content" />
 
-    <com.mx.dialog.views.NumberProgressBar
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        app:progress_current="10"
-        app:progress_max="100"
-        app:progress_reached_bar_height="2dp"
-        app:progress_reached_color="@color/mx_dialog_color_action"
-        app:progress_text_color="@color/mx_dialog_color_action"
-        app:progress_text_size="@dimen/mx_dialog_text_size_small"
-        app:progress_unreached_bar_height="2dp"
-        app:progress_unreached_color="@color/mx_dialog_color_background_alpha" />
-
     <TextView
         android:id="@+id/actionBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:background="@drawable/mx_dialog_btn_bg_action_corner"
+        android:background="@drawable/mx_dialog_btn_bg_upgrade"
         android:gravity="center"
         android:paddingVertical="14dp"
         android:text="立即更新"
-        android:textColor="@color/mx_dialog_color_text_action"
+        android:textColor="@color/mx_dialog_color_upgrade"
         android:textSize="@dimen/mx_dialog_text_size_button" />
 </LinearLayout>

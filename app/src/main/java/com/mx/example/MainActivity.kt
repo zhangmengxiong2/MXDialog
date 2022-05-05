@@ -1,14 +1,22 @@
 package com.mx.example
 
+import android.app.Dialog
+import android.content.Context
 import android.content.Intent
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.text.Html
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.FileProvider
 import com.mx.dialog.MXDialog
 import com.mx.dialog.tip.MXDialogPosition
 import com.mx.dialog.tip.MXDialogType
+import com.mx.dialog.upgrade.IMXUpgrade
 import com.mx.dialog.upgrade.MXUpgradeDialog
+import java.io.File
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,17 +49,43 @@ class MainActivity : AppCompatActivity() {
     fun showLoading(view: View) {
         MXUpgradeDialog(this).apply {
             setCancelable(false)
-            setCardPosition(MXDialogPosition.CENTER.also {
-//                it.translationX = 50
-//                it.translationY = -100
-            })
-            setOnCancelListener {
-                Toast.makeText(this@MainActivity, "退出回调", Toast.LENGTH_SHORT).show()
-            }
-            setDismissDelay(30)
+            setMessage(Html.fromHtml("1:xxx<br />2:xxx<br />3:xxx<br />4:xxx"))
+            setIUpgrade(
+                "https://5a694755beae180ed219fdf5d2238691.rdt.tfogc.com:49156/dldir1.qq.com/weixin/android/weixin8022android2140_arm64.apk?mkey=6273e8db6676c7899fedb5fcebc4779b&arrive_key=302432739767&cip=175.10.24.12&proto=https",
+                imxUpgrade
+            )
+
 //            setIndeterminateDrawable(resources.getDrawable(com.mx.dialog.R.drawable.mx_dialog_icon_error))
 //            setMessage("我在加载中... ${MXProgressDialog.REPLACE_PROGRESS}")
         }.show()
+    }
+
+    private val imxUpgrade = object : IMXUpgrade {
+        override fun download(dialog: Dialog, url: String, progress: (Int) -> Unit): File? {
+            val file = File(dialog.context.cacheDir, "aaa.apk")
+            file.createNewFile()
+            val result = HttpDataHelp.download(url, file, progress)
+            return if (result == true && file.exists()) file else null
+        }
+
+        override fun install(context: Context, file: File) {
+            val intent = Intent()
+            intent.action = Intent.ACTION_VIEW
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            val type = "application/vnd.android.package-archive"
+            if (Build.VERSION.SDK_INT >= 24) {
+                val uri = FileProvider.getUriForFile(
+                    this@MainActivity,
+                    "${this@MainActivity.packageName}.fileProvider",
+                    file
+                )
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                intent.setDataAndType(uri, type)
+            } else {
+                intent.setDataAndType(Uri.fromFile(file), type)
+            }
+            startActivity(intent)
+        }
     }
 
     fun showToast(view: View) {
