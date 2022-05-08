@@ -63,7 +63,7 @@
         android:id="@+id/btnLay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/mx_dialog_size_divider_space">
+        android:layout_marginTop="@dimen/mx_dialog_size_divider_normal">
 
         <TextView
             android:id="@+id/cancelBtn"
@@ -74,7 +74,7 @@
 
         <View
             android:id="@+id/btnDivider"
-            android:layout_width="@dimen/mx_dialog_size_divider_space"
+            android:layout_width="@dimen/mx_dialog_size_divider_normal"
             android:layout_height="wrap_content"
             android:visibility="gone" />
 

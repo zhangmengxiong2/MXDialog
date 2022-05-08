@@ -48,45 +48,30 @@ object MXDialog {
     }
 
     /**
+     * 显示提示信息，不需要返回操作
      * @param message 内容
      * @param title 标题
      * @param actionButtonText 活动按钮文字
-     * @param cancelButtonText 取消按钮文字
      * @param dismissDelay x秒后弹窗消失
-     * @param cancelable 是否响应返回按钮、是否点击空白处消失
      * @param dialogType Icon类型
-     * @param onActionClick 按钮点击响应
      */
     fun tip(
         context: Context, message: CharSequence, title: CharSequence? = null,
         actionButtonText: CharSequence? = null,
-        onActionClick: ((confirm: Boolean) -> Unit)? = null,
-        cancelable: Boolean = true,
-        cancelButtonText: CharSequence? = null,
-        onCancelListener: (() -> Unit)? = null,
-        dismissDelay: Int? = null, dialogType: MXDialogType? = null
+        dismissDelay: Int? = null, dialogType: MXDialogType? = null,
     ) {
         val dialog = MXTipDialog(context)
         dialog.setTitle(title)
         dialog.setMessage(message)
-        dialog.setCancelable(cancelable)
+        dialog.setCancelable(true)
         dialog.setDismissDelay(dismissDelay)
-
-        if (cancelable) {
-            dialog.setCancelBtn(
-                visible = cancelButtonText != null,
-                text = cancelButtonText
-            ) { onActionClick?.invoke(false) }
-
-            dialog.setOnCancelListener(onCancelListener)
-        }
+        dialog.setCancelBtn(visible = false)
 
         dialog.setActionBtn(
             text = actionButtonText
                 ?: context.resources.getString(R.string.mx_dialog_button_action_text)
-        ) { onActionClick?.invoke(true) }
+        )
         dialog.setTipType(dialogType)
-
         dialog.show()
     }
 

@@ -3,4 +3,7 @@
     <string name="mx_dialog_button_action_text">确认</string>
     <string name="mx_dialog_button_cancel_text">取消</string>
     <string name="mx_dialog_upgrade_title">发现有新版本</string>
+    <string name="mx_dialog_upgrade_action">立即更新</string>
+    <string name="mx_dialog_upgrade_download">开始下载</string>
+    <string name="mx_dialog_upgrade_install">下载完成，去安装</string>
 </resources>

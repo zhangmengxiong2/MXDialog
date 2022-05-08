@@ -10,7 +10,7 @@
     <LinearLayout
         android:id="@+id/titleLay"
         android:layout_width="match_parent"
-        android:layout_height="55dp"
+        android:layout_height="@dimen/mx_dialog_size_title_layout_height"
         android:gravity="center_vertical"
         android:paddingHorizontal="15dp">
 
@@ -65,7 +65,7 @@
         android:layout_width="match_parent"
         android:layout_height="65dp"
         android:gravity="center"
-        android:padding="@dimen/mx_dialog_size_divider_space">
+        android:padding="@dimen/mx_dialog_size_divider_normal">
 
         <TextView
             android:id="@+id/cancelBtn"

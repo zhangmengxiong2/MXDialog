@@ -153,7 +153,7 @@ open class MXBaseListDialog(context: Context, fullScreen: Boolean) :
         var maxHeight = mxRootLay.height - mxRootLay.paddingTop - mxRootLay.paddingBottom
         if (cancelBtn?.visibility == View.VISIBLE) {
             maxHeight -= context.resources.getDimensionPixelOffset(R.dimen.mx_dialog_size_action_height)
-            maxHeight -= context.resources.getDimensionPixelOffset(R.dimen.mx_dialog_size_divider_space)
+            maxHeight -= context.resources.getDimensionPixelOffset(R.dimen.mx_dialog_size_divider_normal)
         }
         if (titleLay?.visibility == View.VISIBLE) {
             maxHeight -= context.resources.getDimensionPixelOffset(R.dimen.mx_dialog_size_list_item_height)

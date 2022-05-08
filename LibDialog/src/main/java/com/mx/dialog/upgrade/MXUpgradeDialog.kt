@@ -11,6 +11,7 @@ import android.widget.TextView
 import com.mx.dialog.R
 import com.mx.dialog.base.MXBaseCardDialog
 import com.mx.dialog.utils.MXUtils.asString
+import com.mx.dialog.views.MXRatioFrameLayout
 import kotlin.concurrent.thread
 
 open class MXUpgradeDialog(context: Context, fullScreen: Boolean = false) :
@@ -18,6 +19,7 @@ open class MXUpgradeDialog(context: Context, fullScreen: Boolean = false) :
     private val mHandler = Handler(Looper.getMainLooper())
     private var closeBtn: ImageView? = null
     private var titleTxv: TextView? = null
+    private var contentLay: MXRatioFrameLayout? = null
     private var msgTxv: TextView? = null
     private var progressBar: ProgressBar? = null
     private var actionBtn: TextView? = null
@@ -38,9 +40,12 @@ open class MXUpgradeDialog(context: Context, fullScreen: Boolean = false) :
         setCardBackgroundRadius(16f)
         closeBtn = findViewById(R.id.closeBtn)
         titleTxv = findViewById(R.id.titleTxv)
+        contentLay = findViewById(R.id.contentLay)
         msgTxv = findViewById(R.id.msgTxv)
         progressBar = findViewById(R.id.progressBar)
         actionBtn = findViewById(R.id.actionBtn)
+
+        contentLay?.setMaxHeightRatio(0.5f)
         processInitStage()
     }
 
@@ -119,14 +124,14 @@ open class MXUpgradeDialog(context: Context, fullScreen: Boolean = false) :
     }
 
     private fun processInitStage() {
-        actionBtn?.text = "下载安装"
+        actionBtn?.text = context.getString(R.string.mx_dialog_upgrade_download)
         progressBar?.visibility = View.INVISIBLE
         actionBtn?.isEnabled = true
         actionBtn?.setOnClickListener(downloadClickListener)
     }
 
     private fun processInstallStage() {
-        actionBtn?.text = "下载完成，去安装"
+        actionBtn?.text = context.getString(R.string.mx_dialog_upgrade_install)
         progressBar?.visibility = View.INVISIBLE
         actionBtn?.isEnabled = true
         actionBtn?.setOnClickListener(installClickListener)

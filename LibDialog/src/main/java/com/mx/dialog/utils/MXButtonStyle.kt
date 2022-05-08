@@ -36,7 +36,7 @@ enum class MXButtonStyle {
             when (style) {
                 Rounded -> {
                     val padding =
-                        context.resources.getDimensionPixelOffset(R.dimen.mx_dialog_size_divider_space)
+                        context.resources.getDimensionPixelOffset(R.dimen.mx_dialog_size_divider_normal)
                     content.setPadding(padding, padding, padding, padding)
                     cancelBtn?.setBackgroundResource(R.drawable.mx_dialog_btn_bg_cancel_circular)
                     actionBtn?.setBackgroundResource(R.drawable.mx_dialog_btn_bg_action_circular)

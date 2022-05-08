@@ -3,58 +3,80 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center"
-    android:orientation="vertical"
-    android:paddingBottom="@dimen/mx_dialog_size_divider_space">
+    android:orientation="vertical">
 
-    <RelativeLayout
+    <LinearLayout
+        android:id="@+id/titleLay"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/mx_dialog_size_title_layout_height"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="@dimen/mx_dialog_size_divider_normal"
+            android:layout_marginRight="3dp"
+            android:src="@drawable/mx_dialog_icon_upgrade"
+            android:tint="@color/mx_dialog_color_action" />
+
+        <TextView
+            android:id="@+id/titleTxv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="@string/mx_dialog_upgrade_title"
+            android:textColor="@color/mx_dialog_color_text"
+            android:textSize="@dimen/mx_dialog_text_size_title"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/closeBtn"
+            android:layout_width="@dimen/mx_dialog_size_title_layout_height"
+            android:layout_height="@dimen/mx_dialog_size_title_layout_height"
+            android:layout_alignParentRight="true"
+            android:padding="15dp"
+            android:src="@drawable/mx_dialog_icon_close" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/mx_dialog_color_divider" />
+
+    <com.mx.dialog.views.MXRatioFrameLayout
+        android:id="@+id/contentLay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/closeBtn"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignParentRight="true"
-            android:padding="8dp"
-            android:src="@drawable/mx_dialog_icon_close" />
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none">
 
-        <ImageView
-            android:id="@+id/upgradeImg"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="30dp"
-            android:src="@drawable/mx_dialog_icon_upgrade"
-            android:tint="@color/mx_dialog_color_action" />
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/msgTxv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:paddingHorizontal="@dimen/mx_dialog_size_divider_large"
+                android:paddingVertical="@dimen/mx_dialog_size_divider_normal"
+                android:text="@string/mx_dialog_upgrade_title"
+                android:textColor="@color/mx_dialog_color_text"
+                android:textSize="@dimen/mx_dialog_text_size_content" />
 
-    <TextView
-        android:id="@+id/titleTxv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/mx_dialog_size_divider_space"
-        android:layout_marginTop="@dimen/mx_dialog_size_divider_space"
-        android:text="@string/mx_dialog_upgrade_title"
-        android:textColor="@color/mx_dialog_color_text"
-        android:textSize="@dimen/mx_dialog_text_size_title"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/msgTxv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/mx_dialog_size_divider_space"
-        android:text="@string/mx_dialog_upgrade_title"
-        android:textColor="@color/mx_dialog_color_text"
-        android:textSize="@dimen/mx_dialog_text_size_content" />
+        </ScrollView>
+    </com.mx.dialog.views.MXRatioFrameLayout>
 
     <ProgressBar
         android:id="@+id/progressBar"
         style="@android:style/Widget.ProgressBar.Horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/mx_dialog_size_divider_space"
+        android:layout_marginHorizontal="@dimen/mx_dialog_size_divider_large"
+        android:layout_marginTop="@dimen/mx_dialog_size_divider_small"
         android:focusable="false"
         android:focusableInTouchMode="false"
         android:max="1000"
@@ -67,13 +89,12 @@
     <TextView
         android:id="@+id/actionBtn"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/mx_dialog_size_divider_space"
-        android:layout_marginBottom="@dimen/mx_dialog_size_divider_space"
+        android:layout_height="@dimen/mx_dialog_size_action_height"
+        android:layout_marginHorizontal="@dimen/mx_dialog_size_divider_large"
+        android:layout_marginBottom="@dimen/mx_dialog_size_divider_large"
         android:background="@drawable/mx_dialog_btn_bg_upgrade"
         android:gravity="center"
-        android:paddingVertical="14dp"
-        android:text="立即更新"
+        android:text="@string/mx_dialog_upgrade_action"
         android:textColor="@color/mx_dialog_color_upgrade"
         android:textSize="@dimen/mx_dialog_text_size_button" />
 </LinearLayout>
