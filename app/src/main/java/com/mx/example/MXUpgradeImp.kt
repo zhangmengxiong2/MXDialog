@@ -15,9 +15,11 @@ import java.io.IOException
 import java.util.concurrent.TimeUnit
 
 class MXUpgradeImp(private val url: String, private val context: Context) : IMXUpgrade {
+    private var currentCall: Call? = null
     private var isActive = true
     private var targetFile: File? = null
     override fun downloadAPK(progress: (state: IMXDownloadStatus, percent: Float) -> Unit) {
+        currentCall?.cancel()
         isActive = true
         targetFile?.delete()
         targetFile = null
@@ -32,55 +34,57 @@ class MXUpgradeImp(private val url: String, private val context: Context) : IMXU
             .cacheControl(CacheControl.FORCE_NETWORK)
             .build()
         try {
-            OkHttpClient.Builder()
+            val call = OkHttpClient.Builder()
                 .connectTimeout(60 * 2, TimeUnit.SECONDS)
                 .writeTimeout(60 * 2, TimeUnit.SECONDS)
                 .readTimeout(60 * 2, TimeUnit.SECONDS)
-                .retryOnConnectionFailure(true).build().newCall(request).enqueue(object : Callback {
-                    override fun onFailure(call: Call, e: IOException) {
+                .retryOnConnectionFailure(true).build().newCall(request)
+            currentCall = call
+            call.enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+                    e.printStackTrace()
+                    file.delete()
+                    progress.invoke(
+                        IMXDownloadStatus.ERROR,
+                        0f
+                    )
+                }
+
+                override fun onResponse(call: Call, response: Response) {
+                    try {
+                        val inputStream = response.body?.source()?.inputStream() ?: return
+                        val bufferedOutputStream = BufferedOutputStream(FileOutputStream(file))
+                        val data = ByteArray(1024 * 1024 * 10)
+                        var len = 0
+                        var read_size = 0
+                        val available = response.body?.contentLength() ?: -1
+                        while (isActive && inputStream.read(data).also { len = it } >= 0) {
+                            bufferedOutputStream.write(data, 0, len)
+                            read_size += len
+                            progress.invoke(
+                                IMXDownloadStatus.DOWNLOAD,
+                                read_size.toFloat() / available
+                            )
+                        }
+                        bufferedOutputStream.flush()
+                        bufferedOutputStream.close()
+                        inputStream.close()
+                    } catch (e: Exception) {
                         e.printStackTrace()
                         file.delete()
                         progress.invoke(
                             IMXDownloadStatus.ERROR,
                             0f
                         )
+                        return
                     }
-
-                    override fun onResponse(call: Call, response: Response) {
-                        try {
-                            val inputStream = response.body?.source()?.inputStream() ?: return
-                            val bufferedOutputStream = BufferedOutputStream(FileOutputStream(file))
-                            val data = ByteArray(1024 * 1024 * 10)
-                            var len = 0
-                            var read_size = 0
-                            val available = response.body?.contentLength() ?: -1
-                            while (isActive && inputStream.read(data).also { len = it } >= 0) {
-                                bufferedOutputStream.write(data, 0, len)
-                                read_size += len
-                                progress.invoke(
-                                    IMXDownloadStatus.DOWNLOAD,
-                                    read_size.toFloat() / available
-                                )
-                            }
-                            bufferedOutputStream.flush()
-                            bufferedOutputStream.close()
-                            inputStream.close()
-                        } catch (e: Exception) {
-                            e.printStackTrace()
-                            file.delete()
-                            progress.invoke(
-                                IMXDownloadStatus.ERROR,
-                                0f
-                            )
-                            return
-                        }
-                        targetFile = file
-                        progress.invoke(
-                            IMXDownloadStatus.SUCCESS,
-                            1f
-                        )
-                    }
-                })
+                    targetFile = file
+                    progress.invoke(
+                        IMXDownloadStatus.SUCCESS,
+                        1f
+                    )
+                }
+            })
         } catch (e: Exception) {
             e.printStackTrace()
             file.delete()
@@ -116,6 +120,8 @@ class MXUpgradeImp(private val url: String, private val context: Context) : IMXU
 
     override fun destroy() {
         isActive = false
+        currentCall?.cancel()
+        currentCall = null
         targetFile = null
     }
 }

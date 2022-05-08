@@ -33,7 +33,9 @@ open class MXUpgradeDialog(context: Context, fullScreen: Boolean = false) :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setCanceledOnTouchOutside(false)
         setCardMargin(40f)
+        setCardBackgroundRadius(16f)
         closeBtn = findViewById(R.id.closeBtn)
         titleTxv = findViewById(R.id.titleTxv)
         msgTxv = findViewById(R.id.msgTxv)

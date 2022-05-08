@@ -44,9 +44,7 @@
         android:id="@+id/msgTxv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/mx_dialog_size_divider_space"
-        android:layout_marginTop="@dimen/mx_dialog_size_divider_space"
-        android:layout_marginBottom="@dimen/mx_dialog_size_divider_space"
+        android:layout_margin="@dimen/mx_dialog_size_divider_space"
         android:text="@string/mx_dialog_upgrade_title"
         android:textColor="@color/mx_dialog_color_text"
         android:textSize="@dimen/mx_dialog_text_size_content" />
