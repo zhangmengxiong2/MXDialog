@@ -60,17 +60,8 @@ internal object MXUtils {
         return d
     }
 
-    fun Float.asString(x: Int = 1): String {
-        val fmt = StringBuffer().apply {
-            append("#0")
-            if (x > 0) {
-                append('.')
-                repeat(x) {
-                    append('0')
-                }
-            }
-        }.toString()
-        return DecimalFormat(fmt).format(this)
+    fun Float.asString(): String {
+        return DecimalFormat("#0.00").format(this)
     }
 
     fun getScreenWidthDP(appContext: Context): Int =

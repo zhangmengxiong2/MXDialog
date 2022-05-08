@@ -89,7 +89,7 @@ open class MXUpgradeDialog(context: Context, fullScreen: Boolean = false) :
                         if (!isShowing) return@post
                         when (state) {
                             IMXDownloadStatus.DOWNLOAD -> {
-                                actionBtn?.text = "下载中 ${(percent * 100f).asString(2)}%"
+                                actionBtn?.text = "下载中 ${(percent * 100f).asString()}%"
                                 progressBar?.progress = (percent * 1000).toInt()
                             }
                             IMXDownloadStatus.ERROR -> {

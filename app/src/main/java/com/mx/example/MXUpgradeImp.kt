@@ -23,7 +23,7 @@ class MXUpgradeImp(private val url: String, private val context: Context) : IMXU
         targetFile = null
 
         val file = File(
-            context.externalCacheDir,
+            context.cacheDir,
             "${context.packageName}_${System.currentTimeMillis()}.apk"
         )
         file.createNewFile()
