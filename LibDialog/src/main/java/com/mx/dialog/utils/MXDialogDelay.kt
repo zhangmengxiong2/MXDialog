@@ -49,7 +49,7 @@ internal class MXDialogDelay {
             try {
                 if (ticketTime > 0) {
                     val next = ticketLeft--
-                    MXDialogUtils.log("倒计时：$next")
+                    MXUtils.log("倒计时：$next")
                     if (next > 0) {
                         ticketCall?.invoke(false, ticketTime, next)
                     } else {

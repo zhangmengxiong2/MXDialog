@@ -42,7 +42,7 @@ enum class MXButtonStyle {
                     actionBtn?.setBackgroundResource(R.drawable.mx_dialog_btn_bg_action_circular)
 
                     val lp1 = (content.layoutParams as LinearLayout.LayoutParams)
-                    lp1.height = MXDialogUtils.dp2px(context, 65f)
+                    lp1.height = MXUtils.dp2px(context, 65f)
                     content.layoutParams = lp1
 
                     if (isCancelShow) {
@@ -67,7 +67,7 @@ enum class MXButtonStyle {
                     )
 
                     val lp1 = (content.layoutParams as LinearLayout.LayoutParams)
-                    lp1.height = MXDialogUtils.dp2px(context, 50f)
+                    lp1.height = MXUtils.dp2px(context, 50f)
                     content.layoutParams = lp1
 
                     if (isCancelShow) {
@@ -93,7 +93,7 @@ enum class MXButtonStyle {
                     actionBtn?.setTextColor(ColorStateList.valueOf(content.resources.getColor(R.color.mx_dialog_color_action)))
 
                     val lp1 = (content.layoutParams as LinearLayout.LayoutParams)
-                    lp1.height = MXDialogUtils.dp2px(context, 50f)
+                    lp1.height = MXUtils.dp2px(context, 50f)
                     content.layoutParams = lp1
 
                     if (isCancelShow) {

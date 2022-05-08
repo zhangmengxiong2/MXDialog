@@ -2,11 +2,12 @@ package com.mx.dialog.utils
 
 import android.content.Context
 import com.mx.dialog.BuildConfig
+import java.text.DecimalFormat
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.roundToInt
 
-internal object MXDialogUtils {
+internal object MXUtils {
     private var debug = BuildConfig.DEBUG
     fun setDebug(debug: Boolean) {
         this.debug = debug
@@ -57,6 +58,19 @@ internal object MXDialogUtils {
         val d = appContext.resources.displayMetrics.density
         if (d <= 0) return 1f
         return d
+    }
+
+    fun Float.asString(x: Int = 1): String {
+        val fmt = StringBuffer().apply {
+            append("#0")
+            if (x > 0) {
+                append('.')
+                repeat(x) {
+                    append('0')
+                }
+            }
+        }.toString()
+        return DecimalFormat(fmt).format(this)
     }
 
     fun getScreenWidthDP(appContext: Context): Int =

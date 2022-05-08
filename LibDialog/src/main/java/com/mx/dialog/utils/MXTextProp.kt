@@ -45,7 +45,7 @@ internal data class MXTextProp(
         val view = textView ?: return
         val context = view.context ?: return
         view.minHeight = textHeightDP?.let {
-            MXDialogUtils.dp2px(context, it)
+            MXUtils.dp2px(context, it)
         } ?: context.resources.getDimensionPixelOffset(defaultRes)
     }
 

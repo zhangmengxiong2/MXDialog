@@ -11,8 +11,8 @@ import android.widget.TextView
 import com.mx.dialog.R
 import com.mx.dialog.base.MXBaseCardDialog
 import com.mx.dialog.utils.MXButtonStyle
-import com.mx.dialog.utils.MXDialogUtils
 import com.mx.dialog.utils.MXTextProp
+import com.mx.dialog.utils.MXUtils
 import com.mx.dialog.views.MXRatioFrameLayout
 
 abstract class MXTipBaseDialog(context: Context, fullScreen: Boolean = false) :
@@ -89,7 +89,7 @@ abstract class MXTipBaseDialog(context: Context, fullScreen: Boolean = false) :
         titleTxv?.gravity = titleGravity
 
         contentLay?.setMaxHeightRatio(maxContentRatio)
-        contentLay?.minimumHeight = MXDialogUtils.dp2px(context, minContentHeightDP)
+        contentLay?.minimumHeight = MXUtils.dp2px(context, minContentHeightDP)
 
         kotlin.run { // 处理按钮
             processCancelBtn()

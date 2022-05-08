@@ -48,44 +48,18 @@ class MainActivity : AppCompatActivity() {
 
     fun showLoading(view: View) {
         MXUpgradeDialog(this).apply {
-            setCancelable(false)
+            setCancelable(true)
             setMessage(Html.fromHtml("1:xxx<br />2:xxx<br />3:xxx<br />4:xxx"))
             setIUpgrade(
-                "https://5a694755beae180ed219fdf5d2238691.rdt.tfogc.com:49156/dldir1.qq.com/weixin/android/weixin8022android2140_arm64.apk?mkey=6273e8db6676c7899fedb5fcebc4779b&arrive_key=302432739767&cip=175.10.24.12&proto=https",
-                imxUpgrade
+                MXUpgradeImp(
+                    "https://5a694755beae180ed219fdf5d2238691.rdt.tfogc.com:49156/dldir1.qq.com/weixin/android/weixin8022android2140_arm64.apk?mkey=6273e8db6676c7899fedb5fcebc4779b&arrive_key=302432739767&cip=175.10.24.12&proto=https",
+                    this@MainActivity
+                )
             )
 
 //            setIndeterminateDrawable(resources.getDrawable(com.mx.dialog.R.drawable.mx_dialog_icon_error))
 //            setMessage("我在加载中... ${MXProgressDialog.REPLACE_PROGRESS}")
         }.show()
-    }
-
-    private val imxUpgrade = object : IMXUpgrade {
-        override fun download(dialog: Dialog, url: String, progress: (Int) -> Unit): File? {
-            val file = File(dialog.context.cacheDir, "aaa.apk")
-            file.createNewFile()
-            val result = HttpDataHelp.download(url, file, progress)
-            return if (result == true && file.exists()) file else null
-        }
-
-        override fun install(context: Context, file: File) {
-            val intent = Intent()
-            intent.action = Intent.ACTION_VIEW
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            val type = "application/vnd.android.package-archive"
-            if (Build.VERSION.SDK_INT >= 24) {
-                val uri = FileProvider.getUriForFile(
-                    this@MainActivity,
-                    "${this@MainActivity.packageName}.fileProvider",
-                    file
-                )
-                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                intent.setDataAndType(uri, type)
-            } else {
-                intent.setDataAndType(Uri.fromFile(file), type)
-            }
-            startActivity(intent)
-        }
     }
 
     fun showToast(view: View) {

@@ -5,25 +5,25 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
+import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import com.mx.dialog.R
 import com.mx.dialog.base.MXBaseCardDialog
-import java.io.File
-import java.lang.Exception
+import com.mx.dialog.utils.MXUtils.asString
 import kotlin.concurrent.thread
 
 open class MXUpgradeDialog(context: Context, fullScreen: Boolean = false) :
     MXBaseCardDialog(context, fullScreen) {
     private val mHandler = Handler(Looper.getMainLooper())
+    private var closeBtn: ImageView? = null
     private var titleTxv: TextView? = null
     private var msgTxv: TextView? = null
+    private var progressBar: ProgressBar? = null
     private var actionBtn: TextView? = null
 
     private var titleStr: CharSequence? = null
     private var msgStr: CharSequence? = null
-
-    private var downloadUrl: String? = null
-    private var downloadFile: File? = null
 
     private var iUpgrade: IMXUpgrade? = null
 
@@ -34,15 +34,25 @@ open class MXUpgradeDialog(context: Context, fullScreen: Boolean = false) :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setCardMargin(40f)
+        closeBtn = findViewById(R.id.closeBtn)
         titleTxv = findViewById(R.id.titleTxv)
         msgTxv = findViewById(R.id.msgTxv)
+        progressBar = findViewById(R.id.progressBar)
         actionBtn = findViewById(R.id.actionBtn)
-
         processInitStage()
     }
 
     override fun initDialog() {
         super.initDialog()
+        if (isCancelable()) {
+            closeBtn?.visibility = View.VISIBLE
+            closeBtn?.setOnClickListener {
+                dismiss()
+            }
+        } else {
+            closeBtn?.visibility = View.GONE
+        }
+
         titleTxv?.text = titleStr ?: context.resources.getString(R.string.mx_dialog_upgrade_title)
         msgTxv?.text = msgStr
     }
@@ -62,42 +72,44 @@ open class MXUpgradeDialog(context: Context, fullScreen: Boolean = false) :
         initDialog()
     }
 
-    fun setIUpgrade(url: String, upgrade: IMXUpgrade?) {
-        downloadUrl = url
+    fun setIUpgrade(upgrade: IMXUpgrade?) {
         iUpgrade = upgrade
     }
 
     private val downloadClickListener = View.OnClickListener {
-        val url = downloadUrl ?: return@OnClickListener
-        actionBtn?.visibility = View.VISIBLE
+        progressBar?.visibility = View.VISIBLE
+        progressBar?.max = 1000
+        progressBar?.progress = 0
         actionBtn?.isEnabled = false
         actionBtn?.text = "下载中 0%"
-        var percent = 0
         thread {
-            val result = try {
-                iUpgrade?.download(this, url) { p ->
-                    if (p != percent) {
-                        mHandler.post { actionBtn?.text = "下载中 ${p}%" }
-                        percent = p
+            try {
+                iUpgrade?.downloadAPK { state, percent ->
+                    mHandler.post {
+                        if (!isShowing) return@post
+                        when (state) {
+                            IMXDownloadStatus.DOWNLOAD -> {
+                                actionBtn?.text = "下载中 ${(percent * 100f).asString(2)}%"
+                                progressBar?.progress = (percent * 1000).toInt()
+                            }
+                            IMXDownloadStatus.ERROR -> {
+                                processErrorStage("下载失败")
+                            }
+                            IMXDownloadStatus.SUCCESS -> {
+                                processInstallStage()
+                            }
+                        }
                     }
-                }!!
+                }
             } catch (e: Exception) {
                 e.printStackTrace()
-                mHandler.post { processErrorStage("下载失败") }
-                return@thread
-            }
-            mHandler.post {
-                downloadFile = result
-                processInstallStage()
             }
         }
     }
 
     private val installClickListener = View.OnClickListener {
-        val file = downloadFile ?: return@OnClickListener
-        if (!file.exists()) return@OnClickListener
         try {
-            iUpgrade?.install(context, file)
+            iUpgrade?.installAPK()
         } catch (e: Exception) {
             e.printStackTrace()
             processErrorStage("安装失败")
@@ -106,22 +118,27 @@ open class MXUpgradeDialog(context: Context, fullScreen: Boolean = false) :
 
     private fun processInitStage() {
         actionBtn?.text = "下载安装"
-        actionBtn?.visibility = View.VISIBLE
+        progressBar?.visibility = View.INVISIBLE
         actionBtn?.isEnabled = true
         actionBtn?.setOnClickListener(downloadClickListener)
     }
 
     private fun processInstallStage() {
         actionBtn?.text = "下载完成，去安装"
-        actionBtn?.visibility = View.VISIBLE
+        progressBar?.visibility = View.INVISIBLE
         actionBtn?.isEnabled = true
         actionBtn?.setOnClickListener(installClickListener)
     }
 
     private fun processErrorStage(message: String) {
         actionBtn?.text = "$message，重新下载"
-        actionBtn?.visibility = View.VISIBLE
+        progressBar?.visibility = View.INVISIBLE
         actionBtn?.isEnabled = true
         actionBtn?.setOnClickListener(downloadClickListener)
+    }
+
+    override fun dismiss() {
+        iUpgrade?.destroy()
+        super.dismiss()
     }
 }

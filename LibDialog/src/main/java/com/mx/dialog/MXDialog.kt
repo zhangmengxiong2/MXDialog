@@ -6,11 +6,11 @@ import com.mx.dialog.list.MXListDialog
 import com.mx.dialog.tip.MXDialogPosition
 import com.mx.dialog.tip.MXDialogType
 import com.mx.dialog.tip.MXTipDialog
-import com.mx.dialog.utils.MXDialogUtils
+import com.mx.dialog.utils.MXUtils
 
 object MXDialog {
     fun setDebug(debug: Boolean) {
-        MXDialogUtils.setDebug(debug)
+        MXUtils.setDebug(debug)
     }
 
     /**

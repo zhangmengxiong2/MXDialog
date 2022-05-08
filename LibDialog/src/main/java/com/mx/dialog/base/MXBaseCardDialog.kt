@@ -8,8 +8,8 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import com.mx.dialog.R
 import com.mx.dialog.tip.MXDialogPosition
-import com.mx.dialog.utils.MXDialogUtils
 import com.mx.dialog.utils.MXDrawableUtils
+import com.mx.dialog.utils.MXUtils
 
 /**
  * 集成内容定位的功能
@@ -54,21 +54,21 @@ abstract class MXBaseCardDialog(context: Context, fullScreen: Boolean = false) :
         initDialog()
     }
 
-    private val marginLeft: Int get() = MXDialogUtils.dp2px(context, cardMarginDP.left)
+    private val marginLeft: Int get() = MXUtils.dp2px(context, cardMarginDP.left)
     private val marginTop: Int
         get() {
-            var top = MXDialogUtils.dp2px(context, cardMarginDP.top)
+            var top = MXUtils.dp2px(context, cardMarginDP.top)
             if (includeStatusBarHeight) {
-                top += MXDialogUtils.getStatusBarHeight(context)
+                top += MXUtils.getStatusBarHeight(context)
             }
             return top
         }
-    private val marginRight: Int get() = MXDialogUtils.dp2px(context, cardMarginDP.right)
+    private val marginRight: Int get() = MXUtils.dp2px(context, cardMarginDP.right)
     private val marginBottom: Int
-        get() = MXDialogUtils.dp2px(
+        get() = MXUtils.dp2px(
             context,
             cardMarginDP.bottom
-        ) + (if (includeNavigationBarHeight) MXDialogUtils.getNavigationBarHeight(context) else 0)
+        ) + (if (includeNavigationBarHeight) MXUtils.getNavigationBarHeight(context) else 0)
 
     protected open fun initDialog() {
         initRootView(mxRootLay ?: return)
@@ -100,12 +100,12 @@ abstract class MXBaseCardDialog(context: Context, fullScreen: Boolean = false) :
 
         val lp = (cardLay.layoutParams as FrameLayout.LayoutParams?)
         lp?.gravity = position.gravity
-        lp?.width = MXDialogUtils.getScreenWidth(context) - marginLeft - marginRight
+        lp?.width = MXUtils.getScreenWidth(context) - marginLeft - marginRight
         cardLay.layoutParams = lp
         cardLay.translationX =
-            MXDialogUtils.dp2px(context, position.translationX ?: 0).toFloat()
+            MXUtils.dp2px(context, position.translationX ?: 0).toFloat()
         cardLay.translationY =
-            MXDialogUtils.dp2px(context, position.translationY ?: 0).toFloat()
+            MXUtils.dp2px(context, position.translationY ?: 0).toFloat()
     }
 
     /**
