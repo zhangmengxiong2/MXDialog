@@ -62,7 +62,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="left"
                 android:paddingHorizontal="@dimen/mx_dialog_size_divider_large"
-                android:paddingVertical="@dimen/mx_dialog_size_divider_normal"
+                android:paddingVertical="@dimen/mx_dialog_size_divider_large"
                 android:text="@string/mx_dialog_upgrade_title"
                 android:textColor="@color/mx_dialog_color_text"
                 android:textSize="@dimen/mx_dialog_text_size_content" />

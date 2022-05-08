@@ -28,6 +28,7 @@ open class MXUpgradeDialog(context: Context, fullScreen: Boolean = false) :
     private var msgStr: CharSequence? = null
 
     private var iUpgrade: IMXUpgrade? = null
+    private var autoInstallWhenDownload = true
 
     override fun getContentLayoutId(): Int {
         return R.layout.mx_dialog_upgrade
@@ -79,8 +80,18 @@ open class MXUpgradeDialog(context: Context, fullScreen: Boolean = false) :
         initDialog()
     }
 
+    /**
+     * 设置升级回调相关
+     */
     fun setIUpgrade(upgrade: IMXUpgrade?) {
         iUpgrade = upgrade
+    }
+
+    /**
+     * 设置下载完成后自动安装
+     */
+    fun setAutoInstall(autoInstall: Boolean) {
+        autoInstallWhenDownload = autoInstall
     }
 
     private val downloadClickListener = View.OnClickListener {
@@ -135,6 +146,14 @@ open class MXUpgradeDialog(context: Context, fullScreen: Boolean = false) :
         progressBar?.visibility = View.INVISIBLE
         actionBtn?.isEnabled = true
         actionBtn?.setOnClickListener(installClickListener)
+
+        if (autoInstallWhenDownload) {
+            try {
+                iUpgrade?.installAPK()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
     }
 
     private fun processErrorStage(message: String) {
