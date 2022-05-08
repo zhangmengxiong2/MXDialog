@@ -9,7 +9,7 @@ internal object MXDrawableUtils {
      */
     fun buildGradientDrawable(context: Context, colorRes: Int, cornerDP: Float): GradientDrawable {
         val drawable = GradientDrawable()
-        drawable.cornerRadius = MXDialogUtils.dp2px(context, cornerDP).toFloat()
+        drawable.cornerRadius = MXUtils.dp2px(context, cornerDP).toFloat()
         val color = context.resources.getColor(colorRes)
         drawable.setColor(color)
         return drawable
@@ -25,14 +25,14 @@ internal object MXDrawableUtils {
     ): GradientDrawable {
         val drawable = GradientDrawable()
         drawable.cornerRadii = floatArrayOf(
-            MXDialogUtils.dp2px(context, cornerArrayDP[0]).toFloat(),
-            MXDialogUtils.dp2px(context, cornerArrayDP[0]).toFloat(),
-            MXDialogUtils.dp2px(context, cornerArrayDP[1]).toFloat(),
-            MXDialogUtils.dp2px(context, cornerArrayDP[1]).toFloat(),
-            MXDialogUtils.dp2px(context, cornerArrayDP[2]).toFloat(),
-            MXDialogUtils.dp2px(context, cornerArrayDP[2]).toFloat(),
-            MXDialogUtils.dp2px(context, cornerArrayDP[3]).toFloat(),
-            MXDialogUtils.dp2px(context, cornerArrayDP[3]).toFloat()
+            MXUtils.dp2px(context, cornerArrayDP[0]).toFloat(),
+            MXUtils.dp2px(context, cornerArrayDP[0]).toFloat(),
+            MXUtils.dp2px(context, cornerArrayDP[1]).toFloat(),
+            MXUtils.dp2px(context, cornerArrayDP[1]).toFloat(),
+            MXUtils.dp2px(context, cornerArrayDP[2]).toFloat(),
+            MXUtils.dp2px(context, cornerArrayDP[2]).toFloat(),
+            MXUtils.dp2px(context, cornerArrayDP[3]).toFloat(),
+            MXUtils.dp2px(context, cornerArrayDP[3]).toFloat()
         )
         val color = context.resources.getColor(colorRes)
         drawable.setColor(color)

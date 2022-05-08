@@ -12,9 +12,9 @@ import android.widget.TextView
 import com.mx.dialog.R
 import com.mx.dialog.base.MXBaseDialog
 import com.mx.dialog.tip.MXDialogPosition
-import com.mx.dialog.utils.MXDialogUtils
 import com.mx.dialog.utils.MXDrawableUtils
 import com.mx.dialog.utils.MXTextProp
+import com.mx.dialog.utils.MXUtils
 import com.mx.dialog.views.MXRatioFrameLayout
 
 open class MXBaseListDialog(context: Context, fullScreen: Boolean) :
@@ -105,21 +105,21 @@ open class MXBaseListDialog(context: Context, fullScreen: Boolean) :
         }
 
         kotlin.run { // 位置设置
-            val marginLeft = MXDialogUtils.dp2px(context, cardMarginDP.left)
-            val marginTop = MXDialogUtils.dp2px(
+            val marginLeft = MXUtils.dp2px(context, cardMarginDP.left)
+            val marginTop = MXUtils.dp2px(
                 context,
                 cardMarginDP.top
-            ) + (if (includeStatusBarHeight) MXDialogUtils.getStatusBarHeight(context) else 0)
-            val marginRight = MXDialogUtils.dp2px(context, cardMarginDP.right)
-            val marginBottom = MXDialogUtils.dp2px(
+            ) + (if (includeStatusBarHeight) MXUtils.getStatusBarHeight(context) else 0)
+            val marginRight = MXUtils.dp2px(context, cardMarginDP.right)
+            val marginBottom = MXUtils.dp2px(
                 context,
                 cardMarginDP.bottom
-            ) + (if (includeNavigationBarHeight) MXDialogUtils.getNavigationBarHeight(context) else 0)
+            ) + (if (includeNavigationBarHeight) MXUtils.getNavigationBarHeight(context) else 0)
 
             mxRootLay?.setPadding(marginLeft, marginTop, marginRight, marginBottom)
 
 
-            val screenWidth = MXDialogUtils.getScreenWidth(context) - marginLeft - marginRight
+            val screenWidth = MXUtils.getScreenWidth(context) - marginLeft - marginRight
             mxCardLay?.layoutParams?.width = screenWidth
             btnLay?.layoutParams?.width = screenWidth
         }
@@ -134,9 +134,9 @@ open class MXBaseListDialog(context: Context, fullScreen: Boolean) :
             mxRootLay?.gravity = position.gravity
 
             mxCardLay?.translationX =
-                MXDialogUtils.dp2px(context, position.translationX ?: 0).toFloat()
+                MXUtils.dp2px(context, position.translationX ?: 0).toFloat()
             mxCardLay?.translationY =
-                MXDialogUtils.dp2px(context, position.translationY ?: 0).toFloat()
+                MXUtils.dp2px(context, position.translationY ?: 0).toFloat()
         }
 
         contentLay?.setMaxHeightRatio(contentMaxHeightRatioDP)
