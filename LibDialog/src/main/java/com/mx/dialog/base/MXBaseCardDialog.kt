@@ -83,7 +83,7 @@ abstract class MXBaseCardDialog(context: Context, fullScreen: Boolean = false) :
         }
         rootLay.setPadding(marginLeft, marginTop, marginRight, marginBottom)
         val color = dialogBackgroundColor
-            ?: context.resources.getColor(R.color.mx_dialog_color_background_alpha)
+            ?: context.resources.getColor(R.color.mx_dialog_color_background_root)
         rootLay.setBackgroundColor(color)
     }
 
@@ -91,7 +91,7 @@ abstract class MXBaseCardDialog(context: Context, fullScreen: Boolean = false) :
         cardLay.setOnClickListener { }
         if (cardBackgroundRadiusDP >= 0) {
             cardLay.background = MXDrawableUtils.buildGradientDrawable(
-                context, R.color.mx_dialog_color_background,
+                context, R.color.mx_dialog_color_background_content,
                 cardBackgroundRadiusDP
             )
         } else {

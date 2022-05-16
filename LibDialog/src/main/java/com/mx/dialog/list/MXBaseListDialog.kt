@@ -97,7 +97,7 @@ open class MXBaseListDialog(context: Context, fullScreen: Boolean) :
 
         if (contentCornerRadiusDP >= 0) {
             mxCardLay?.background = MXDrawableUtils.buildGradientDrawable(
-                context, R.color.mx_dialog_color_background,
+                context, R.color.mx_dialog_color_background_content,
                 contentCornerRadiusDP
             )
         } else {
@@ -126,7 +126,7 @@ open class MXBaseListDialog(context: Context, fullScreen: Boolean) :
 
         kotlin.run {
             val color = dialogBackgroundColor
-                ?: context.resources.getColor(R.color.mx_dialog_color_background_alpha)
+                ?: context.resources.getColor(R.color.mx_dialog_color_background_root)
             mxRootLay?.setBackgroundColor(color)
         }
 
@@ -183,7 +183,7 @@ open class MXBaseListDialog(context: Context, fullScreen: Boolean) :
         button.setOnClickListener { onBackPressed() }
         if (contentCornerRadiusDP >= 0) {
             button.background = MXDrawableUtils.buildGradientDrawable(
-                context, R.color.mx_dialog_color_cancel,
+                context, R.color.mx_dialog_color_background_content,
                 contentCornerRadiusDP
             )
         } else {

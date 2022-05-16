@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
     <corners android:radius="@dimen/mx_dialog_size_card_corner_radius" />
-     <solid android:color="@color/mx_dialog_color_action" />
+    <solid android:color="@color/mx_dialog_color_action" />
 </shape>

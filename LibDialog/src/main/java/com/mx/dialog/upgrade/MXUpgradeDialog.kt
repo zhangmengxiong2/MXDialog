@@ -13,6 +13,8 @@ import com.mx.dialog.base.MXBaseCardDialog
 import com.mx.dialog.utils.MXUtils.asString
 import com.mx.dialog.views.MXRatioFrameLayout
 import kotlin.concurrent.thread
+import kotlin.math.abs
+import kotlin.math.roundToInt
 
 open class MXUpgradeDialog(context: Context, fullScreen: Boolean = false) :
     MXBaseCardDialog(context, fullScreen) {
@@ -99,16 +101,25 @@ open class MXUpgradeDialog(context: Context, fullScreen: Boolean = false) :
         progressBar?.max = 1000
         progressBar?.progress = 0
         actionBtn?.isEnabled = false
-        actionBtn?.text = "下载中 0%"
+        actionBtn?.text = "下载中 0.00%"
         thread {
             try {
+                var lastUpdateTime = 0L
                 iUpgrade?.downloadAPK { state, percent ->
+                    if (!isShowing) return@downloadAPK
+                    if (state == IMXDownloadStatus.DOWNLOAD
+                        && abs(lastUpdateTime - System.currentTimeMillis()) < 100
+                        && percent < 1f
+                    ) {
+                        return@downloadAPK
+                    }
+                    lastUpdateTime = System.currentTimeMillis()
                     mHandler.post {
                         if (!isShowing) return@post
                         when (state) {
                             IMXDownloadStatus.DOWNLOAD -> {
                                 actionBtn?.text = "下载中 ${(percent * 100f).asString()}%"
-                                progressBar?.progress = (percent * 1000).toInt()
+                                progressBar?.progress = (percent * 1000).roundToInt()
                             }
                             IMXDownloadStatus.ERROR -> {
                                 processErrorStage("下载失败")

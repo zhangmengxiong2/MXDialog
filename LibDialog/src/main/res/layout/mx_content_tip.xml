@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/mx_dialog_size_title_layout_height"
         android:gravity="center_vertical"
-        android:paddingHorizontal="15dp">
+        android:paddingHorizontal="@dimen/mx_dialog_size_divider_normal">
 
         <ImageView
             android:id="@+id/tipTypeImg"
@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:singleLine="true"
             android:text="2 秒后消失"
-            android:textColor="@color/mx_dialog_color_text_ticket"
+            android:textColor="@color/mx_dialog_color_text_cancel"
             android:textSize="@dimen/mx_dialog_text_size_small"
             android:visibility="gone" />
     </LinearLayout>

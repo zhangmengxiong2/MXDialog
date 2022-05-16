@@ -3,7 +3,7 @@
     android:id="@+id/mxRootLay"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/mx_dialog_color_background_alpha"
+    android:background="@color/mx_dialog_color_background_root"
     android:soundEffectsEnabled="false">
 
     <LinearLayout

@@ -18,7 +18,6 @@
         <entry key="..\:/DevProjects/MXDialog/LibDialog/src/main/res/drawable/mx_dialog_card_bg.xml" value="0.362962962962963" />
         <entry key="..\:/DevProjects/MXDialog/LibDialog/src/main/res/drawable/mx_dialog_divider.xml" value="0.118" />
         <entry key="..\:/DevProjects/MXDialog/LibDialog/src/main/res/drawable/mx_dialog_divider_space.xml" value="0.38229166666666664" />
-        <entry key="..\:/DevProjects/MXDialog/LibDialog/src/main/res/drawable/mx_dialog_icon_close.xml" value="0.2465" />
         <entry key="..\:/DevProjects/MXDialog/LibDialog/src/main/res/drawable/mx_dialog_icon_error.xml" value="0.4553846153846154" />
         <entry key="..\:/DevProjects/MXDialog/LibDialog/src/main/res/drawable/mx_dialog_icon_loading.xml" value="0.4553846153846154" />
         <entry key="..\:/DevProjects/MXDialog/LibDialog/src/main/res/drawable/mx_dialog_icon_select.xml" value="0.18" />
@@ -26,7 +25,7 @@
         <entry key="..\:/DevProjects/MXDialog/LibDialog/src/main/res/drawable/mx_dialog_icon_unselect.xml" value="0.193" />
         <entry key="..\:/DevProjects/MXDialog/LibDialog/src/main/res/drawable/mx_dialog_icon_upgrade.xml" value="0.2465" />
         <entry key="..\:/DevProjects/MXDialog/LibDialog/src/main/res/drawable/mx_dialog_icon_warn.xml" value="0.4553846153846154" />
-        <entry key="..\:/DevProjects/MXDialog/LibDialog/src/main/res/drawable/mx_dialog_progress_background.xml" value="0.2465" />
+        <entry key="..\:/DevProjects/MXDialog/LibDialog/src/main/res/drawable/mx_dialog_progress_background.xml" value="0.192" />
         <entry key="..\:/DevProjects/MXDialog/LibDialog/src/main/res/drawable/mx_dialog_progress_loading.xml" value="0.25" />
         <entry key="..\:/DevProjects/MXDialog/LibDialog/src/main/res/drawable/mx_dialog_progressbar.xml" value="0.2465" />
         <entry key="..\:/DevProjects/MXDialog/LibDialog/src/main/res/layout/mx_content_loading.xml" value="0.36614583333333334" />

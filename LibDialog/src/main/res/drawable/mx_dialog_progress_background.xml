@@ -2,7 +2,7 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@android:id/background">
         <shape>
-            <corners android:radius="8dp" />
+            <corners android:radius="@dimen/mx_dialog_size_card_corner_radius" />
             <solid android:color="@color/mx_dialog_color_divider" />
 
         </shape>
@@ -10,7 +10,7 @@
     <item android:id="@android:id/progress">
         <clip>
             <shape>
-                <corners android:radius="8dp" />
+                <corners android:radius="@dimen/mx_dialog_size_card_corner_radius" />
                 <solid android:color="@color/mx_dialog_color_action" />
             </shape>
         </clip>

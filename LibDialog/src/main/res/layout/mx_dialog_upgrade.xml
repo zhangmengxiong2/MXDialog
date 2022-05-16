@@ -9,12 +9,12 @@
         android:id="@+id/titleLay"
         android:layout_width="match_parent"
         android:layout_height="@dimen/mx_dialog_size_title_layout_height"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/mx_dialog_size_divider_normal">
 
         <ImageView
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:layout_marginLeft="@dimen/mx_dialog_size_divider_normal"
             android:layout_marginRight="3dp"
             android:src="@drawable/mx_dialog_icon_upgrade"
             android:tint="@color/mx_dialog_color_action" />
@@ -70,31 +70,39 @@
         </ScrollView>
     </com.mx.dialog.views.MXRatioFrameLayout>
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="@android:style/Widget.ProgressBar.Horizontal"
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/mx_dialog_size_divider_large"
-        android:layout_marginTop="@dimen/mx_dialog_size_divider_small"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
-        android:max="1000"
-        android:maxHeight="5dp"
-        android:minHeight="5dp"
-        android:progress="50"
-        android:progressDrawable="@drawable/mx_dialog_progress_background"
-        android:visibility="invisible" />
+        android:layout_height="1dp"
+        android:background="@color/mx_dialog_color_divider" />
 
-    <TextView
-        android:id="@+id/actionBtn"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/mx_dialog_size_action_height"
         android:layout_marginHorizontal="@dimen/mx_dialog_size_divider_large"
-        android:layout_marginBottom="@dimen/mx_dialog_size_divider_large"
-        android:background="@drawable/mx_dialog_btn_bg_upgrade"
-        android:gravity="center"
-        android:text="@string/mx_dialog_upgrade_action"
-        android:textColor="@color/mx_dialog_color_upgrade"
-        android:textSize="@dimen/mx_dialog_text_size_button" />
+        android:layout_marginTop="@dimen/mx_dialog_size_divider_small"
+        android:layout_marginBottom="@dimen/mx_dialog_size_divider_large">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.5"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:max="1000"
+            android:progress="50"
+            android:progressDrawable="@drawable/mx_dialog_progress_background"
+            android:visibility="invisible" />
+
+        <TextView
+            android:id="@+id/actionBtn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/mx_dialog_btn_bg_upgrade"
+            android:gravity="center"
+            android:text="@string/mx_dialog_upgrade_action"
+            android:textColor="@color/mx_dialog_color_upgrade"
+            android:textSize="@dimen/mx_dialog_text_size_button" />
+    </FrameLayout>
 </LinearLayout>

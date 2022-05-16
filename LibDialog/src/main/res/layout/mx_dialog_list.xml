@@ -4,7 +4,7 @@
     android:id="@+id/mxRootLay"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/mx_dialog_color_border"
+    android:background="@color/mx_dialog_color_background_root"
     android:gravity="bottom|center_horizontal"
     android:orientation="vertical"
     android:padding="@dimen/mx_dialog_size_card_corner_radius">
@@ -50,7 +50,7 @@
                 android:id="@+id/listView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#00000000"
+                android:background="@color/mx_dialog_color_transparent"
                 android:divider="@color/mx_dialog_color_divider"
                 android:dividerHeight="1dp"
                 android:listSelector="#00000000"
@@ -62,13 +62,13 @@
     <LinearLayout
         android:id="@+id/btnLay"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/mx_dialog_size_action_height"
         android:layout_marginTop="@dimen/mx_dialog_size_divider_normal">
 
         <TextView
             android:id="@+id/cancelBtn"
             style="@style/mx_dialog_style_cancel_btn"
-            android:layout_height="@dimen/mx_dialog_size_action_height"
+            android:layout_height="match_parent"
             android:background="@drawable/mx_dialog_btn_bg_cancel_corner"
             android:text="@string/mx_dialog_button_cancel_text" />
 
@@ -81,7 +81,7 @@
         <TextView
             android:id="@+id/okBtn"
             style="@style/mx_dialog_style_active_btn"
-            android:layout_height="@dimen/mx_dialog_size_action_height"
+            android:layout_height="match_parent"
             android:background="@drawable/mx_dialog_btn_bg_action_corner"
             android:text="@string/mx_dialog_button_action_text"
             android:visibility="gone" />
