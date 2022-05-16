@@ -78,16 +78,14 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/mx_dialog_size_action_height"
-        android:layout_marginHorizontal="@dimen/mx_dialog_size_divider_large"
-        android:layout_marginTop="@dimen/mx_dialog_size_divider_small"
-        android:layout_marginBottom="@dimen/mx_dialog_size_divider_large">
+        android:layout_margin="@dimen/mx_dialog_size_divider_normal">
 
         <ProgressBar
             android:id="@+id/progressBar"
             style="@android:style/Widget.ProgressBar.Horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:alpha="0.5"
+            android:alpha="0.8"
             android:focusable="false"
             android:focusableInTouchMode="false"
             android:max="1000"

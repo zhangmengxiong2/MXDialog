@@ -108,7 +108,7 @@ open class MXUpgradeDialog(context: Context, fullScreen: Boolean = false) :
                 iUpgrade?.downloadAPK { state, percent ->
                     if (!isShowing) return@downloadAPK
                     if (state == IMXDownloadStatus.DOWNLOAD
-                        && abs(lastUpdateTime - System.currentTimeMillis()) < 100
+                        && abs(lastUpdateTime - System.currentTimeMillis()) < 200
                         && percent < 1f
                     ) {
                         return@downloadAPK
