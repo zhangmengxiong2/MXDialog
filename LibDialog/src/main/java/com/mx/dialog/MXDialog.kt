@@ -19,7 +19,8 @@ object MXDialog {
      * @param title 标题 默认=“温馨提示”
      * @param actionButtonText 确认按钮文字
      * @param cancelButtonText 取消按钮文字
-     * @param onActionClick 操作点击回调
+     * @param onActionClick 操作点击回调、
+     * @param maxContentRatio 内容最大高度比
      */
     fun confirm(
         context: Context,
@@ -28,11 +29,13 @@ object MXDialog {
         actionButtonText: CharSequence? = null,
         cancelButtonText: CharSequence? = null,
         cancelable: Boolean = true,
+        maxContentRatio: Float = 1f,
         onActionClick: ((confirm: Boolean) -> Unit)? = null
     ) {
         val dialog = MXTipDialog(context)
         dialog.setTitle(title)
         dialog.setMessage(message)
+        dialog.setMaxContentRatio(maxContentRatio)
         dialog.setCancelable(cancelable)
         dialog.setActionBtn(text = actionButtonText) { onActionClick?.invoke(true) }
         if (cancelable) {
@@ -52,18 +55,20 @@ object MXDialog {
      * @param message 内容
      * @param title 标题
      * @param actionButtonText 活动按钮文字
+     * @param maxContentRatio 内容最大高度比
      * @param dismissDelay x秒后弹窗消失
      * @param dialogType Icon类型
      */
     fun tip(
         context: Context, message: CharSequence, title: CharSequence? = null,
-        actionButtonText: CharSequence? = null,
+        actionButtonText: CharSequence? = null, maxContentRatio: Float = 1f,
         dismissDelay: Int? = null, dialogType: MXDialogType? = null,
     ) {
         val dialog = MXTipDialog(context)
         dialog.setTitle(title)
         dialog.setMessage(message)
         dialog.setCancelable(true)
+        dialog.setMaxContentRatio(maxContentRatio)
         dialog.setDismissDelay(dismissDelay)
         dialog.setCancelBtn(visible = false)
 
