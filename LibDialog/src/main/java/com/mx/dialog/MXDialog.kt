@@ -33,6 +33,7 @@ object MXDialog {
         val dialog = MXTipDialog(context)
         dialog.setTitle(title)
         dialog.setMessage(message)
+        dialog.setMaxContentRatio(1f)
         dialog.setCancelable(cancelable)
         dialog.setActionBtn(text = actionButtonText) { onActionClick?.invoke(true) }
         if (cancelable) {
@@ -64,6 +65,7 @@ object MXDialog {
         dialog.setTitle(title)
         dialog.setMessage(message)
         dialog.setCancelable(true)
+        dialog.setMaxContentRatio(1f)
         dialog.setDismissDelay(dismissDelay)
         dialog.setCancelBtn(visible = false)
 
