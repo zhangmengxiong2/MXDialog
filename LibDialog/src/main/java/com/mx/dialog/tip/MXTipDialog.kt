@@ -11,7 +11,8 @@ import android.widget.ScrollView
 import android.widget.TextView
 import com.mx.dialog.R
 
-open class MXTipDialog(context: Context) : MXTipBaseDialog(context) {
+open class MXTipDialog(context: Context, fullScreen: Boolean = false) :
+    MXTipBaseDialog(context, fullScreen) {
     private var msgTypeface: Typeface? = null
     private var msgStr: CharSequence? = null
     private var msgColor: Int? = null

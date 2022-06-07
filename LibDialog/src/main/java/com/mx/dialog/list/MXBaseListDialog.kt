@@ -17,7 +17,7 @@ import com.mx.dialog.utils.MXTextProp
 import com.mx.dialog.utils.MXUtils
 import com.mx.dialog.views.MXRatioFrameLayout
 
-open class MXBaseListDialog(context: Context, fullScreen: Boolean) :
+open class MXBaseListDialog(context: Context, fullScreen: Boolean = false) :
     MXBaseDialog(context, fullScreen) {
     private var includeStatusBarHeight: Boolean = false
     private var includeNavigationBarHeight: Boolean = false
