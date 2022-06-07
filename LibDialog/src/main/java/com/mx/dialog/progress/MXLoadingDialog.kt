@@ -10,7 +10,8 @@ import android.widget.TextView
 import com.mx.dialog.R
 import com.mx.dialog.base.MXBaseCardDialog
 
-open class MXLoadingDialog(context: Context) : MXBaseCardDialog(context) {
+open class MXLoadingDialog(context: Context, fullScreen: Boolean = false) :
+    MXBaseCardDialog(context, fullScreen) {
     private var loadingMessage: CharSequence? = null
     private var indeterminateDrawable: Drawable? = null
 
