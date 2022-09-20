@@ -15,8 +15,7 @@ import com.mx.dialog.utils.MXUtils
  * 集成内容定位的功能
  * 详情见：setPosition()
  */
-abstract class MXBaseCardDialog(context: Context, fullScreen: Boolean = false) :
-    MXBaseDialog(context, fullScreen) {
+abstract class MXBaseCardDialog(context: Context) : MXBaseDialog(context) {
     private var includeStatusBarHeight: Boolean = false
     private var includeNavigationBarHeight: Boolean = false
 

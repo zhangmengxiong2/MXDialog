@@ -1,27 +1,83 @@
 package com.mx.example
 
+import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
-import android.os.Build
+import android.graphics.Color
 import android.os.Bundle
 import android.text.Html
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.FileProvider
+import com.gyf.immersionbar.BarHide
+import com.gyf.immersionbar.ImmersionBar
 import com.mx.dialog.MXDialog
-import com.mx.dialog.tip.MXDialogPosition
 import com.mx.dialog.tip.MXDialogType
-import com.mx.dialog.upgrade.IMXUpgrade
 import com.mx.dialog.upgrade.MXUpgradeDialog
-import java.io.File
+import com.mx.dialog.utils.IMXLifecycle
 
 class MainActivity : AppCompatActivity() {
+    protected val immersionBar: ImmersionBar by lazy {
+        ImmersionBar.with(this).autoDarkModeEnable(true)
+    }
+
+    protected fun setFullScreen() {
+        immersionBar.reset()
+        immersionBar.hideBar(BarHide.FLAG_HIDE_BAR)
+        immersionBar.keyboardEnable(true)
+        immersionBar.init()
+    }
+
+    protected fun setTransparentStatusBar(
+        statusBarDarkFont: Boolean = true,
+        hideNavigation: Boolean = false
+    ) {
+        immersionBar.reset()
+        immersionBar.transparentStatusBar()
+        if (hideNavigation) {
+            immersionBar.hideBar(BarHide.FLAG_HIDE_NAVIGATION_BAR)
+        } else {
+            immersionBar.hideBar(BarHide.FLAG_SHOW_BAR)
+        }
+
+        immersionBar.statusBarDarkFont(statusBarDarkFont)
+        immersionBar.keyboardEnable(true)
+        immersionBar.navigationBarColorInt(Color.WHITE)
+        immersionBar.init()
+    }
+
+    protected fun setStatusBarColor(color: Int, statusBarDarkFont: Boolean = false) {
+        immersionBar.reset()
+        immersionBar.statusBarColorInt(color)
+        immersionBar.statusBarDarkFont(statusBarDarkFont)
+        immersionBar.fitsSystemWindows(true)
+        immersionBar.navigationBarColorInt(Color.WHITE)
+        immersionBar.hideBar(BarHide.FLAG_SHOW_BAR)
+        immersionBar.init()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        supportActionBar?.hide()
+        setTransparentStatusBar(statusBarDarkFont = false, hideNavigation = false)
+        setStatusBarColor(Color.GREEN)
+
+//        MXDialog.addLifecycle(object : IMXLifecycle {
+//            override fun onCreate(context: Context, dialog: Dialog) {
+//                if (context is Activity) {
+//                    ImmersionBar.with(context, dialog).transparentBar().init()
+//                }
+//            }
+//
+//            override fun onDismiss(context: Context, dialog: Dialog) {
+//                if (context is Activity) {
+//                    ImmersionBar.destroy(context, dialog)
+//                }
+//            }
+//        })
+//        setFullScreen()
     }
 
     fun showTip(view: View) {

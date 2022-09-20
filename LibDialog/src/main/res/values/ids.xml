@@ -2,4 +2,24 @@
 <resources>
     <item name="mxRootLay" type="id" />
     <item name="mxCardLay" type="id" />
+    <item name="mxTitleLay" type="id" />
+    <item name="mxContentLay" type="id" />
+    <item name="mxBtnLay" type="id" />
+    <item name="mxBtnDivider" type="id" />
+
+    <item name="mxCancelBtn" type="id" />
+    <item name="mxOkBtn" type="id" />
+
+    <item name="mxTipScrollView" type="id" />
+    <item name="mxMsgTxv" type="id" />
+
+    <item name="mxTipTypeImg" type="id" />
+    <item name="mxTitleTxv" type="id" />
+    <item name="mxDelayTxv" type="id" />
+    <item name="mxInfoTxv" type="id" />
+    <item name="mxSelectTag" type="id" />
+    <item name="mxProgressBar" type="id" />
+    <item name="mxLoadingTxv" type="id" />
+    <item name="mxStatusBarView" type="id" />
+    <item name="mxNavigationBarView" type="id" />
 </resources>

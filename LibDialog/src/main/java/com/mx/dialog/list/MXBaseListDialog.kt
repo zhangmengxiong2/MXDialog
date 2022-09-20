@@ -17,8 +17,7 @@ import com.mx.dialog.utils.MXTextProp
 import com.mx.dialog.utils.MXUtils
 import com.mx.dialog.views.MXRatioFrameLayout
 
-open class MXBaseListDialog(context: Context, fullScreen: Boolean = false) :
-    MXBaseDialog(context, fullScreen) {
+open class MXBaseListDialog(context: Context) : MXBaseDialog(context) {
     private var includeStatusBarHeight: Boolean = false
     private var includeNavigationBarHeight: Boolean = false
 
@@ -52,13 +51,13 @@ open class MXBaseListDialog(context: Context, fullScreen: Boolean = false) :
     private fun initView() {
         if (mxRootLay == null) mxRootLay = findViewById(R.id.mxRootLay)
         if (mxCardLay == null) mxCardLay = findViewById(R.id.mxCardLay)
-        if (btnLay == null) btnLay = findViewById(R.id.btnLay)
-        if (contentLay == null) contentLay = findViewById(R.id.contentLay)
-        if (btnDivider == null) btnDivider = findViewById(R.id.btnDivider)
-        if (cancelBtn == null) cancelBtn = findViewById(R.id.cancelBtn)
-        if (okBtn == null) okBtn = findViewById(R.id.okBtn)
-        if (titleTxv == null) titleTxv = findViewById(R.id.titleTxv)
-        if (titleLay == null) titleLay = findViewById(R.id.titleLay)
+        if (btnLay == null) btnLay = findViewById(R.id.mxBtnLay)
+        if (contentLay == null) contentLay = findViewById(R.id.mxContentLay)
+        if (btnDivider == null) btnDivider = findViewById(R.id.mxBtnDivider)
+        if (cancelBtn == null) cancelBtn = findViewById(R.id.mxCancelBtn)
+        if (okBtn == null) okBtn = findViewById(R.id.mxOkBtn)
+        if (titleTxv == null) titleTxv = findViewById(R.id.mxTitleTxv)
+        if (titleLay == null) titleLay = findViewById(R.id.mxTitleLay)
         if (listView == null) listView = findViewById(R.id.listView)
     }
 

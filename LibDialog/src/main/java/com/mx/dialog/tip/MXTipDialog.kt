@@ -11,8 +11,7 @@ import android.widget.ScrollView
 import android.widget.TextView
 import com.mx.dialog.R
 
-open class MXTipDialog(context: Context, fullScreen: Boolean = false) :
-    MXTipBaseDialog(context, fullScreen) {
+open class MXTipDialog(context: Context) : MXTipBaseDialog(context) {
     private var msgTypeface: Typeface? = null
     private var msgStr: CharSequence? = null
     private var msgColor: Int? = null
@@ -25,8 +24,8 @@ open class MXTipDialog(context: Context, fullScreen: Boolean = false) :
 
     override fun initView() {
         super.initView()
-        msgTxv = findViewById(R.id.msgTxv)
-        tipScrollView = findViewById(R.id.tipScrollView)
+        msgTxv = findViewById(R.id.mxMsgTxv)
+        tipScrollView = findViewById(R.id.mxTipScrollView)
     }
 
     override fun initDialog() {

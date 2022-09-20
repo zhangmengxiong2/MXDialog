@@ -16,8 +16,7 @@ import kotlin.concurrent.thread
 import kotlin.math.abs
 import kotlin.math.roundToInt
 
-open class MXUpgradeDialog(context: Context, fullScreen: Boolean = false) :
-    MXBaseCardDialog(context, fullScreen) {
+open class MXUpgradeDialog(context: Context) : MXBaseCardDialog(context) {
     private val mHandler = Handler(Looper.getMainLooper())
     private var closeBtn: ImageView? = null
     private var titleTxv: TextView? = null
@@ -40,10 +39,10 @@ open class MXUpgradeDialog(context: Context, fullScreen: Boolean = false) :
         super.onCreate(savedInstanceState)
         setCanceledOnTouchOutside(false)
         closeBtn = findViewById(R.id.closeBtn)
-        titleTxv = findViewById(R.id.titleTxv)
-        contentLay = findViewById(R.id.contentLay)
-        msgTxv = findViewById(R.id.msgTxv)
-        progressBar = findViewById(R.id.progressBar)
+        titleTxv = findViewById(R.id.mxTitleTxv)
+        contentLay = findViewById(R.id.mxContentLay)
+        msgTxv = findViewById(R.id.mxMsgTxv)
+        progressBar = findViewById(R.id.mxProgressBar)
         actionBtn = findViewById(R.id.actionBtn)
 
         contentLay?.setMaxHeightRatio(0.5f)

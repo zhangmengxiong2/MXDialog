@@ -15,8 +15,7 @@ import com.mx.dialog.utils.MXTextProp
 import com.mx.dialog.utils.MXUtils
 import com.mx.dialog.views.MXRatioFrameLayout
 
-abstract class MXTipBaseDialog(context: Context, fullScreen: Boolean = false) :
-    MXBaseCardDialog(context, fullScreen) {
+abstract class MXTipBaseDialog(context: Context) : MXBaseCardDialog(context) {
     private var btnLay: LinearLayout? = null
     private var tipTypeImg: ImageView? = null
     private var contentLay: MXRatioFrameLayout? = null
@@ -45,7 +44,7 @@ abstract class MXTipBaseDialog(context: Context, fullScreen: Boolean = false) :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        contentLay = findViewById(R.id.contentLay)
+        contentLay = findViewById(R.id.mxContentLay)
         // 从重构方法创建Content内容
         generalContentView(contentLay!!)?.let { view ->
             contentLay?.removeAllViews()
@@ -62,13 +61,13 @@ abstract class MXTipBaseDialog(context: Context, fullScreen: Boolean = false) :
     abstract fun generalContentView(parent: FrameLayout): View?
 
     protected open fun initView() {
-        btnLay = findViewById(R.id.btnLay)
-        tipTypeImg = findViewById(R.id.tipTypeImg)
-        titleTxv = findViewById(R.id.titleTxv)
-        delayTxv = findViewById(R.id.delayTxv)
-        cancelBtn = findViewById(R.id.cancelBtn)
-        btnDivider = findViewById(R.id.btnDivider)
-        actionBtn = findViewById(R.id.okBtn)
+        btnLay = findViewById(R.id.mxBtnLay)
+        tipTypeImg = findViewById(R.id.mxTipTypeImg)
+        titleTxv = findViewById(R.id.mxTitleTxv)
+        delayTxv = findViewById(R.id.mxDelayTxv)
+        cancelBtn = findViewById(R.id.mxCancelBtn)
+        btnDivider = findViewById(R.id.mxBtnDivider)
+        actionBtn = findViewById(R.id.mxOkBtn)
     }
 
     override fun onDismissTicket(maxSecond: Int, remindSecond: Int) {

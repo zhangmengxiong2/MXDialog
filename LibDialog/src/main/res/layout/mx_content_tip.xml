@@ -8,21 +8,21 @@
     android:soundEffectsEnabled="false">
 
     <LinearLayout
-        android:id="@+id/titleLay"
+        android:id="@+id/mxTitleLay"
         android:layout_width="match_parent"
         android:layout_height="@dimen/mx_dialog_size_title_layout_height"
         android:gravity="center_vertical"
         android:paddingHorizontal="@dimen/mx_dialog_size_divider_normal">
 
         <ImageView
-            android:id="@+id/tipTypeImg"
+            android:id="@+id/mxTipTypeImg"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_marginRight="3dp"
             android:src="@drawable/mx_dialog_icon_success" />
 
         <TextView
-            android:id="@+id/titleTxv"
+            android:id="@+id/mxTitleTxv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -34,7 +34,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/delayTxv"
+            android:id="@+id/mxDelayTxv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:singleLine="true"
@@ -50,7 +50,7 @@
         android:background="@color/mx_dialog_color_divider" />
 
     <com.mx.dialog.views.MXRatioFrameLayout
-        android:id="@+id/contentLay"
+        android:id="@+id/mxContentLay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical" />
@@ -61,20 +61,20 @@
         android:background="@color/mx_dialog_color_divider" />
 
     <LinearLayout
-        android:id="@+id/btnLay"
+        android:id="@+id/mxBtnLay"
         android:layout_width="match_parent"
         android:layout_height="65dp"
         android:gravity="center"
         android:padding="@dimen/mx_dialog_size_divider_normal">
 
         <TextView
-            android:id="@+id/cancelBtn"
+            android:id="@+id/mxCancelBtn"
             style="@style/mx_dialog_style_cancel_btn"
             android:background="@drawable/mx_dialog_btn_bg_cancel_circular"
             android:text="@string/mx_dialog_button_cancel_text" />
 
         <View
-            android:id="@+id/btnDivider"
+            android:id="@+id/mxBtnDivider"
             android:layout_width="1dp"
             android:layout_height="match_parent"
             android:layout_marginHorizontal="6dp"
@@ -82,7 +82,7 @@
             android:visibility="invisible" />
 
         <TextView
-            android:id="@+id/okBtn"
+            android:id="@+id/mxOkBtn"
             style="@style/mx_dialog_style_active_btn"
             android:background="@drawable/mx_dialog_btn_bg_action_circular"
             android:text="@string/mx_dialog_button_action_text" />

@@ -6,11 +6,25 @@ import com.mx.dialog.list.MXListDialog
 import com.mx.dialog.tip.MXDialogPosition
 import com.mx.dialog.tip.MXDialogType
 import com.mx.dialog.tip.MXTipDialog
+import com.mx.dialog.utils.IMXLifecycle
 import com.mx.dialog.utils.MXUtils
 
 object MXDialog {
     fun setDebug(debug: Boolean) {
         MXUtils.setDebug(debug)
+    }
+
+    private val lifecycleList = ArrayList<IMXLifecycle>()
+    internal fun getLifecycleList(): List<IMXLifecycle> {
+        return lifecycleList.toList()
+    }
+
+    fun addLifecycle(lifecycle: IMXLifecycle) {
+        lifecycleList.add(lifecycle)
+    }
+
+    fun removeLifecycle(lifecycle: IMXLifecycle) {
+        lifecycleList.remove(lifecycle)
     }
 
     /**
@@ -21,7 +35,6 @@ object MXDialog {
      * @param cancelButtonText 取消按钮文字
      * @param onActionClick 操作点击回调、
      * @param maxContentRatio 内容最大高度比
-     * @param fullScreen 全屏模式
      */
     fun confirm(
         context: Context,
@@ -31,10 +44,9 @@ object MXDialog {
         cancelButtonText: CharSequence? = null,
         cancelable: Boolean = true,
         maxContentRatio: Float = 1f,
-        fullScreen: Boolean = false,
         onActionClick: ((confirm: Boolean) -> Unit)? = null
     ) {
-        val dialog = MXTipDialog(context, fullScreen)
+        val dialog = MXTipDialog(context)
         dialog.setTitle(title)
         dialog.setMessage(message)
         dialog.setMaxContentRatio(maxContentRatio)
@@ -60,15 +72,13 @@ object MXDialog {
      * @param maxContentRatio 内容最大高度比
      * @param dismissDelay x秒后弹窗消失
      * @param dialogType Icon类型
-     * @param fullScreen 全屏模式
      */
     fun tip(
         context: Context, message: CharSequence, title: CharSequence? = null,
         actionButtonText: CharSequence? = null, maxContentRatio: Float = 1f,
-        dismissDelay: Int? = null, dialogType: MXDialogType? = null,
-        fullScreen: Boolean = false
+        dismissDelay: Int? = null, dialogType: MXDialogType? = null
     ) {
-        val dialog = MXTipDialog(context, fullScreen)
+        val dialog = MXTipDialog(context)
         dialog.setTitle(title)
         dialog.setMessage(message)
         dialog.setCancelable(true)
@@ -97,10 +107,9 @@ object MXDialog {
         textColor: Int? = null,
         textSizeSP: Float? = null,
         textGravity: Int? = Gravity.LEFT or Gravity.CENTER_VERTICAL,
-        fullScreen: Boolean = false,
         select: ((index: Int) -> Unit)
     ) {
-        MXListDialog(context, fullScreen).apply {
+        MXListDialog(context).apply {
             setTitle(title)
             setContentMaxHeightRatio(contentMaxHeightRatio)
             setContentCornerRadius(contentRadiusDP)
@@ -131,10 +140,9 @@ object MXDialog {
         textColor: Int? = null,
         textSizeSP: Float? = null,
         textGravity: Int? = Gravity.LEFT or Gravity.CENTER_VERTICAL,
-        fullScreen: Boolean = false,
         select: ((list: List<Int>) -> Unit)
     ) {
-        MXListDialog(context, fullScreen).apply {
+        MXListDialog(context).apply {
             setTitle(title)
             setContentMaxHeightRatio(contentMaxHeightRatio)
             setContentCornerRadius(contentRadiusDP)

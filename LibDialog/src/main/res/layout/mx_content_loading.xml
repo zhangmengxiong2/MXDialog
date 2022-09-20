@@ -8,7 +8,7 @@
     android:paddingVertical="20dp">
 
     <ProgressBar
-        android:id="@+id/progressBar"
+        android:id="@+id/mxProgressBar"
         android:layout_width="@dimen/mx_dialog_size_progress_img"
         android:layout_height="@dimen/mx_dialog_size_progress_img"
         android:indeterminate="true"
@@ -17,7 +17,7 @@
         android:indeterminateTint="@color/mx_dialog_color_action" />
 
     <TextView
-        android:id="@+id/loadingTxv"
+        android:id="@+id/mxLoadingTxv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/mx_dialog_size_divider_normal"

@@ -9,8 +9,8 @@ import android.widget.TextView
 import com.mx.dialog.R
 import com.mx.dialog.utils.MXTextProp
 
-open class MXListDialog(context: Context, fullScreen: Boolean = false) :
-    MXBaseListDialog(context, fullScreen) {
+open class MXListDialog(context: Context) :
+    MXBaseListDialog(context) {
     private var isSingleSelectMod = true
     private var onSingleSelect: ((Int) -> Unit)? = null
     private var onMultipleSelect: ((List<Int>) -> Unit)? = null
@@ -19,8 +19,8 @@ open class MXListDialog(context: Context, fullScreen: Boolean = false) :
     private val listItemProp = MXTextProp()
     private val listAdapt by lazy {
         MXBaseListAdapt<String>(context, R.layout.mx_dialog_list_item) { itemView, position, item ->
-            val infoTxv = itemView.findViewById<TextView>(R.id.infoTxv)
-            val selectTag = itemView.findViewById<ImageView>(R.id.selectTag)
+            val infoTxv = itemView.findViewById<TextView>(R.id.mxInfoTxv)
+            val selectTag = itemView.findViewById<ImageView>(R.id.mxSelectTag)
             listItemProp.attachTextHeight(infoTxv, R.dimen.mx_dialog_size_list_item_height)
             listItemProp.attachTextColor(infoTxv, R.color.mx_dialog_color_text)
             listItemProp.attachTextStyle(infoTxv, Typeface.NORMAL)

@@ -17,14 +17,14 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/titleLay"
+            android:id="@+id/mxTitleLay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:visibility="gone">
 
             <TextView
-                android:id="@+id/titleTxv"
+                android:id="@+id/mxTitleTxv"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/mx_dialog_size_list_item_height"
                 android:ellipsize="end"
@@ -42,7 +42,7 @@
         </LinearLayout>
 
         <com.mx.dialog.views.MXRatioFrameLayout
-            android:id="@+id/contentLay"
+            android:id="@+id/mxContentLay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -60,26 +60,26 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/btnLay"
+        android:id="@+id/mxBtnLay"
         android:layout_width="match_parent"
         android:layout_height="@dimen/mx_dialog_size_action_height"
         android:layout_marginTop="@dimen/mx_dialog_size_divider_normal">
 
         <TextView
-            android:id="@+id/cancelBtn"
+            android:id="@+id/mxCancelBtn"
             style="@style/mx_dialog_style_cancel_btn"
             android:layout_height="match_parent"
             android:background="@drawable/mx_dialog_btn_bg_cancel_corner"
             android:text="@string/mx_dialog_button_cancel_text" />
 
         <View
-            android:id="@+id/btnDivider"
+            android:id="@+id/mxBtnDivider"
             android:layout_width="@dimen/mx_dialog_size_divider_normal"
             android:layout_height="wrap_content"
             android:visibility="gone" />
 
         <TextView
-            android:id="@+id/okBtn"
+            android:id="@+id/mxOkBtn"
             style="@style/mx_dialog_style_active_btn"
             android:layout_height="match_parent"
             android:background="@drawable/mx_dialog_btn_bg_action_corner"

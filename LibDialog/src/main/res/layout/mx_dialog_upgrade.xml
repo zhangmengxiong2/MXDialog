@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/titleLay"
+        android:id="@+id/mxTitleLay"
         android:layout_width="match_parent"
         android:layout_height="@dimen/mx_dialog_size_title_layout_height"
         android:gravity="center_vertical"
@@ -20,7 +20,7 @@
             android:tint="@color/mx_dialog_color_action" />
 
         <TextView
-            android:id="@+id/titleTxv"
+            android:id="@+id/mxTitleTxv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -46,7 +46,7 @@
         android:background="@color/mx_dialog_color_divider" />
 
     <com.mx.dialog.views.MXRatioFrameLayout
-        android:id="@+id/contentLay"
+        android:id="@+id/mxContentLay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -57,7 +57,7 @@
             android:scrollbars="none">
 
             <TextView
-                android:id="@+id/msgTxv"
+                android:id="@+id/mxMsgTxv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="left"
@@ -81,7 +81,7 @@
         android:layout_margin="@dimen/mx_dialog_size_divider_normal">
 
         <ProgressBar
-            android:id="@+id/progressBar"
+            android:id="@+id/mxProgressBar"
             style="@android:style/Widget.ProgressBar.Horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

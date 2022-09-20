@@ -10,8 +10,7 @@ import android.widget.TextView
 import com.mx.dialog.R
 import com.mx.dialog.base.MXBaseCardDialog
 
-open class MXLoadingDialog(context: Context, fullScreen: Boolean = false) :
-    MXBaseCardDialog(context, fullScreen) {
+open class MXLoadingDialog(context: Context) : MXBaseCardDialog(context) {
     private var loadingMessage: CharSequence? = null
     private var indeterminateDrawable: Drawable? = null
 
@@ -36,8 +35,8 @@ open class MXLoadingDialog(context: Context, fullScreen: Boolean = false) :
     }
 
     private fun initView() {
-        progressBar = findViewById(R.id.progressBar)
-        loadingTxv = findViewById(R.id.loadingTxv)
+        progressBar = findViewById(R.id.mxProgressBar)
+        loadingTxv = findViewById(R.id.mxLoadingTxv)
     }
 
     private fun initData() {
