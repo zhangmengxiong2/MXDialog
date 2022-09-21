@@ -8,6 +8,9 @@ import com.mx.dialog.tip.MXDialogType
 import com.mx.dialog.tip.MXTipDialog
 import com.mx.dialog.utils.IMXLifecycle
 import com.mx.dialog.utils.MXUtils
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.withContext
 
 object MXDialog {
     fun setDebug(debug: Boolean) {
@@ -45,7 +48,7 @@ object MXDialog {
         cancelable: Boolean = true,
         maxContentRatio: Float = 1f,
         onActionClick: ((confirm: Boolean) -> Unit)? = null
-    ) {
+    ): MXTipDialog {
         val dialog = MXTipDialog(context)
         dialog.setTitle(title)
         dialog.setMessage(message)
@@ -62,6 +65,36 @@ object MXDialog {
         }
         dialog.setTipType(MXDialogType.WARN)
         dialog.show()
+        return dialog
+    }
+
+    suspend fun confirmSync(
+        context: Context,
+        message: CharSequence,
+        title: CharSequence? = null,
+        actionButtonText: CharSequence? = null,
+        cancelButtonText: CharSequence? = null,
+        cancelable: Boolean = true,
+        maxContentRatio: Float = 1f
+    ): Boolean = withContext(Dispatchers.Main) {
+        var hasConfirm = false
+        val lock = Object()
+        confirm(
+            context,
+            message,
+            title,
+            actionButtonText,
+            cancelButtonText,
+            cancelable,
+            maxContentRatio
+        ) { confirm ->
+            hasConfirm = confirm
+            synchronized(lock) { lock.notifyAll() }
+        }
+        return@withContext withContext(Dispatchers.IO) {
+            synchronized(lock) { lock.wait() }
+            hasConfirm ?: false
+        }
     }
 
     /**
@@ -77,7 +110,7 @@ object MXDialog {
         context: Context, message: CharSequence, title: CharSequence? = null,
         actionButtonText: CharSequence? = null, maxContentRatio: Float = 1f,
         dismissDelay: Int? = null, dialogType: MXDialogType? = null
-    ) {
+    ): MXTipDialog {
         val dialog = MXTipDialog(context)
         dialog.setTitle(title)
         dialog.setMessage(message)
@@ -92,6 +125,32 @@ object MXDialog {
         )
         dialog.setTipType(dialogType)
         dialog.show()
+        return dialog
+    }
+
+    suspend fun tipSync(
+        context: Context, message: CharSequence, title: CharSequence? = null,
+        actionButtonText: CharSequence? = null, maxContentRatio: Float = 1f,
+        dismissDelay: Int? = null, dialogType: MXDialogType? = null
+    ) = withContext(Dispatchers.Main) {
+        val lock = Object()
+        val dialog = tip(
+            context,
+            message,
+            title,
+            actionButtonText,
+            maxContentRatio,
+            dismissDelay,
+            dialogType
+        )
+        dialog.setOnDismissListener {
+            synchronized(lock) { lock.notifyAll() }
+        }
+        dialog.show()
+
+        return@withContext withContext(Dispatchers.IO) {
+            synchronized(lock) { lock.wait() }
+        }
     }
 
     fun select(
@@ -103,28 +162,72 @@ object MXDialog {
         contentMaxHeightRatio: Float = 1f,
         contentRadiusDP: Float = 10f,
         contentMarginDP: Float = 20f,
-        position: MXDialogPosition = MXDialogPosition.BOTTOM,
+        position: MXDialogPosition = MXDialogPosition.CENTER,
         textColor: Int? = null,
         textSizeSP: Float? = null,
         textGravity: Int? = Gravity.LEFT or Gravity.CENTER_VERTICAL,
+        onCancelListener: (() -> Unit)? = null,
         select: ((index: Int) -> Unit)
-    ) {
-        MXListDialog(context).apply {
-            setTitle(title)
-            setContentMaxHeightRatio(contentMaxHeightRatio)
-            setContentCornerRadius(contentRadiusDP)
-            setContentPosition(position)
-            setContentMargin(contentMarginDP)
-            setCancelable(cancelable)
-            setItems(
-                list,
-                selectIndex = selectIndex,
-                textColor = textColor,
-                textSizeSP = textSizeSP,
-                textGravity = textGravity,
-                onSelect = select
-            )
-        }.show()
+    ): MXListDialog {
+        val dialog = MXListDialog(context)
+        dialog.setTitle(title)
+        dialog.setContentMaxHeightRatio(contentMaxHeightRatio)
+        dialog.setContentCornerRadius(contentRadiusDP)
+        dialog.setContentPosition(position)
+        dialog.setContentMargin(contentMarginDP)
+        dialog.setCancelable(cancelable)
+        dialog.setOnCancelListener(onCancelListener)
+        dialog.setItems(
+            list,
+            selectIndex = selectIndex,
+            textColor = textColor,
+            textSizeSP = textSizeSP,
+            textGravity = textGravity,
+            onSelect = select
+        )
+        dialog.show()
+        return dialog
+    }
+
+    suspend fun selectSync(
+        context: Context,
+        list: List<String>,
+        selectIndex: Int? = null,
+        title: CharSequence? = null,
+        cancelable: Boolean = true,
+        contentMaxHeightRatio: Float = 1f,
+        contentRadiusDP: Float = 10f,
+        contentMarginDP: Float = 20f,
+        position: MXDialogPosition = MXDialogPosition.CENTER,
+        textColor: Int? = null,
+        textSizeSP: Float? = null,
+        textGravity: Int? = Gravity.LEFT or Gravity.CENTER_VERTICAL
+    ): Int? = withContext(Dispatchers.Main) {
+        var checkedIndex: Int? = null
+        val lock = Object()
+        select(
+            context = context,
+            list = list,
+            selectIndex = selectIndex,
+            title = title,
+            cancelable = cancelable,
+            contentMaxHeightRatio = contentMaxHeightRatio,
+            contentRadiusDP = contentRadiusDP,
+            contentMarginDP = contentMarginDP,
+            position = position,
+            textColor = textColor,
+            textSizeSP = textSizeSP,
+            textGravity = textGravity,
+            onCancelListener = { synchronized(lock) { lock.notifyAll() } }
+        ) { index ->
+            checkedIndex = index
+            synchronized(lock) { lock.notifyAll() }
+        }
+
+        return@withContext withContext(Dispatchers.IO) {
+            synchronized(lock) { lock.wait() }
+            checkedIndex
+        }
     }
 
     fun selectMulti(
@@ -140,24 +243,67 @@ object MXDialog {
         textColor: Int? = null,
         textSizeSP: Float? = null,
         textGravity: Int? = Gravity.LEFT or Gravity.CENTER_VERTICAL,
+        onCancelListener: (() -> Unit)? = null,
         select: ((list: List<Int>) -> Unit)
-    ) {
-        MXListDialog(context).apply {
-            setTitle(title)
-            setContentMaxHeightRatio(contentMaxHeightRatio)
-            setContentCornerRadius(contentRadiusDP)
-            setContentPosition(position)
-            setContentMargin(contentMarginDP)
-            setCancelable(cancelable)
-            setMultipleItems(
-                list,
-                selectIndexList = selectIndexList,
-                textColor = textColor,
-                textSizeSP = textSizeSP,
-                textGravity = textGravity,
-                onSelect = select
-            )
-        }.show()
+    ): MXListDialog {
+        val dialog = MXListDialog(context)
+        dialog.setTitle(title)
+        dialog.setContentMaxHeightRatio(contentMaxHeightRatio)
+        dialog.setContentCornerRadius(contentRadiusDP)
+        dialog.setContentPosition(position)
+        dialog.setContentMargin(contentMarginDP)
+        dialog.setCancelable(cancelable)
+        dialog.setOnCancelListener(onCancelListener)
+        dialog.setMultipleItems(
+            list,
+            selectIndexList = selectIndexList,
+            textColor = textColor,
+            textSizeSP = textSizeSP,
+            textGravity = textGravity,
+            onSelect = select
+        )
+        dialog.show()
+        return dialog
     }
 
+    suspend fun selectMultiSync(
+        context: Context,
+        list: List<String>,
+        selectIndexList: List<Int>? = null,
+        title: CharSequence? = null,
+        cancelable: Boolean = true,
+        contentMaxHeightRatio: Float = 1.2f,
+        contentRadiusDP: Float = 10f,
+        contentMarginDP: Float = 20f,
+        position: MXDialogPosition = MXDialogPosition.BOTTOM,
+        textColor: Int? = null,
+        textSizeSP: Float? = null,
+        textGravity: Int? = Gravity.LEFT or Gravity.CENTER_VERTICAL
+    ): List<Int>? = withContext(Dispatchers.Main) {
+        var checkedIndex: List<Int>? = null
+        val lock = Object()
+        selectMulti(
+            context = context,
+            list = list,
+            selectIndexList = selectIndexList,
+            title = title,
+            cancelable = cancelable,
+            contentMaxHeightRatio = contentMaxHeightRatio,
+            contentRadiusDP = contentRadiusDP,
+            contentMarginDP = contentMarginDP,
+            position = position,
+            textColor = textColor,
+            textSizeSP = textSizeSP,
+            textGravity = textGravity,
+            onCancelListener = { synchronized(lock) { lock.notifyAll() } }
+        ) { index ->
+            checkedIndex = index
+            synchronized(lock) { lock.notifyAll() }
+        }
+
+        return@withContext withContext(Dispatchers.IO) {
+            synchronized(lock) { lock.wait() }
+            checkedIndex
+        }
+    }
 }

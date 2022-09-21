@@ -69,7 +69,6 @@ open class MXBaseListDialog(context: Context) : MXBaseDialog(context) {
     protected open fun initDialog() {
         if (listView == null) return
 
-
         if (titleStr != null) {
             titleTxv?.text = titleStr
             titleLay?.visibility = View.VISIBLE
@@ -91,6 +90,11 @@ open class MXBaseListDialog(context: Context) : MXBaseDialog(context) {
                 btnDivider?.visibility = View.VISIBLE
             } else {
                 btnDivider?.visibility = View.GONE
+            }
+            if (cancelBtn?.visibility != View.VISIBLE && okBtn?.visibility != View.VISIBLE) {
+                btnLay?.visibility = View.GONE
+            } else {
+                btnLay?.visibility = View.VISIBLE
             }
         }
 
@@ -277,8 +281,6 @@ open class MXBaseListDialog(context: Context) : MXBaseDialog(context) {
 
     protected fun setActionClick(click: (() -> Unit)? = null) {
         actionProp.onclick = click
-
-        initDialog()
     }
 
     /**

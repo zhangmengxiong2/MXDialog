@@ -10,12 +10,14 @@ import android.text.Html
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.gyf.immersionbar.BarHide
 import com.gyf.immersionbar.ImmersionBar
 import com.mx.dialog.MXDialog
 import com.mx.dialog.tip.MXDialogType
 import com.mx.dialog.upgrade.MXUpgradeDialog
 import com.mx.dialog.utils.IMXLifecycle
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     protected val immersionBar: ImmersionBar by lazy {
@@ -85,8 +87,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun showConfirm(view: View) {
-        MXDialog.confirm(this, "请确认") { confirm ->
-            Toast.makeText(this@MainActivity, "操作回调 confirm=$confirm", Toast.LENGTH_SHORT).show()
+//        MXDialog.confirm(this, "请确认") { confirm ->
+//            Toast.makeText(this@MainActivity, "操作回调 confirm=$confirm", Toast.LENGTH_SHORT).show()
+//        }
+        lifecycleScope.launch {
+            val confirm = MXDialog.confirmSync(this@MainActivity, "请确认")
+            MXDialog.tip(this@MainActivity, "确认：$confirm")
         }
     }
 
@@ -124,13 +130,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun showSelect(view: View) {
-        MXDialog.select(
-            this,
-            list = ('A'..'Z').toMutableList().map { it.toString() },
-            selectIndex = 0,
-//            cancelable = false
-        ) { index ->
-            MXDialog.confirm(this@MainActivity, "点击了：$index")
+        lifecycleScope.launch {
+            val index = MXDialog.selectMultiSync(
+                this@MainActivity,
+                list = ('A'..'Z').toMutableList().map { it.toString() },
+                selectIndexList = arrayListOf(0, 1),
+//                cancelable = false
+            )
+            MXDialog.tip(this@MainActivity, "点击了：$index")
         }
     }
 }

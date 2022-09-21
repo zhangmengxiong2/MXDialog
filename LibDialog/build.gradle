@@ -33,7 +33,7 @@ afterEvaluate {
 
                 groupId = 'com.mx.dialog'
                 artifactId = 'MXDialog'
-                version = '1.0.9'
+                version = rootProject.ext.versionName
             }
         }
     }
@@ -41,4 +41,5 @@ afterEvaluate {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    compileOnly 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2'
 }

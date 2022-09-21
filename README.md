@@ -13,6 +13,7 @@
 
 ```groovy
     dependencies {
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2'
     implementation 'com.gitee.zhangmengxiong:MXDialog:x.x.x'
 }
 ```
