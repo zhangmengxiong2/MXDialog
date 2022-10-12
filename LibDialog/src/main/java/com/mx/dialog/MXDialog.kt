@@ -162,7 +162,7 @@ object MXDialog {
         contentMaxHeightRatio: Float = 1f,
         contentRadiusDP: Float = 10f,
         contentMarginDP: Float = 20f,
-        position: MXDialogPosition = MXDialogPosition.CENTER,
+        position: MXDialogPosition = MXDialogPosition.BOTTOM,
         textColor: Int? = null,
         textSizeSP: Float? = null,
         textGravity: Int? = Gravity.LEFT or Gravity.CENTER_VERTICAL,
@@ -198,7 +198,7 @@ object MXDialog {
         contentMaxHeightRatio: Float = 1f,
         contentRadiusDP: Float = 10f,
         contentMarginDP: Float = 20f,
-        position: MXDialogPosition = MXDialogPosition.CENTER,
+        position: MXDialogPosition = MXDialogPosition.BOTTOM,
         textColor: Int? = null,
         textSizeSP: Float? = null,
         textGravity: Int? = Gravity.LEFT or Gravity.CENTER_VERTICAL

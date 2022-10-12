@@ -24,6 +24,7 @@ android {
     kotlinOptions {
         jvmTarget = '11'
     }
+    namespace 'com.mx.dialog'
 }
 afterEvaluate {
     publishing {

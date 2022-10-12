@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/mx_dialog_color_background_root"
+    android:fitsSystemWindows="true"
     android:soundEffectsEnabled="false">
 
     <LinearLayout
