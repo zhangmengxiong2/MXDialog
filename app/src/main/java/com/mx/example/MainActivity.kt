@@ -14,6 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import com.gyf.immersionbar.BarHide
 import com.gyf.immersionbar.ImmersionBar
 import com.mx.dialog.MXDialog
+import com.mx.dialog.progress.MXLoadingDialog
 import com.mx.dialog.tip.MXDialogType
 import com.mx.dialog.upgrade.MXUpgradeDialog
 import com.mx.dialog.utils.IMXLifecycle
@@ -109,20 +110,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun showLoading(view: View) {
-        MXUpgradeDialog(this).apply {
-            setCancelable(true)
-            setTitle("发现更新")
-            setMessage(Html.fromHtml("1:xxx<br />2:xxx<br />3:xxx<br />1:xxx<br />2:xxx<br />3:xxx<br />1:xxx<br />2:xxx<br />3:xxx<br />4:xxx"))
-            setIUpgrade(
-                MXUpgradeImp(
-                    "https://5a694755beae180ed219fdf5d2238691.rdt.tfogc.com:49156/dldir1.qq.com/weixin/android/weixin8022android2140_arm64.apk?mkey=6273e8db6676c7899fedb5fcebc4779b&arrive_key=302432739767&cip=175.10.24.12&proto=https",
-                    this@MainActivity
-                )
-            )
-
-//            setIndeterminateDrawable(resources.getDrawable(com.mx.dialog.R.drawable.mx_dialog_icon_error))
-//            setMessage("我在加载中... ${MXProgressDialog.REPLACE_PROGRESS}")
-        }.show()
+//        MXUpgradeDialog(this).apply {
+//            setCancelable(true)
+//            setTitle("发现更新")
+//            setMessage(Html.fromHtml("1:xxx<br />2:xxx<br />3:xxx<br />1:xxx<br />2:xxx<br />3:xxx<br />1:xxx<br />2:xxx<br />3:xxx<br />4:xxx"))
+//            setIUpgrade(
+//                MXUpgradeImp(
+//                    "https://5a694755beae180ed219fdf5d2238691.rdt.tfogc.com:49156/dldir1.qq.com/weixin/android/weixin8022android2140_arm64.apk?mkey=6273e8db6676c7899fedb5fcebc4779b&arrive_key=302432739767&cip=175.10.24.12&proto=https",
+//                    this@MainActivity
+//                )
+//            )
+//
+////            setIndeterminateDrawable(resources.getDrawable(com.mx.dialog.R.drawable.mx_dialog_icon_error))
+////            setMessage("我在加载中... ${MXProgressDialog.REPLACE_PROGRESS}")
+//        }.show()
+        MXLoadingDialog(this).show()
     }
 
     fun showToast(view: View) {
