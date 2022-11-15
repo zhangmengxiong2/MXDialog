@@ -1,21 +1,26 @@
 package com.mx.dialog.progress
 
+import android.animation.ObjectAnimator
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import android.widget.ProgressBar
+import android.widget.ImageView
 import android.widget.TextView
 import com.mx.dialog.R
 import com.mx.dialog.base.MXBaseCardDialog
+import com.mx.dialog.utils.MXUtils
 
 open class MXLoadingDialog(context: Context) : MXBaseCardDialog(context) {
     private var loadingMessage: CharSequence? = null
     private var indeterminateDrawable: Drawable? = null
 
-    private var progressBar: ProgressBar? = null
+    private var loadingImg: ImageView? = null
     private var loadingTxv: TextView? = null
+
+    private var loadingAnimator: ObjectAnimator? = null
+    private var userSetAnimator: ObjectAnimator? = null
 
     override fun getContentLayoutId(): Int {
         return R.layout.mx_content_loading
@@ -35,20 +40,23 @@ open class MXLoadingDialog(context: Context) : MXBaseCardDialog(context) {
     }
 
     private fun initView() {
-        progressBar = findViewById(R.id.mxProgressBar)
+        loadingImg = findViewById(R.id.mxLoadingImg)
         loadingTxv = findViewById(R.id.mxLoadingTxv)
+
+        loadingImg?.let { loadingAnimator = MXUtils.rotationAnimation(it, 1000) }
     }
 
     private fun initData() {
         loadingTxv?.text = loadingMessage ?: "正在加载中..."
-
-        kotlin.run { // Icon设置
-            val width =
-                context.resources.getDimensionPixelOffset(R.dimen.mx_dialog_size_progress_img)
+        loadingImg?.let { progressBar -> // Icon设置
             val drawable = indeterminateDrawable
-                ?: context.resources.getDrawable(R.drawable.mx_dialog_progress_loading)
-            drawable.setBounds(0, 0, width, width)
-            progressBar?.indeterminateDrawable = drawable
+            if (drawable != null) {
+                progressBar.setImageDrawable(drawable)
+                userSetAnimator?.start()
+            } else {
+                progressBar.setImageResource(R.drawable.mx_dialog_icon_loading)
+                loadingAnimator?.start()
+            }
         }
     }
 
@@ -59,12 +67,22 @@ open class MXLoadingDialog(context: Context) : MXBaseCardDialog(context) {
     }
 
     override fun onDismissTicket(maxSecond: Int, remindSecond: Int) {
-
     }
 
-    fun setIndeterminateDrawable(drawable: Drawable) {
+    fun setIndeterminateDrawable(drawable: Drawable, animator: ObjectAnimator? = null) {
         indeterminateDrawable = drawable
+        if (animator != null) {
+            this.loadingAnimator?.end()
+            this.userSetAnimator?.end()
+            this.userSetAnimator = animator
+        }
 
         initData()
+    }
+
+    override fun dismiss() {
+        loadingAnimator?.cancel()
+        loadingAnimator = null
+        super.dismiss()
     }
 }

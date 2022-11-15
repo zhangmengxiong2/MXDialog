@@ -1,6 +1,9 @@
 package com.mx.dialog.utils
 
+import android.animation.ObjectAnimator
+import android.animation.ValueAnimator
 import android.content.Context
+import android.view.View
 import com.mx.dialog.BuildConfig
 import java.text.DecimalFormat
 import kotlin.math.max
@@ -62,6 +65,15 @@ internal object MXUtils {
 
     fun Float.asString(): String {
         return DecimalFormat("#0.00").format(this)
+    }
+
+    fun rotationAnimation(view: View, duration: Long): ObjectAnimator {
+        val animator = ObjectAnimator.ofFloat(view, "rotation", view.rotation, view.rotation + 360f)
+        animator.duration = duration
+        animator.interpolator = null
+        animator.repeatMode = ValueAnimator.RESTART
+        animator.repeatCount = -1
+        return animator
     }
 
     fun getScreenWidthDP(appContext: Context): Int =
