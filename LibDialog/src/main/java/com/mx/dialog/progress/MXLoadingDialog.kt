@@ -29,7 +29,6 @@ open class MXLoadingDialog(context: Context) : MXBaseCardDialog(context) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initView()
-        initData()
     }
 
     override fun initCardView(cardLay: ViewGroup) {
@@ -46,15 +45,20 @@ open class MXLoadingDialog(context: Context) : MXBaseCardDialog(context) {
         loadingImg?.let { loadingAnimator = MXUtils.rotationAnimation(it, 1000) }
     }
 
+    override fun show() {
+        super.show()
+        initData()
+    }
+
     private fun initData() {
         loadingTxv?.text = loadingMessage ?: "正在加载中..."
-        loadingImg?.let { progressBar -> // Icon设置
+        loadingImg?.let { imageView -> // Icon设置
             val drawable = indeterminateDrawable
             if (drawable != null) {
-                progressBar.setImageDrawable(drawable)
+                imageView.setImageDrawable(drawable)
                 userSetAnimator?.start()
             } else {
-                progressBar.setImageResource(R.drawable.mx_dialog_icon_loading)
+                imageView.setImageResource(R.drawable.mx_dialog_icon_loading)
                 loadingAnimator?.start()
             }
         }
@@ -71,18 +75,17 @@ open class MXLoadingDialog(context: Context) : MXBaseCardDialog(context) {
 
     fun setIndeterminateDrawable(drawable: Drawable, animator: ObjectAnimator? = null) {
         indeterminateDrawable = drawable
-        if (animator != null) {
-            this.loadingAnimator?.end()
-            this.userSetAnimator?.end()
-            this.userSetAnimator = animator
-        }
+        this.loadingAnimator?.end()
+        this.userSetAnimator?.end()
+        this.userSetAnimator = animator
 
         initData()
     }
 
     override fun dismiss() {
         loadingAnimator?.cancel()
-        loadingAnimator = null
+        userSetAnimator?.cancel()
+
         super.dismiss()
     }
 }
