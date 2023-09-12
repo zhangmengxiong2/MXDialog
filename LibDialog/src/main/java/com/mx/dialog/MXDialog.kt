@@ -9,7 +9,6 @@ import com.mx.dialog.tip.MXTipDialog
 import com.mx.dialog.utils.IMXLifecycle
 import com.mx.dialog.utils.MXUtils
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 
 object MXDialog {
@@ -46,6 +45,7 @@ object MXDialog {
         actionButtonText: CharSequence? = null,
         cancelButtonText: CharSequence? = null,
         cancelable: Boolean = true,
+        cancelableOnTouchOutside: Boolean = true,
         maxContentRatio: Float = 1f,
         onActionClick: ((confirm: Boolean) -> Unit)? = null
     ): MXTipDialog {
@@ -54,6 +54,7 @@ object MXDialog {
         dialog.setMessage(message)
         dialog.setMaxContentRatio(maxContentRatio)
         dialog.setCancelable(cancelable)
+        dialog.setCanceledOnTouchOutside(cancelableOnTouchOutside)
         dialog.setActionBtn(text = actionButtonText) { onActionClick?.invoke(true) }
         if (cancelable) {
             dialog.setCancelBtn(text = cancelButtonText) {
@@ -75,17 +76,15 @@ object MXDialog {
         actionButtonText: CharSequence? = null,
         cancelButtonText: CharSequence? = null,
         cancelable: Boolean = true,
+        cancelableOnTouchOutside: Boolean = true,
         maxContentRatio: Float = 1f
     ): Boolean = withContext(Dispatchers.Main) {
         var hasConfirm = false
         val lock = Object()
         confirm(
-            context,
-            message,
-            title,
-            actionButtonText,
-            cancelButtonText,
-            cancelable,
+            context, message, title,
+            actionButtonText, cancelButtonText,
+            cancelable, cancelableOnTouchOutside,
             maxContentRatio
         ) { confirm ->
             hasConfirm = confirm
