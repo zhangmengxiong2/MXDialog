@@ -72,19 +72,5 @@
             style="@style/mx_dialog_style_cancel_btn"
             android:background="@drawable/mx_dialog_btn_bg_cancel_circular"
             android:text="@string/mx_dialog_button_cancel_text" />
-
-        <View
-            android:id="@+id/mxBtnDivider"
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:layout_marginHorizontal="6dp"
-            android:background="@color/mx_dialog_color_divider"
-            android:visibility="invisible" />
-
-        <TextView
-            android:id="@+id/mxOkBtn"
-            style="@style/mx_dialog_style_active_btn"
-            android:background="@drawable/mx_dialog_btn_bg_action_circular"
-            android:text="@string/mx_dialog_button_action_text" />
     </LinearLayout>
 </LinearLayout>

@@ -3,6 +3,7 @@ package com.mx.dialog.tip
 import android.content.Context
 import android.os.Bundle
 import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
@@ -23,13 +24,12 @@ abstract class MXTipBaseDialog(context: Context) : MXBaseCardDialog(context) {
     private var delayTxv: TextView? = null
     private var cancelBtn: TextView? = null
     private var btnDivider: View? = null
-    private var actionBtn: TextView? = null
 
     private var titleStr: CharSequence? = null
     private var titleGravity: Int = Gravity.LEFT
 
     private var cancelProp: MXTextProp? = null
-    private var actionProp: MXTextProp? = null
+    private val actionProps = ArrayList<MXTextProp>()
 
     private var buttonStyle = MXButtonStyle.ActionFocus
     private var tipType = MXDialogType.NONE
@@ -67,7 +67,6 @@ abstract class MXTipBaseDialog(context: Context) : MXBaseCardDialog(context) {
         delayTxv = findViewById(R.id.mxDelayTxv)
         cancelBtn = findViewById(R.id.mxCancelBtn)
         btnDivider = findViewById(R.id.mxBtnDivider)
-        actionBtn = findViewById(R.id.mxOkBtn)
     }
 
     override fun onDismissTicket(maxSecond: Int, remindSecond: Int) {
@@ -92,16 +91,22 @@ abstract class MXTipBaseDialog(context: Context) : MXBaseCardDialog(context) {
 
         kotlin.run { // 处理按钮
             processCancelBtn()
-            processActionBtn()
-            if (cancelBtn?.visibility == View.VISIBLE || actionBtn?.visibility == View.VISIBLE) {
-                btnLay?.visibility = View.VISIBLE
-                val cornerDP = getCardBackgroundRadiusDP()
-                MXButtonStyle.attach(
-                    buttonStyle, btnLay, cancelBtn,
-                    actionBtn, btnDivider, cornerDP
-                )
-            } else {
-                btnLay?.visibility = View.GONE
+
+            val btnLay = btnLay
+            if (btnLay != null) {
+                (0..btnLay.childCount).mapNotNull {
+                    btnLay.getChildAt(it)
+                }.forEachIndexed { index, view ->
+                    if (index > 0) btnLay.removeView(view)
+                }
+                actionProps.forEachIndexed { index, actionProp ->
+                    processActionBtn(actionProp)
+                }
+                if (cancelBtn?.visibility == View.VISIBLE || actionProps.isNotEmpty()) {
+                    btnLay.visibility = View.VISIBLE
+                } else {
+                    btnLay.visibility = View.GONE
+                }
             }
         }
 
@@ -109,14 +114,17 @@ abstract class MXTipBaseDialog(context: Context) : MXBaseCardDialog(context) {
             MXDialogType.NONE -> {
                 tipTypeImg?.visibility = View.GONE
             }
+
             MXDialogType.SUCCESS -> {
                 tipTypeImg?.visibility = View.VISIBLE
                 tipTypeImg?.setImageResource(R.drawable.mx_dialog_icon_success)
             }
+
             MXDialogType.WARN -> {
                 tipTypeImg?.visibility = View.VISIBLE
                 tipTypeImg?.setImageResource(R.drawable.mx_dialog_icon_warn)
             }
+
             MXDialogType.ERROR -> {
                 tipTypeImg?.visibility = View.VISIBLE
                 tipTypeImg?.setImageResource(R.drawable.mx_dialog_icon_error)
@@ -150,48 +158,64 @@ abstract class MXTipBaseDialog(context: Context) : MXBaseCardDialog(context) {
         }
     }
 
-    private fun processActionBtn() {
-        val button = actionBtn ?: return
-        val prop = actionProp
-        val showActionBtn = (prop == null || prop.visible)
-        if (showActionBtn) {
-            val actionProp = prop ?: MXTextProp(
-                context.resources.getString(R.string.mx_dialog_button_action_text),
-                true,
-                context.resources.getColor(R.color.mx_dialog_color_text_action),
-                15f
-            )
-            button.text = actionProp.text
-            actionProp.attachTextColor(button, R.color.mx_dialog_color_text_action)
-            actionProp.attachTextSize(button, R.dimen.mx_dialog_text_size_button)
-            button.setOnClickListener {
-                dismiss()
-                actionProp.onclick?.invoke()
-            }
+    private fun processActionBtn(prop: MXTextProp?): TextView? {
+        val btnLay = btnLay ?: return null
 
-            button.visibility = View.VISIBLE
-        } else {
-            button.visibility = View.GONE
+        val showActionBtn = (prop == null || prop.visible)
+        if (!showActionBtn) return null
+
+        LayoutInflater.from(context).inflate(
+            R.layout.mx_content_action_btn, btnLay, true
+        )
+        val button = (btnLay.getChildAt(btnLay.childCount - 1) as TextView?) ?: return null
+        val actionProp = prop ?: MXTextProp(
+            context.resources.getString(R.string.mx_dialog_button_action_text),
+            true,
+            context.resources.getColor(R.color.mx_dialog_color_text_action),
+            15f
+        )
+        button.text = actionProp.text
+        actionProp.attachTextColor(button, R.color.mx_dialog_color_text_action)
+        actionProp.attachTextSize(button, R.dimen.mx_dialog_text_size_button)
+        button.setOnClickListener {
+            dismiss()
+            actionProp.onclick?.invoke()
         }
+        button.visibility = View.VISIBLE
+
+        val cornerDP = getCardBackgroundRadiusDP()
+        MXButtonStyle.attach(
+            buttonStyle, btnLay, cancelBtn,
+            button, btnDivider, cornerDP
+        )
+        return button
     }
 
     /**
      * 设置活动按钮
      */
-    fun setActionBtn(
+    fun addActionBtn(
         text: CharSequence? = null,
         visible: Boolean = true,
         textColor: Int? = null,
         textSizeSP: Float? = null,
         onclick: (() -> Unit)? = null
     ) {
-        actionProp = MXTextProp(
-            text ?: context.resources.getString(R.string.mx_dialog_button_action_text),
-            visible,
-            textColor,
-            textSizeSP,
-            onclick = onclick
+        actionProps.add(
+            MXTextProp(
+                text ?: context.resources.getString(R.string.mx_dialog_button_action_text),
+                visible, textColor, textSizeSP, onclick = onclick
+            )
         )
+
+        initDialog()
+    }
+
+    /**
+     * 清空活动按钮
+     */
+    fun cleanActionBtn() {
+        actionProps.clear()
 
         initDialog()
     }

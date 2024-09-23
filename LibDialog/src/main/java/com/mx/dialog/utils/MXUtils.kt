@@ -4,14 +4,13 @@ import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
 import android.content.Context
 import android.view.View
-import com.mx.dialog.BuildConfig
 import java.text.DecimalFormat
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.roundToInt
 
 internal object MXUtils {
-    private var debug = BuildConfig.DEBUG
+    private var debug = false
     fun setDebug(debug: Boolean) {
         this.debug = debug
     }

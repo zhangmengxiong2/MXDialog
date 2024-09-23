@@ -55,7 +55,7 @@ object MXDialog {
         dialog.setMaxContentRatio(maxContentRatio)
         dialog.setCancelable(cancelable)
         dialog.setCanceledOnTouchOutside(cancelableOnTouchOutside)
-        dialog.setActionBtn(text = actionButtonText) { onActionClick?.invoke(true) }
+        dialog.addActionBtn(text = actionButtonText) { onActionClick?.invoke(true) }
         if (cancelable) {
             dialog.setCancelBtn(text = cancelButtonText) {
                 onActionClick?.invoke(false)
@@ -118,7 +118,7 @@ object MXDialog {
         dialog.setDismissDelay(dismissDelay)
         dialog.setCancelBtn(visible = false)
 
-        dialog.setActionBtn(
+        dialog.addActionBtn(
             text = actionButtonText
                 ?: context.resources.getString(R.string.mx_dialog_button_action_text)
         )
