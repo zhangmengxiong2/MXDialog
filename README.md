@@ -3,7 +3,7 @@
 #### 介绍
 
 通用Dialog
-最新版本：[![](https://jitpack.io/v/com.gitee.zhangmengxiong/MXDialog.svg)](https://jitpack.io/#com.gitee.zhangmengxiong/MXDialog)
+最新版本：[![](https://jitpack.io/v/zmx1990/MXDialog.svg)](https://jitpack.io/#zmx1990/MXDialog)
 
 #### 功能特性
 
