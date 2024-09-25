@@ -23,7 +23,6 @@ abstract class MXTipBaseDialog(context: Context) : MXBaseCardDialog(context) {
     private var titleTxv: TextView? = null
     private var delayTxv: TextView? = null
     private var cancelBtn: TextView? = null
-    private var btnDivider: View? = null
 
     private var titleStr: CharSequence? = null
     private var titleGravity: Int = Gravity.LEFT
@@ -66,7 +65,6 @@ abstract class MXTipBaseDialog(context: Context) : MXBaseCardDialog(context) {
         titleTxv = findViewById(R.id.mxTitleTxv)
         delayTxv = findViewById(R.id.mxDelayTxv)
         cancelBtn = findViewById(R.id.mxCancelBtn)
-        btnDivider = findViewById(R.id.mxBtnDivider)
     }
 
     override fun onDismissTicket(maxSecond: Int, remindSecond: Int) {
@@ -168,9 +166,9 @@ abstract class MXTipBaseDialog(context: Context) : MXBaseCardDialog(context) {
             R.layout.mx_content_action_btn, btnLay, true
         )
         val button = (btnLay.getChildAt(btnLay.childCount - 1) as TextView?) ?: return null
+        val divider = btnLay.getChildAt(btnLay.childCount - 2)
         val actionProp = prop ?: MXTextProp(
-            context.resources.getString(R.string.mx_dialog_button_action_text),
-            true,
+            context.resources.getString(R.string.mx_dialog_button_action_text), true,
             context.resources.getColor(R.color.mx_dialog_color_text_action),
             15f
         )
@@ -186,13 +184,27 @@ abstract class MXTipBaseDialog(context: Context) : MXBaseCardDialog(context) {
         val cornerDP = getCardBackgroundRadiusDP()
         MXButtonStyle.attach(
             buttonStyle, btnLay, cancelBtn,
-            button, btnDivider, cornerDP
+            button, divider, cornerDP
         )
         return button
     }
 
     /**
      * 设置活动按钮
+     */
+    fun setActionBtn(
+        text: CharSequence? = null,
+        visible: Boolean = true,
+        textColor: Int? = null,
+        textSizeSP: Float? = null,
+        onclick: (() -> Unit)? = null
+    ) {
+        actionProps.clear()
+        addActionBtn(text, visible, textColor, textSizeSP, onclick)
+    }
+
+    /**
+     * 添加活动按钮
      */
     fun addActionBtn(
         text: CharSequence? = null,
@@ -203,8 +215,8 @@ abstract class MXTipBaseDialog(context: Context) : MXBaseCardDialog(context) {
     ) {
         actionProps.add(
             MXTextProp(
-                text ?: context.resources.getString(R.string.mx_dialog_button_action_text),
-                visible, textColor, textSizeSP, onclick = onclick
+                text ?: context.resources.getString(R.string.mx_dialog_button_action_text), visible,
+                textColor, textSizeSP, onclick = onclick
             )
         )
 

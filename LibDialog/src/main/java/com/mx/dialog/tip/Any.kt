@@ -15,6 +15,7 @@ class MXDialogPosition {
         val TOP: MXDialogPosition
             get() = MXDialogPosition().apply {
                 gravity = Gravity.TOP or Gravity.CENTER_HORIZONTAL
+                translationY = 20
             }
 
         val CENTER: MXDialogPosition
@@ -25,6 +26,7 @@ class MXDialogPosition {
         val BOTTOM: MXDialogPosition
             get() = MXDialogPosition().apply {
                 gravity = Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL
+                translationY = -40
             }
     }
 }

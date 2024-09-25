@@ -2,7 +2,6 @@ package com.mx.example
 
 import android.graphics.Color
 import android.os.Bundle
-import android.view.Gravity
 import android.widget.SeekBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -17,7 +16,6 @@ import com.mx.example.databinding.ActivityTipDialogBinding
 class TipDialogActivity : AppCompatActivity() {
     private val binding by lazy { ActivityTipDialogBinding.inflate(layoutInflater) }
     private val tipDialog by lazy { MXTipDialog(this) }
-    private val position = MXDialogPosition()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -25,7 +23,6 @@ class TipDialogActivity : AppCompatActivity() {
     }
 
     private fun initView() {
-        tipDialog.setCardPosition(position)
         tipDialog.setButtonStyle(MXButtonStyle.ActionFocus)
         tipDialog.setOnCancelListener {
             Toast.makeText(this, "取消操作", Toast.LENGTH_SHORT).show()
@@ -56,9 +53,11 @@ class TipDialogActivity : AppCompatActivity() {
         })
 
         binding.positionGroup.children.forEachIndexed { index, view ->
-            val gravitys = arrayOf(Gravity.TOP, Gravity.CENTER, Gravity.BOTTOM)
+            val gravitys = arrayOf(
+                MXDialogPosition.TOP, MXDialogPosition.CENTER, MXDialogPosition.BOTTOM
+            )
             view.setOnClickListener {
-                position.gravity = gravitys[index]
+                tipDialog.setCardPosition(gravitys[index])
                 tipDialog.show()
             }
         }
@@ -95,7 +94,7 @@ class TipDialogActivity : AppCompatActivity() {
         binding.marginEdt.addTextChangedListener {
             tipDialog.setCardMargin(it?.toString()?.toFloatOrNull() ?: 0f)
         }
-        tipDialog.addActionBtn {
+        tipDialog.setActionBtn {
             Toast.makeText(this, "点击确认", Toast.LENGTH_SHORT).show()
         }
 //        tipDialog.setAction2Btn("Action2") {
