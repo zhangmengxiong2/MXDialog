@@ -65,12 +65,6 @@
         android:layout_width="match_parent"
         android:layout_height="65dp"
         android:gravity="center"
-        android:padding="@dimen/mx_dialog_size_divider_normal">
-
-        <TextView
-            android:id="@+id/mxCancelBtn"
-            style="@style/mx_dialog_style_cancel_btn"
-            android:background="@drawable/mx_dialog_btn_bg_cancel_circular"
-            android:text="@string/mx_dialog_button_cancel_text" />
-    </LinearLayout>
+        android:orientation="horizontal"
+        android:padding="@dimen/mx_dialog_size_divider_normal" />
 </LinearLayout>

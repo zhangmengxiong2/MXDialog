@@ -22,12 +22,14 @@ abstract class MXTipBaseDialog(context: Context) : MXBaseCardDialog(context) {
     private var contentLay: MXRatioFrameLayout? = null
     private var titleTxv: TextView? = null
     private var delayTxv: TextView? = null
-    private var cancelBtn: TextView? = null
 
     private var titleStr: CharSequence? = null
     private var titleGravity: Int = Gravity.LEFT
 
-    private var cancelProp: MXTextProp? = null
+    private var cancelProp = MXTextProp(
+        context.resources.getString(R.string.mx_dialog_button_cancel_text), true,
+        context.resources.getColor(R.color.mx_dialog_color_text_cancel), 15f
+    )
     private val actionProps = ArrayList<MXTextProp>()
 
     private var buttonStyle = MXButtonStyle.ActionFocus
@@ -48,8 +50,7 @@ abstract class MXTipBaseDialog(context: Context) : MXBaseCardDialog(context) {
         generalContentView(contentLay!!)?.let { view ->
             contentLay?.removeAllViews()
             contentLay?.addView(
-                view,
-                FrameLayout.LayoutParams.MATCH_PARENT,
+                view, FrameLayout.LayoutParams.MATCH_PARENT,
                 FrameLayout.LayoutParams.WRAP_CONTENT
             )
         }
@@ -64,7 +65,6 @@ abstract class MXTipBaseDialog(context: Context) : MXBaseCardDialog(context) {
         tipTypeImg = findViewById(R.id.mxTipTypeImg)
         titleTxv = findViewById(R.id.mxTitleTxv)
         delayTxv = findViewById(R.id.mxDelayTxv)
-        cancelBtn = findViewById(R.id.mxCancelBtn)
     }
 
     override fun onDismissTicket(maxSecond: Int, remindSecond: Int) {
@@ -88,19 +88,13 @@ abstract class MXTipBaseDialog(context: Context) : MXBaseCardDialog(context) {
         contentLay?.minimumHeight = MXUtils.dp2px(context, minContentHeightDP)
 
         kotlin.run { // 处理按钮
-            processCancelBtn()
-
             val btnLay = btnLay
             if (btnLay != null) {
-                (0..btnLay.childCount).mapNotNull {
-                    btnLay.getChildAt(it)
-                }.forEachIndexed { index, view ->
-                    if (index > 0) btnLay.removeView(view)
-                }
-                actionProps.forEachIndexed { index, actionProp ->
-                    processActionBtn(actionProp)
-                }
-                if (cancelBtn?.visibility == View.VISIBLE || actionProps.isNotEmpty()) {
+                btnLay.removeAllViews()
+                val cancelBtn = processCancelBtn()
+                actionProps.forEach { prop -> processActionBtn(cancelBtn, prop) }
+
+                if (btnLay.childCount > 0) {
                     btnLay.visibility = View.VISIBLE
                 } else {
                     btnLay.visibility = View.GONE
@@ -130,33 +124,30 @@ abstract class MXTipBaseDialog(context: Context) : MXBaseCardDialog(context) {
         }
     }
 
-    private fun processCancelBtn() {
-        val button = cancelBtn ?: return
+    private fun processCancelBtn(): TextView? {
+        val btnLay = btnLay ?: return null
+        LayoutInflater.from(context).inflate(
+            R.layout.mx_content_cancel_btn, btnLay, true
+        )
+        val button = (btnLay.getChildAt(0) as TextView?) ?: return null
         val prop = cancelProp
-        val showCancelBtn = (prop == null || prop.visible) && isCancelable()
-
-        if (showCancelBtn) {
-            val cancelProp = prop ?: MXTextProp(
-                context.resources.getString(R.string.mx_dialog_button_cancel_text),
-                true,
-                context.resources.getColor(R.color.mx_dialog_color_text_cancel),
-                15f
-            )
-
-            button.text = cancelProp.text
-            cancelProp.attachTextColor(button, R.color.mx_dialog_color_text_cancel)
-            cancelProp.attachTextSize(button, R.dimen.mx_dialog_text_size_button)
-            button.setOnClickListener {
-                dismiss()
-                cancelProp.onclick?.invoke()
-            }
-            button.visibility = View.VISIBLE
-        } else {
+        val showCancelBtn = (prop.visible) && isCancelable()
+        if (!showCancelBtn) {
             button.visibility = View.GONE
+            return null
         }
+
+        button.text = prop.text
+        prop.attachTextColor(button, R.color.mx_dialog_color_text_cancel)
+        prop.attachTextSize(button, R.dimen.mx_dialog_text_size_button)
+        button.setOnClickListener {
+            dismiss()
+            prop.onclick?.invoke()
+        }
+        return button
     }
 
-    private fun processActionBtn(prop: MXTextProp?): TextView? {
+    private fun processActionBtn(cancelBtn: TextView?, prop: MXTextProp?): TextView? {
         val btnLay = btnLay ?: return null
 
         val showActionBtn = (prop == null || prop.visible)
@@ -179,7 +170,6 @@ abstract class MXTipBaseDialog(context: Context) : MXBaseCardDialog(context) {
             dismiss()
             actionProp.onclick?.invoke()
         }
-        button.visibility = View.VISIBLE
 
         val cornerDP = getCardBackgroundRadiusDP()
         MXButtonStyle.attach(
@@ -215,8 +205,8 @@ abstract class MXTipBaseDialog(context: Context) : MXBaseCardDialog(context) {
     ) {
         actionProps.add(
             MXTextProp(
-                text ?: context.resources.getString(R.string.mx_dialog_button_action_text), visible,
-                textColor, textSizeSP, onclick = onclick
+                text ?: context.resources.getString(R.string.mx_dialog_button_action_text),
+                visible, textColor, textSizeSP, onclick = onclick
             )
         )
 
@@ -257,18 +247,21 @@ abstract class MXTipBaseDialog(context: Context) : MXBaseCardDialog(context) {
     override fun setTitle(title: CharSequence?) {
         titleStr = title
         titleGravity = Gravity.LEFT
+
         initDialog()
     }
 
     override fun setTitle(titleId: Int) {
         titleStr = context.getString(titleId)
         titleGravity = Gravity.LEFT
+
         initDialog()
     }
 
     fun setTitle(title: CharSequence?, gravity: Int = Gravity.LEFT) {
         titleStr = title
         titleGravity = gravity
+
         initDialog()
     }
 

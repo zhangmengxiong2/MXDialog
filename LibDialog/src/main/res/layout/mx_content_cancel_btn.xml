@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:id="@+id/mxCancelBtn"
+        style="@style/mx_dialog_style_cancel_btn"
+        android:background="@drawable/mx_dialog_btn_bg_cancel_circular"
+        android:text="@string/mx_dialog_button_cancel_text" />
+</merge>
