@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
 import androidx.core.widget.addTextChangedListener
+import com.mx.dialog.tip.MXDialogCancelPosition
 import com.mx.dialog.tip.MXDialogPosition
 import com.mx.dialog.tip.MXDialogType
 import com.mx.dialog.tip.MXTipDialog
@@ -91,13 +92,23 @@ class TipDialogActivity : AppCompatActivity() {
                 tipDialog.show()
             }
         }
+        binding.cancelPositionGroup.children.forEachIndexed { index, view ->
+            val types = arrayOf(
+                MXDialogCancelPosition.LEFT,
+                MXDialogCancelPosition.RIGHT
+            )
+            view.setOnClickListener {
+                tipDialog.setCancelPosition(types[index])
+                tipDialog.show()
+            }
+        }
         binding.marginEdt.addTextChangedListener {
             tipDialog.setCardMargin(it?.toString()?.toFloatOrNull() ?: 0f)
         }
         tipDialog.setActionBtn {
             Toast.makeText(this, "点击确认", Toast.LENGTH_SHORT).show()
         }
-//        tipDialog.setAction2Btn("Action2") {
+//        tipDialog.addActionBtn("Action2") {
 //            Toast.makeText(this, "点击确认2", Toast.LENGTH_SHORT).show()
 //        }
         tipDialog.setCancelBtn {

@@ -185,5 +185,28 @@
                 android:text="ActionFocus" />
 
         </RadioGroup>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cancel Position：" />
+
+        <RadioGroup
+            android:id="@+id/cancelPositionGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Left" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Right" />
+        </RadioGroup>
     </LinearLayout>
 </ScrollView>

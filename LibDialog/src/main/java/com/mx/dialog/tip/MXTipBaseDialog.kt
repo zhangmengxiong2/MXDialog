@@ -30,6 +30,7 @@ abstract class MXTipBaseDialog(context: Context) : MXBaseCardDialog(context) {
         context.resources.getString(R.string.mx_dialog_button_cancel_text), true,
         context.resources.getColor(R.color.mx_dialog_color_text_cancel), 15f
     )
+    private var cancelPosition = MXDialogCancelPosition.LEFT
     private val actionProps = ArrayList<MXTextProp>()
 
     private var buttonStyle = MXButtonStyle.ActionFocus
@@ -91,8 +92,14 @@ abstract class MXTipBaseDialog(context: Context) : MXBaseCardDialog(context) {
             val btnLay = btnLay
             if (btnLay != null) {
                 btnLay.removeAllViews()
-                val cancelBtn = processCancelBtn()
-                actionProps.forEach { prop -> processActionBtn(cancelBtn, prop) }
+                if (cancelPosition == MXDialogCancelPosition.LEFT) {
+                    processCancelBtn()
+                    actionProps.forEach { prop -> processActionBtn(prop) }
+                } else {
+                    actionProps.forEach { prop -> processActionBtn(prop) }
+                    processCancelBtn()
+                }
+                MXButtonStyle.attach(buttonStyle, btnLay, getCardBackgroundRadiusDP())
 
                 if (btnLay.childCount > 0) {
                     btnLay.visibility = View.VISIBLE
@@ -126,12 +133,13 @@ abstract class MXTipBaseDialog(context: Context) : MXBaseCardDialog(context) {
 
     private fun processCancelBtn(): TextView? {
         val btnLay = btnLay ?: return null
+
+        val prop = cancelProp
+        val showCancelBtn = (prop.visible) && isCancelable()
         LayoutInflater.from(context).inflate(
             R.layout.mx_content_cancel_btn, btnLay, true
         )
-        val button = (btnLay.getChildAt(0) as TextView?) ?: return null
-        val prop = cancelProp
-        val showCancelBtn = (prop.visible) && isCancelable()
+        val button = (btnLay.getChildAt(btnLay.childCount - 1) as TextView?) ?: return null
         if (!showCancelBtn) {
             button.visibility = View.GONE
             return null
@@ -144,10 +152,12 @@ abstract class MXTipBaseDialog(context: Context) : MXBaseCardDialog(context) {
             dismiss()
             prop.onclick?.invoke()
         }
+        button.setTag(R.id.mxCancelBtn, true)
+
         return button
     }
 
-    private fun processActionBtn(cancelBtn: TextView?, prop: MXTextProp?): TextView? {
+    private fun processActionBtn(prop: MXTextProp?): TextView? {
         val btnLay = btnLay ?: return null
 
         val showActionBtn = (prop == null || prop.visible)
@@ -157,11 +167,9 @@ abstract class MXTipBaseDialog(context: Context) : MXBaseCardDialog(context) {
             R.layout.mx_content_action_btn, btnLay, true
         )
         val button = (btnLay.getChildAt(btnLay.childCount - 1) as TextView?) ?: return null
-        val divider = btnLay.getChildAt(btnLay.childCount - 2)
         val actionProp = prop ?: MXTextProp(
             context.resources.getString(R.string.mx_dialog_button_action_text), true,
-            context.resources.getColor(R.color.mx_dialog_color_text_action),
-            15f
+            context.resources.getColor(R.color.mx_dialog_color_text_action), 15f
         )
         button.text = actionProp.text
         actionProp.attachTextColor(button, R.color.mx_dialog_color_text_action)
@@ -170,13 +178,19 @@ abstract class MXTipBaseDialog(context: Context) : MXBaseCardDialog(context) {
             dismiss()
             actionProp.onclick?.invoke()
         }
-
-        val cornerDP = getCardBackgroundRadiusDP()
-        MXButtonStyle.attach(
-            buttonStyle, btnLay, cancelBtn,
-            button, divider, cornerDP
-        )
         return button
+    }
+
+    private fun attachDivider(): View? {
+        val btnLay = btnLay ?: return null
+        val hasBefore = (btnLay.childCount > 0)
+
+        return if (hasBefore) {
+            LayoutInflater.from(context).inflate(
+                R.layout.mx_content_divider_btn, btnLay, true
+            )
+            btnLay.getChildAt(btnLay.childCount - 1)
+        } else null
     }
 
     /**
@@ -242,6 +256,13 @@ abstract class MXTipBaseDialog(context: Context) : MXBaseCardDialog(context) {
             visible, textColor, textSizeSP, onclick = onclick
         )
         initDialog()
+    }
+
+    /**
+     * 设置取消按钮的位置
+     */
+    fun setCancelPosition(position: MXDialogCancelPosition) {
+        cancelPosition = position
     }
 
     override fun setTitle(title: CharSequence?) {

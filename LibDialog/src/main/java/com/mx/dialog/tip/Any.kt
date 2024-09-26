@@ -31,6 +31,10 @@ class MXDialogPosition {
     }
 }
 
+enum class MXDialogCancelPosition {
+    LEFT, RIGHT
+}
+
 /**
  * type of dialog icon
  */

@@ -1,16 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <View
-        android:id="@+id/actionDivider"
-        android:layout_width="1dp"
-        android:layout_height="match_parent"
-        android:layout_marginHorizontal="6dp"
-        android:background="@color/mx_dialog_color_divider" />
-
-    <TextView
-        android:id="@+id/actionBtn"
-        style="@style/mx_dialog_style_active_btn"
-        android:background="@drawable/mx_dialog_btn_bg_action_circular"
-        android:text="@string/mx_dialog_button_action_text" />
-</merge>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/actionBtn"
+    style="@style/mx_dialog_style_active_btn"
+    android:background="@drawable/mx_dialog_btn_bg_action_circular"
+    android:text="@string/mx_dialog_button_action_text" />
