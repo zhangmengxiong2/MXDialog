@@ -2,6 +2,7 @@
 <resources>
     <color name="mx_dialog_color_background_root">#aa000000</color>
     <color name="mx_dialog_color_background_content">#ffffff</color>
+    <color name="mx_dialog_color_background_button">#FAFAFA</color>
     <color name="mx_dialog_color_transparent">#00000000</color>
 
     <color name="mx_dialog_color_divider">#11666666</color>

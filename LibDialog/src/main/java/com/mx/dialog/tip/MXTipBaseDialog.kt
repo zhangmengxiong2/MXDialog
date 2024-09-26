@@ -111,7 +111,8 @@ abstract class MXTipBaseDialog(context: Context) : MXBaseCardDialog(context) {
 
         when (tipType) {
             MXType.NONE -> {
-                tipTypeImg?.visibility = View.GONE
+                tipTypeImg?.visibility = View.VISIBLE
+                tipTypeImg?.setImageResource(R.drawable.mx_dialog_icon_none)
             }
 
             MXType.SUCCESS -> {

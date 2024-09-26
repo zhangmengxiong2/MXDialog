@@ -22,6 +22,11 @@ internal object MXBtnAttach {
                 attachAction(style, content, view, cornerDP)
             }
         }
+
+        content.background = MXDrawableUtils.buildGradientDrawable(
+            content.context, R.color.mx_dialog_color_background_button,
+            floatArrayOf(0f, 0f, cornerDP, cornerDP)
+        )
     }
 
     private fun attachDivider(style: MXBtnStyle, content: LinearLayout) {
