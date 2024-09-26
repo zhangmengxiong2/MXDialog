@@ -7,11 +7,11 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
 import androidx.core.widget.addTextChangedListener
-import com.mx.dialog.tip.MXDialogCancelPosition
-import com.mx.dialog.tip.MXDialogPosition
-import com.mx.dialog.tip.MXDialogType
+import com.mx.dialog.tip.MXBtnStyle
+import com.mx.dialog.tip.MXPosition
+import com.mx.dialog.tip.MXCardPosition
+import com.mx.dialog.tip.MXType
 import com.mx.dialog.tip.MXTipDialog
-import com.mx.dialog.utils.MXButtonStyle
 import com.mx.example.databinding.ActivityTipDialogBinding
 
 class TipDialogActivity : AppCompatActivity() {
@@ -24,7 +24,7 @@ class TipDialogActivity : AppCompatActivity() {
     }
 
     private fun initView() {
-        tipDialog.setButtonStyle(MXButtonStyle.ActionFocus)
+        tipDialog.setButtonStyle(MXBtnStyle.ActionFocus)
         tipDialog.setOnCancelListener {
             Toast.makeText(this, "取消操作", Toast.LENGTH_SHORT).show()
         }
@@ -55,7 +55,7 @@ class TipDialogActivity : AppCompatActivity() {
 
         binding.positionGroup.children.forEachIndexed { index, view ->
             val gravitys = arrayOf(
-                MXDialogPosition.TOP, MXDialogPosition.CENTER, MXDialogPosition.BOTTOM
+                MXCardPosition.TOP, MXCardPosition.CENTER, MXCardPosition.BOTTOM
             )
             view.setOnClickListener {
                 tipDialog.setCardPosition(gravitys[index])
@@ -71,10 +71,10 @@ class TipDialogActivity : AppCompatActivity() {
         }
         binding.iconGroup.children.forEachIndexed { index, view ->
             val types = arrayOf(
-                MXDialogType.NONE,
-                MXDialogType.SUCCESS,
-                MXDialogType.WARN,
-                MXDialogType.ERROR
+                MXType.NONE,
+                MXType.SUCCESS,
+                MXType.WARN,
+                MXType.ERROR
             )
             view.setOnClickListener {
                 tipDialog.setTipType(types[index])
@@ -83,9 +83,9 @@ class TipDialogActivity : AppCompatActivity() {
         }
         binding.actionGroup.children.forEachIndexed { index, view ->
             val types = arrayOf(
-                MXButtonStyle.Rounded,
-                MXButtonStyle.FillBackground,
-                MXButtonStyle.ActionFocus
+                MXBtnStyle.Rounded,
+                MXBtnStyle.FillBackground,
+                MXBtnStyle.ActionFocus
             )
             view.setOnClickListener {
                 tipDialog.setButtonStyle(types[index])
@@ -94,8 +94,8 @@ class TipDialogActivity : AppCompatActivity() {
         }
         binding.cancelPositionGroup.children.forEachIndexed { index, view ->
             val types = arrayOf(
-                MXDialogCancelPosition.LEFT,
-                MXDialogCancelPosition.RIGHT
+                MXPosition.LEFT,
+                MXPosition.RIGHT
             )
             view.setOnClickListener {
                 tipDialog.setCancelPosition(types[index])

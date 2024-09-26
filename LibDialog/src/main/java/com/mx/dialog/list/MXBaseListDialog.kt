@@ -11,7 +11,7 @@ import android.widget.ListView
 import android.widget.TextView
 import com.mx.dialog.R
 import com.mx.dialog.base.MXBaseDialog
-import com.mx.dialog.tip.MXDialogPosition
+import com.mx.dialog.tip.MXCardPosition
 import com.mx.dialog.utils.MXDrawableUtils
 import com.mx.dialog.utils.MXTextProp
 import com.mx.dialog.utils.MXUtils
@@ -27,7 +27,7 @@ open class MXBaseListDialog(context: Context) : MXBaseDialog(context) {
     private var contentCornerRadiusDP = 12f
     private var contentMaxHeightRatioDP = 0.8f
     private var cardMarginDP = RectF(22f, 22f, 22f, 22f)
-    private var position = MXDialogPosition.BOTTOM
+    private var position = MXCardPosition.BOTTOM
     private var mxRootLay: LinearLayout? = null
     private var mxCardLay: ViewGroup? = null
     private var btnLay: ViewGroup? = null
@@ -313,7 +313,7 @@ open class MXBaseListDialog(context: Context) : MXBaseDialog(context) {
     /**
      * 设置弹窗位置
      */
-    fun setContentPosition(position: MXDialogPosition) {
+    fun setContentPosition(position: MXCardPosition) {
         this.position = position
 
         initDialog()

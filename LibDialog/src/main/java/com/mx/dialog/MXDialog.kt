@@ -3,9 +3,10 @@ package com.mx.dialog
 import android.content.Context
 import android.view.Gravity
 import com.mx.dialog.list.MXListDialog
-import com.mx.dialog.tip.MXDialogPosition
-import com.mx.dialog.tip.MXDialogType
+import com.mx.dialog.tip.MXPosition
+import com.mx.dialog.tip.MXCardPosition
 import com.mx.dialog.tip.MXTipDialog
+import com.mx.dialog.tip.MXType
 import com.mx.dialog.utils.IMXLifecycle
 import com.mx.dialog.utils.MXUtils
 import kotlinx.coroutines.Dispatchers
@@ -47,6 +48,7 @@ object MXDialog {
         cancelable: Boolean = true,
         cancelableOnTouchOutside: Boolean = true,
         maxContentRatio: Float = 1f,
+        cancelPosition: MXPosition = MXPosition.LEFT,
         onActionClick: ((confirm: Boolean) -> Unit)? = null
     ): MXTipDialog {
         val dialog = MXTipDialog(context)
@@ -63,8 +65,9 @@ object MXDialog {
             dialog.setOnCancelListener {
                 onActionClick?.invoke(false)
             }
+            dialog.setCancelPosition(cancelPosition)
         }
-        dialog.setTipType(MXDialogType.WARN)
+        dialog.setTipType(MXType.WARN)
         dialog.show()
         return dialog
     }
@@ -77,7 +80,8 @@ object MXDialog {
         cancelButtonText: CharSequence? = null,
         cancelable: Boolean = true,
         cancelableOnTouchOutside: Boolean = true,
-        maxContentRatio: Float = 1f
+        maxContentRatio: Float = 1f,
+        cancelPosition: MXPosition = MXPosition.LEFT
     ): Boolean = withContext(Dispatchers.Main) {
         var hasConfirm = false
         val lock = Object()
@@ -85,7 +89,7 @@ object MXDialog {
             context, message, title,
             actionButtonText, cancelButtonText,
             cancelable, cancelableOnTouchOutside,
-            maxContentRatio
+            maxContentRatio, cancelPosition
         ) { confirm ->
             hasConfirm = confirm
             synchronized(lock) { lock.notifyAll() }
@@ -108,7 +112,7 @@ object MXDialog {
     fun tip(
         context: Context, message: CharSequence, title: CharSequence? = null,
         actionButtonText: CharSequence? = null, maxContentRatio: Float = 1f,
-        dismissDelay: Int? = null, dialogType: MXDialogType? = null
+        dismissDelay: Int? = null, dialogType: MXType? = null
     ): MXTipDialog {
         val dialog = MXTipDialog(context)
         dialog.setTitle(title)
@@ -130,7 +134,7 @@ object MXDialog {
     suspend fun tipSync(
         context: Context, message: CharSequence, title: CharSequence? = null,
         actionButtonText: CharSequence? = null, maxContentRatio: Float = 1f,
-        dismissDelay: Int? = null, dialogType: MXDialogType? = null
+        dismissDelay: Int? = null, dialogType: MXType? = null
     ) = withContext(Dispatchers.Main) {
         val lock = Object()
         val dialog = tip(
@@ -161,7 +165,7 @@ object MXDialog {
         contentMaxHeightRatio: Float = 1f,
         contentRadiusDP: Float = 10f,
         contentMarginDP: Float = 20f,
-        position: MXDialogPosition = MXDialogPosition.BOTTOM,
+        position: MXCardPosition = MXCardPosition.BOTTOM,
         textColor: Int? = null,
         textSizeSP: Float? = null,
         textGravity: Int? = Gravity.LEFT or Gravity.CENTER_VERTICAL,
@@ -197,7 +201,7 @@ object MXDialog {
         contentMaxHeightRatio: Float = 1f,
         contentRadiusDP: Float = 10f,
         contentMarginDP: Float = 20f,
-        position: MXDialogPosition = MXDialogPosition.BOTTOM,
+        position: MXCardPosition = MXCardPosition.BOTTOM,
         textColor: Int? = null,
         textSizeSP: Float? = null,
         textGravity: Int? = Gravity.LEFT or Gravity.CENTER_VERTICAL
@@ -238,7 +242,7 @@ object MXDialog {
         contentMaxHeightRatio: Float = 1.2f,
         contentRadiusDP: Float = 10f,
         contentMarginDP: Float = 20f,
-        position: MXDialogPosition = MXDialogPosition.BOTTOM,
+        position: MXCardPosition = MXCardPosition.BOTTOM,
         textColor: Int? = null,
         textSizeSP: Float? = null,
         textGravity: Int? = Gravity.LEFT or Gravity.CENTER_VERTICAL,
@@ -274,7 +278,7 @@ object MXDialog {
         contentMaxHeightRatio: Float = 1.2f,
         contentRadiusDP: Float = 10f,
         contentMarginDP: Float = 20f,
-        position: MXDialogPosition = MXDialogPosition.BOTTOM,
+        position: MXCardPosition = MXCardPosition.BOTTOM,
         textColor: Int? = null,
         textSizeSP: Float? = null,
         textGravity: Int? = Gravity.LEFT or Gravity.CENTER_VERTICAL

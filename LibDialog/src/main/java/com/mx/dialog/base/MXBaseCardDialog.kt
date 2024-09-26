@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import com.mx.dialog.R
-import com.mx.dialog.tip.MXDialogPosition
+import com.mx.dialog.tip.MXCardPosition
 import com.mx.dialog.utils.MXDrawableUtils
 import com.mx.dialog.utils.MXUtils
 
@@ -22,7 +22,7 @@ abstract class MXBaseCardDialog(context: Context) : MXBaseDialog(context) {
     private var dialogBackgroundColor: Int? = null
     private var cardBackgroundRadiusDP = 12f
     private var cardMarginDP = RectF(25f, 25f, 25f, 25f)
-    private var position = MXDialogPosition.CENTER
+    private var position = MXCardPosition.CENTER
     private var mxRootLay: ViewGroup? = null
     private var mxCardLay: ViewGroup? = null
 
@@ -130,7 +130,7 @@ abstract class MXBaseCardDialog(context: Context) : MXBaseDialog(context) {
     /**
      * 设置弹窗位置
      */
-    fun setCardPosition(position: MXDialogPosition) {
+    fun setCardPosition(position: MXCardPosition) {
         this.position = position
 
         initDialog()

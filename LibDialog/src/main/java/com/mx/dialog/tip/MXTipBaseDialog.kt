@@ -11,7 +11,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.mx.dialog.R
 import com.mx.dialog.base.MXBaseCardDialog
-import com.mx.dialog.utils.MXButtonStyle
+import com.mx.dialog.utils.MXBtnAttach
 import com.mx.dialog.utils.MXTextProp
 import com.mx.dialog.utils.MXUtils
 import com.mx.dialog.views.MXRatioFrameLayout
@@ -30,11 +30,11 @@ abstract class MXTipBaseDialog(context: Context) : MXBaseCardDialog(context) {
         context.resources.getString(R.string.mx_dialog_button_cancel_text), true,
         context.resources.getColor(R.color.mx_dialog_color_text_cancel), 15f
     )
-    private var cancelPosition = MXDialogCancelPosition.LEFT
+    private var cancelPosition = MXPosition.LEFT
     private val actionProps = ArrayList<MXTextProp>()
 
-    private var buttonStyle = MXButtonStyle.ActionFocus
-    private var tipType = MXDialogType.NONE
+    private var buttonStyle = MXBtnStyle.ActionFocus
+    private var tipType = MXType.NONE
 
     private var maxContentRatio: Float = 0f
     private var minContentHeightDP: Float = 0f
@@ -92,14 +92,14 @@ abstract class MXTipBaseDialog(context: Context) : MXBaseCardDialog(context) {
             val btnLay = btnLay
             if (btnLay != null) {
                 btnLay.removeAllViews()
-                if (cancelPosition == MXDialogCancelPosition.LEFT) {
+                if (cancelPosition == MXPosition.LEFT) {
                     processCancelBtn()
                     actionProps.forEach { prop -> processActionBtn(prop) }
                 } else {
                     actionProps.forEach { prop -> processActionBtn(prop) }
                     processCancelBtn()
                 }
-                MXButtonStyle.attach(buttonStyle, btnLay, getCardBackgroundRadiusDP())
+                MXBtnAttach.attach(buttonStyle, btnLay, getCardBackgroundRadiusDP())
 
                 if (btnLay.childCount > 0) {
                     btnLay.visibility = View.VISIBLE
@@ -110,21 +110,21 @@ abstract class MXTipBaseDialog(context: Context) : MXBaseCardDialog(context) {
         }
 
         when (tipType) {
-            MXDialogType.NONE -> {
+            MXType.NONE -> {
                 tipTypeImg?.visibility = View.GONE
             }
 
-            MXDialogType.SUCCESS -> {
+            MXType.SUCCESS -> {
                 tipTypeImg?.visibility = View.VISIBLE
                 tipTypeImg?.setImageResource(R.drawable.mx_dialog_icon_success)
             }
 
-            MXDialogType.WARN -> {
+            MXType.WARN -> {
                 tipTypeImg?.visibility = View.VISIBLE
                 tipTypeImg?.setImageResource(R.drawable.mx_dialog_icon_warn)
             }
 
-            MXDialogType.ERROR -> {
+            MXType.ERROR -> {
                 tipTypeImg?.visibility = View.VISIBLE
                 tipTypeImg?.setImageResource(R.drawable.mx_dialog_icon_error)
             }
@@ -261,7 +261,7 @@ abstract class MXTipBaseDialog(context: Context) : MXBaseCardDialog(context) {
     /**
      * 设置取消按钮的位置
      */
-    fun setCancelPosition(position: MXDialogCancelPosition) {
+    fun setCancelPosition(position: MXPosition) {
         cancelPosition = position
     }
 
@@ -304,13 +304,13 @@ abstract class MXTipBaseDialog(context: Context) : MXBaseCardDialog(context) {
         initDialog()
     }
 
-    fun setTipType(type: MXDialogType?) {
-        this.tipType = type ?: MXDialogType.NONE
+    fun setTipType(type: MXType?) {
+        this.tipType = type ?: MXType.NONE
 
         initDialog()
     }
 
-    fun setButtonStyle(style: MXButtonStyle) {
+    fun setButtonStyle(style: MXBtnStyle) {
         this.buttonStyle = style
 
         initDialog()

@@ -1,12 +1,8 @@
 package com.mx.example
 
-import android.app.Activity
-import android.app.Dialog
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.text.Html
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -15,9 +11,7 @@ import com.gyf.immersionbar.BarHide
 import com.gyf.immersionbar.ImmersionBar
 import com.mx.dialog.MXDialog
 import com.mx.dialog.progress.MXLoadingDialog
-import com.mx.dialog.tip.MXDialogType
-import com.mx.dialog.upgrade.MXUpgradeDialog
-import com.mx.dialog.utils.IMXLifecycle
+import com.mx.dialog.tip.MXType
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
@@ -98,15 +92,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun showError(view: View) {
-        MXDialog.tip(this, "错误提示", "错误", dialogType = MXDialogType.ERROR)
+        MXDialog.tip(this, "错误提示", "错误", dialogType = MXType.ERROR)
     }
 
     fun showSuccess(view: View) {
-        MXDialog.tip(this, "成功提示", "成功", dialogType = MXDialogType.SUCCESS)
+        MXDialog.tip(this, "成功提示", "成功", dialogType = MXType.SUCCESS)
     }
 
     fun showWarn(view: View) {
-        MXDialog.tip(this, "Warn提示", "提示", dialogType = MXDialogType.WARN)
+        MXDialog.tip(this, "Warn提示", "提示", dialogType = MXType.WARN)
     }
 
     fun showLoading(view: View) {
