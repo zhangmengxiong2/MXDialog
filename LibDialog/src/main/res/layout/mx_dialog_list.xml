@@ -27,7 +27,7 @@
             <TextView
                 android:id="@+id/mxTitleTxv"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/mx_dialog_size_list_item_height"
+                android:layout_height="@dimen/mx_dialog_size_list_title_height"
                 android:ellipsize="end"
                 android:gravity="center"
                 android:singleLine="true"
@@ -64,7 +64,8 @@
         android:id="@+id/mxBtnLay"
         android:layout_width="match_parent"
         android:layout_height="@dimen/mx_dialog_size_action_height"
-        android:layout_marginTop="@dimen/mx_dialog_size_divider_normal">
+        android:layout_marginTop="@dimen/mx_dialog_size_divider_normal"
+        android:layout_marginBottom="@dimen/mx_dialog_size_divider_normal">
 
         <TextView
             android:id="@+id/mxCancelBtn"
