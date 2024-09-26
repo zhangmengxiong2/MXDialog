@@ -26,7 +26,7 @@ class MXCardPosition {
         val BOTTOM: MXCardPosition
             get() = MXCardPosition().apply {
                 gravity = Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL
-                translationY = -40
+                translationY = -20
             }
     }
 }

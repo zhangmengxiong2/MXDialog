@@ -3,8 +3,8 @@ package com.mx.dialog
 import android.content.Context
 import android.view.Gravity
 import com.mx.dialog.list.MXListDialog
-import com.mx.dialog.tip.MXPosition
 import com.mx.dialog.tip.MXCardPosition
+import com.mx.dialog.tip.MXPosition
 import com.mx.dialog.tip.MXTipDialog
 import com.mx.dialog.tip.MXType
 import com.mx.dialog.utils.IMXLifecycle
@@ -278,7 +278,7 @@ object MXDialog {
         contentMaxHeightRatio: Float = 1.2f,
         contentRadiusDP: Float = 10f,
         contentMarginDP: Float = 20f,
-        position: MXCardPosition = MXCardPosition.BOTTOM,
+        position: MXCardPosition = MXCardPosition.BOTTOM.apply { translationY = -10 },
         textColor: Int? = null,
         textSizeSP: Float? = null,
         textGravity: Int? = Gravity.LEFT or Gravity.CENTER_VERTICAL
@@ -309,4 +309,28 @@ object MXDialog {
             checkedIndex
         }
     }
+
+    private fun tipWithType(
+        context: Context,
+        title: CharSequence?,
+        message: CharSequence,
+        type: MXType
+    ) {
+        MXTipDialog(context).apply {
+            setTipType(type)
+            setTitle(title)
+            setMessage(message)
+            setCancelable(false)
+            setActionBtn {}
+        }.show()
+    }
+
+    fun warn(context: Context, message: CharSequence, title: CharSequence? = null) =
+        tipWithType(context, title, message, MXType.WARN)
+
+    fun success(context: Context, message: CharSequence, title: CharSequence? = null) =
+        tipWithType(context, title, message, MXType.SUCCESS)
+
+    fun error(context: Context, message: CharSequence, title: CharSequence? = null) =
+        tipWithType(context, title, message, MXType.ERROR)
 }

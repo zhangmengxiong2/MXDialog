@@ -18,8 +18,8 @@
             android:id="@+id/mxTipTypeImg"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:layout_marginRight="3dp"
-            android:src="@drawable/mx_dialog_icon_success" />
+            android:layout_marginRight="5dp"
+            android:src="@drawable/mx_dialog_icon_none" />
 
         <TextView
             android:id="@+id/mxTitleTxv"

@@ -11,7 +11,7 @@ import com.gyf.immersionbar.BarHide
 import com.gyf.immersionbar.ImmersionBar
 import com.mx.dialog.MXDialog
 import com.mx.dialog.progress.MXLoadingDialog
-import com.mx.dialog.tip.MXType
+import com.mx.dialog.tip.MXCardPosition
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
@@ -92,15 +92,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun showError(view: View) {
-        MXDialog.tip(this, "错误提示", "错误", dialogType = MXType.ERROR)
+        MXDialog.error(this, "错误提示", "错误")
     }
 
     fun showSuccess(view: View) {
-        MXDialog.tip(this, "成功提示", "成功", dialogType = MXType.SUCCESS)
+        MXDialog.success(this, "成功提示", "成功")
     }
 
     fun showWarn(view: View) {
-        MXDialog.tip(this, "Warn提示", "提示", dialogType = MXType.WARN)
+        MXDialog.warn(this, "Warn提示", "提示")
     }
 
     fun showLoading(view: View) {
@@ -118,7 +118,16 @@ class MainActivity : AppCompatActivity() {
 ////            setIndeterminateDrawable(resources.getDrawable(com.mx.dialog.R.drawable.mx_dialog_icon_error))
 ////            setMessage("我在加载中... ${MXProgressDialog.REPLACE_PROGRESS}")
 //        }.show()
-        MXLoadingDialog(this).show()
+        MXLoadingDialog(this).apply {
+            setCancelable(false) //设置是否可手动返回
+            setCardPosition(MXCardPosition.CENTER.apply {
+                // 和TipDialog的位置使用一样
+//                translationY = -10
+//                translationX = 20
+            })
+            setDismissDelay(3) // 设置Dialog3秒后自动消失
+            setMessage("我在加载中...")
+        }.show()
     }
 
     fun showToast(view: View) {
@@ -130,8 +139,9 @@ class MainActivity : AppCompatActivity() {
             val index = MXDialog.selectMultiSync(
                 this@MainActivity,
                 list = ('A'..'Z').toMutableList().map { it.toString() },
-                selectIndexList = arrayListOf(0, 1),
-//                cancelable = false
+                title = "多选！",
+                selectIndexList = arrayListOf(0, 4),
+                cancelable = false
             )
             MXDialog.tip(this@MainActivity, "点击了：$index")
         }

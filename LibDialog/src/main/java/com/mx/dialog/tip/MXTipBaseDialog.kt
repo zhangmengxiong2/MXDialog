@@ -111,7 +111,8 @@ abstract class MXTipBaseDialog(context: Context) : MXBaseCardDialog(context) {
 
         when (tipType) {
             MXType.NONE -> {
-                tipTypeImg?.visibility = View.GONE
+                tipTypeImg?.visibility = View.VISIBLE
+                tipTypeImg?.setImageResource(R.drawable.mx_dialog_icon_none)
             }
 
             MXType.SUCCESS -> {
@@ -179,18 +180,6 @@ abstract class MXTipBaseDialog(context: Context) : MXBaseCardDialog(context) {
             actionProp.onclick?.invoke()
         }
         return button
-    }
-
-    private fun attachDivider(): View? {
-        val btnLay = btnLay ?: return null
-        val hasBefore = (btnLay.childCount > 0)
-
-        return if (hasBefore) {
-            LayoutInflater.from(context).inflate(
-                R.layout.mx_content_divider_btn, btnLay, true
-            )
-            btnLay.getChildAt(btnLay.childCount - 1)
-        } else null
     }
 
     /**

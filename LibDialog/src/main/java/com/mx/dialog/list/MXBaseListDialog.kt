@@ -143,9 +143,7 @@ open class MXBaseListDialog(context: Context) : MXBaseDialog(context) {
         }
 
         contentLay?.setMaxHeightRatio(contentMaxHeightRatioDP)
-        mxRootLay?.post {
-            calculatorListHeight()
-        }
+        mxRootLay?.post { calculatorListHeight() }
     }
 
     /**
