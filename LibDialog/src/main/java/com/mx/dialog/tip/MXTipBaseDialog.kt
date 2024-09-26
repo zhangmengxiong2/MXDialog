@@ -181,18 +181,6 @@ abstract class MXTipBaseDialog(context: Context) : MXBaseCardDialog(context) {
         return button
     }
 
-    private fun attachDivider(): View? {
-        val btnLay = btnLay ?: return null
-        val hasBefore = (btnLay.childCount > 0)
-
-        return if (hasBefore) {
-            LayoutInflater.from(context).inflate(
-                R.layout.mx_content_divider_btn, btnLay, true
-            )
-            btnLay.getChildAt(btnLay.childCount - 1)
-        } else null
-    }
-
     /**
      * 设置活动按钮
      */

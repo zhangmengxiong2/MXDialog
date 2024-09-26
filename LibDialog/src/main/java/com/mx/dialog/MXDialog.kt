@@ -3,8 +3,8 @@ package com.mx.dialog
 import android.content.Context
 import android.view.Gravity
 import com.mx.dialog.list.MXListDialog
-import com.mx.dialog.tip.MXPosition
 import com.mx.dialog.tip.MXCardPosition
+import com.mx.dialog.tip.MXPosition
 import com.mx.dialog.tip.MXTipDialog
 import com.mx.dialog.tip.MXType
 import com.mx.dialog.utils.IMXLifecycle
@@ -309,4 +309,16 @@ object MXDialog {
             checkedIndex
         }
     }
+
+    private fun tipWithType(context: Context, message: String, type: MXType) {
+        MXTipDialog(context).apply {
+            setTipType(type)
+            setMessage(message)
+            setCancelable(false)
+        }.show()
+    }
+
+    fun warn(context: Context, message: String) = tipWithType(context, message, MXType.WARN)
+    fun success(context: Context, message: String) = tipWithType(context, message, MXType.SUCCESS)
+    fun error(context: Context, message: String) = tipWithType(context, message, MXType.ERROR)
 }
